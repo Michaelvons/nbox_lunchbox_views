@@ -122,34 +122,58 @@ var app = {
   gotoBundlePage: function ( cardID, cardLength) {
     //ADD OR REMOVE CSS Class
     app.element("card-category-" + cardID).classList.add("card-active");
-            cards = [];
-            cardsLength = cardLength + 1;
-            var inactiveCards;
+    cards = [];
+    cardsLength = cardLength + 1;
+    var inactiveCards;
 
-            for (var i = 1; i < cardsLength; i++) {
-                cards.push(i);
-                //GET TAB INDEX WHEN TABS ARE CREATED
-                if (cardLength == cards.length) {
-                    cardIndex = cards.indexOf(parseInt(cardID));
+    for (var i = 1; i < cardsLength; i++) {
+      cards.push(i);
+      //GET TAB INDEX WHEN TABS ARE CREATED
+      if (cardLength == cards.length) {
+        cardIndex = cards.indexOf(parseInt(cardID));
 
-                    //RETURN ARRAY OF INACTIVE TABS
-                    inactiveCards = cards.splice(cardIndex, 1);
-                }
-            }
+        //RETURN ARRAY OF INACTIVE TABS
+        inactiveCards = cards.splice(cardIndex, 1);
+      }
+    }
 
-            //REMOVE CSS PROPERTY TO INACTVE TABS
-            for (var i = 0; i < cards.length; i++) {
-              //  console.log(cards[i]);
-                app.element("card-category-" + cards[i]).classList.remove("card-active");
-            }
+    //REMOVE CSS PROPERTY TO INACTVE TABS
+    for (var i = 0; i < cards.length; i++) {
+      //  console.log(cards[i]);
+      app.element("card-category-" + cards[i]).classList.remove("card-active");
+    }
 
     views.goto("page-bundle", function () {
       console.log("nav to page-bundle");
     })
   },
 
-  showModalBundleDetail:function () {
-    views.flash("modalBundleDetail");
+  showModalBundleDetail:function (cardID, cardLength) {
+
+    //ADD OR REMOVE CSS Class
+    app.element("card-bundle-" + cardID).classList.add("card-active");
+    cards = [];
+    cardsLength = cardLength + 1;
+    var inactiveCards;
+
+    for (var i = 1; i < cardsLength; i++) {
+      cards.push(i);
+      //GET TAB INDEX WHEN TABS ARE CREATED
+      if (cardLength == cards.length) {
+        cardIndex = cards.indexOf(parseInt(cardID));
+
+        //RETURN ARRAY OF INACTIVE TABS
+        inactiveCards = cards.splice(cardIndex, 1);
+      }
+    }
+
+    //REMOVE CSS PROPERTY TO INACTVE TABS
+    for (var i = 0; i < cards.length; i++) {
+      //  console.log(cards[i]);
+      app.element("card-bundle-" + cards[i]).classList.remove("card-active");
+    }
+
+    views.peek("modalBundleDetail");
   },
 
   //
