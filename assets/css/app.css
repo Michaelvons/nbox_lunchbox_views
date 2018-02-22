@@ -384,8 +384,21 @@ button{
   font-family: Montserrat-Medium;
 }
 
+button:hover{
+  opacity: .7;
+}
+
 .card-bundle-title{
   font-size: 21px;
   font-family: Montserrat-Medium;
   text-align: center;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+
+.modal{
+  height: 100vh;
 }

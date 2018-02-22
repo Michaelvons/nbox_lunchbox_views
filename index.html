@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <!-- SEARCH PRELOADER VIEW -->
+    <!-- CATEGORY PAGE VIEW -->
     <div id="page-category" class="view" data-statusbar="white" >
       <div class="main-content">
         <div class="main-header">
@@ -35,7 +35,8 @@
         </div>
 
         <div class="card-group">
-          <div class="card card-active">
+          <!-- CARD 1 -->
+          <div id="card-category-1" class="card card-active" onclick="app.gotoBundlePage('1',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -46,7 +47,9 @@
             <div class="card-background">
             </div>
           </div>
-          <div class="card">
+
+          <!-- CARD 2 -->
+          <div id="card-category-2" class="card" onclick="app.gotoBundlePage('2',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -57,7 +60,9 @@
             <div class="card-background">
             </div>
           </div>
-          <div class="card">
+
+          <!-- CARD 3 -->
+          <div id="card-category-3" class="card" onclick="app.gotoBundlePage('3',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -72,7 +77,8 @@
 
         <!-- SECOND CARD GRID -->
         <div class="card-group">
-          <div class="card">
+          <!-- CARD 4 -->
+          <div id="card-category-4" class="card" onclick="app.gotoBundlePage('4',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -83,7 +89,9 @@
             <div class="card-background">
             </div>
           </div>
-          <div class="card">
+
+          <!-- CARD 4 -->
+          <div id="card-category-5" class="card" onclick="app.gotoBundlePage('5',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -94,7 +102,9 @@
             <div class="card-background">
             </div>
           </div>
-          <div class="card">
+
+          <!-- CARD 6 -->
+          <div id="card-category-6" class="card" onclick="app.gotoBundlePage('6',6)">
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
@@ -106,7 +116,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- BASKET -->
         <div class="basket">
           <div class="basket-table">
@@ -169,6 +179,162 @@
       </div>
     </div>
 
+    <!-- BUNDLE VIEW -->
+    <div id="page-bundle" class="view" data-statusbar="white" >
+      <div class="main-content">
+        <div class="main-header">
+          <p class="main-title">Company Name</p>
+          <p class="main-subtitle">Location</p>
+          <p class="main-caption">SELECT A BUNDLE</p>
+        </div>
+
+        <div class="card-group">
+          <!-- CARD 1 -->
+          <div class="card card-active" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="card" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="card" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECOND CARD GRID -->
+        <div class="card-group">
+          <!-- CARD 4 -->
+          <div class="card" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 5 -->
+          <div class="card" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+                <!-- <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p> -->
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 6 -->
+          <div class="card" onclick="app.showModalBundleDetail()">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-bundle-title">Bundle title title title title</p>
+                <!-- <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p> -->
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+        </div>
+
+        <!-- BASKET -->
+        <div class="basket">
+          <div class="basket-table">
+            <table>
+              <tr>
+                <th>BUNDLE NAME</th>
+                <th>UNIT PRICE</th>
+                <th>QUANTITY</th>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+            </table>
+          </div>
+          <div class="basket-total">
+            <div>
+              <div class="basket-total-row">
+                <span>Total Bundle</span>
+                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+              </div>
+              <!-- <div class="basket-total-row"></div> -->
+              <div class="basket-total-row">
+                <span>Delivery</span>
+                <p><span class="currency">NGN</span>300.<span class="currency">00</span></p>
+              </div>
+              <hr>
+              <div class="basket-total-row basket-total-row-total">
+                <span>Total Bundle</span>
+                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+              </div>
+            </div>
+
+            <button class="green-button">
+              PROCEED TO CHECKOUT
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL - BUNDLE DETAIL -->
+    <div id="modalBundleDetail">
+      <div class="modal">
+        <p>Modal Here</p>
+      </div>
+    </div>
 
     <audio id="soundPlayer"></audio>
     <script src="cordova.js"></script>
