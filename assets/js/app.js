@@ -72,9 +72,6 @@ var app = {
         app.CalculateViewPort();
 
         views.start("home", function () {
-            // app.element("talk").innerHTML="oshey";
-            app.slider();
-            app.animatePreloader();
 
         });
 
@@ -335,18 +332,3 @@ window.addEventListener('load', function () {
 
 
 app.start();
-
-
-$(document).ready(function () {
-    console.log("jquery is ready");
-    // $( function() {
-    //     $( "#datepicker" ).datepicker();
-    // } );
-
-    $("departure").click(function () {
-        // alert("The paragraph was clicked.");
-        console.log("hello from button")
-    });
-
-
-});

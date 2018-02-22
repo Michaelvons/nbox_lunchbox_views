@@ -124,3 +124,14 @@ input:focus, textarea:focus, img:focus, div:focus, button:focus {
   -webkit-flex-wrap: nowrap; /* Safari */
   /* flex-wrap:         nowrap; */
 }
+
+/*  */
+/* CUSTOM STYLING */
+/*  */
+/*  */
+
+.screensaver-main-content{
+  width: 100%;
+  height: 100vh;
+  background-image: url("../image/healthyfood.png");
+}
