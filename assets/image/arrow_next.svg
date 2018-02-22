@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="20px" viewBox="0 0 30 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Flights" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-8" transform="translate(-817.000000, -383.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <g id="Group-2" transform="translate(566.000000, 232.000000)">
+                <g id="Book-Button" transform="translate(0.000000, 129.000000)">
+                    <path d="M273.504906,34 L268.91912,38.5857864 C268.138071,39.366835 268.138071,40.633165 268.91912,41.4142136 C269.700168,42.1952621 270.966498,42.1952621 271.747547,41.4142136 L279.747547,33.4142136 C280.528595,32.633165 280.528595,31.366835 279.747547,30.5857864 L271.747547,22.5857864 C270.966498,21.8047379 269.700168,21.8047379 268.91912,22.5857864 C268.138071,23.366835 268.138071,24.633165 268.91912,25.4142136 L273.504906,30 L253,30 C251.895431,30 251,30.8954305 251,32 C251,33.1045695 251.895431,34 253,34 L273.504906,34 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

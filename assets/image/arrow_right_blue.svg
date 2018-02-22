@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-right</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Flights" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="arrow-right" fill-rule="nonzero" fill="#3C7AC9">
+            <polygon id="Shape" points="0 7 0 9 12 9 6.5 14.5 7.92 15.92 15.84 8 7.92 0.08 6.5 1.5 12 7"></polygon>
+        </g>
+    </g>
+</svg>

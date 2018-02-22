@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Flights" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy" transform="translate(-454.000000, -638.000000)" fill-rule="nonzero" fill="#000000">
+            <g id="Group-11" transform="translate(228.000000, 512.000000)">
+                <g id="Group-2-Copy" transform="translate(164.000000, 50.000000)">
+                    <path d="M67.2734939,76.6625645 C67.274728,75.775048 68.6480183,75.775048 68.6496226,76.6874044 L68.6496226,80.4021098 L74,83.5350575 L74,84.9044922 L68.6752916,83.2038588 L68.6752916,85.9802879 L69.9035768,86.9179643 L69.9035768,88 L68.0064172,87.4310822 L66.1030873,88 L66.1030873,86.9179643 L67.3248319,85.9802879 L67.3248319,83.2038588 L62,84.9046122 L62,83.5350575 L67.2734939,80.4021098 L67.2734939,76.6625645 L67.2734939,76.6625645 Z" id="Shape" transform="translate(68.000000, 82.000000) rotate(90.000000) translate(-68.000000, -82.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

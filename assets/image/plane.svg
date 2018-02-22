@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Flights" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home" transform="translate(-195.000000, -104.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <path d="M205.546988,105.325129 C205.549456,103.550096 208.296037,103.550096 208.299245,105.374809 L208.299245,112.80422 L219,119.070115 L219,121.808984 L208.350583,118.407718 L208.350583,123.960576 L210.807154,125.835929 L210.807154,128 L207.012834,126.862164 L203.206175,128 L203.206175,125.835929 L205.649664,123.960576 L205.649664,118.407718 L195,121.809224 L195,119.070115 L205.546988,112.80422 L205.546988,105.325129 L205.546988,105.325129 Z" id="Shape" transform="translate(207.000000, 116.000000) rotate(90.000000) translate(-207.000000, -116.000000) "></path>
+        </g>
+    </g>
+</svg>

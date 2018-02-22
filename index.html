@@ -1,0 +1,969 @@
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>Nairabox Flight</title>
+  <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
+  <link rel="stylesheet" href="views/views.css" type="text/css"/>
+
+</head>
+
+<body class="body" onresize="views.resize()">
+
+  <div id="busyUIView"></div>
+  <div id="UIViews" class="views">
+
+    <!-- VIEW -->
+    <!-- HOME VIEW -->
+    <div id="home" class="view" data-statusbar="white" data-target="homeMenu" data-type="controller">
+
+
+      <div class="toolbar">
+        <div class="toolbar_menu">
+          <img src="assets/image/arrow_back_white.svg">
+          <div id="toolbar_menu_1" class="menu menu_active" onclick="app.tabSelect('1',3)">
+            RETURN
+          </div>
+          <div id="toolbar_menu_2" class="menu" onclick="app.tabSelect('2',3)">
+            ONE WAY
+          </div>
+          <div id="toolbar_menu_3" class="menu" onclick="app.tabSelect('3',3)">
+            MULTI STOP
+          </div>
+          <img src="assets/image/menu.svg" onclick="app.showMenu()">
+        </div>
+        <div id="toolbar_destination" class="toolbar_destination">
+          <div id="departure" class="destination_alias">
+            <input id="toolbarDepartureCityAlias" type="text" placeholder="LOS">
+            <p  id="departure_city"class="destination">DEPARTURE CITY</p>
+          </div>
+          <!-- <div id="separator_destination"> -->
+          <!-- <img id="toolbar_plus" src="assets/image/destination_plus.svg"> -->
+          <img id="toolbar_plane" src="assets/image/plane.svg">
+          <!-- </div> -->
+          <div id="arrival" class="destination_alias">
+            <input id="toolbarArrivalCityAlias" type="text" placeholder="LHR">
+            <p id="arrival_city" class="destination">ARRIVAL CITY</p>
+          </div>
+          <img id="toolbar_plus" src="assets/image/destination_plus.svg" onclick="app.addFlight()">
+
+        </div>
+        <div id="flight_list" class="flight_list"></div>
+        <div class="container_toolbar_options">
+          <div class="toolbar_options toolbar_options_1">
+            <div class="toolbar_option"  onclick="app.showDatepickerModal()">
+              <p class="toolbar_option_title">Departure</p>
+              <p id="toolbarDeparture" class="toolbar_option_text">TUE, AUG 25</p>
+            </div>
+            <div class="toolbar_option" onclick="app.showDatepickerModal()">
+              <p class="toolbar_option_title">Return</p>
+              <p id="toolbarReturn" class="toolbar_option_text">THU, AUG 27</p>
+            </div>
+            <div class="toolbar_option" onclick="app.showTravellerPicker()">
+              <p class="toolbar_option_title">Travellers</p>
+              <p id="toolbarTotalTraveller" class="toolbar_option_text">4 PEOPLE</p>
+            </div>
+          </div>
+          <div class="toolbar_options toolbar_options_2">
+            <div class="toolbar_option" onclick="app.showCabinClass()">
+              <p class="toolbar_option_title">Cabin Class</p>
+              <p id="toolbarCabinClass" class="toolbar_option_text">ECONOMY</p>
+            </div>
+            <button class="toolbar_option toolbar_option_btn" onclick="app.searchPreloader()">
+              SEARCH
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="main_content">
+        <div class="container_card">
+          <p class="card_title">Trending Destinations from Lagos</p>
+
+
+
+
+          <!-- <div class="cards">
+          <div class="card">
+          <img class="card_image" src="assets/image/image_1.png">
+        </div>
+      </div> -->
+      <!-- <div class="card_trending">
+      <img class="card_image" src="assets/image/image_1.png">
+      <img class="card_flare" src="assets/image/flare.png">
+      <p class="card_trending_title">New York</p>
+    </div> -->
+
+
+    <!-- Slider main container -->
+    <div class="swiper-container">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide slide_1">
+          <div class="card_trending">
+            <img class="card_image" src="assets/image/image_1.png">
+            <img class="card_flare" src="assets/image/flare.png">
+            <p class="card_trending_title">New York</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="card_trending">
+            <img class="card_image" src="assets/image/image_1.png">
+            <img class="card_flare" src="assets/image/flare.png">
+            <p class="card_trending_title">New York</p>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="card_trending">
+            <img class="card_image" src="assets/image/image_1.png">
+            <img class="card_flare" src="assets/image/flare.png">
+            <p class="card_trending_title">New York</p>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="card_trending">
+            <img class="card_image" src="assets/image/image_1.png">
+            <img class="card_flare" src="assets/image/flare.png">
+            <p class="card_trending_title">New York</p>
+          </div>
+        </div>
+      </div>
+      <!-- If we need pagination -->
+      <!-- <div class="swiper-pagination"></div> -->
+
+      <!-- If we need navigation buttons -->
+      <!-- <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> -->
+
+      <!-- If we need scrollbar -->
+      <!-- <div class="swiper-scrollbar"></div> -->
+    </div>
+
+
+  </div>
+  <div class="container_card">
+    <p class="card_title">Your Search History</p>
+    <div class="cards">
+
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+
+          <!-- SEARCH CARD -->
+          <div class="swiper-slide-history slide_1">
+            <div id="card_search_1" class="card_search" onclick="app.searchHistorySelect('1', 3)">
+              <p>Lagos</p>
+              <p>New York</p>
+              <div class="card_suggestion_destination card_suggestion_destination_active">
+                LOS
+                <img id="separator_plane_suggestion_1" class="separator_plane_suggestion" src="assets/image/plane_black.svg">
+                <img id="separator_plane_suggestion_white_1" class="separator_plane_suggestion hidewhitePlane" src="assets/image/plane.svg">
+                JFK
+              </div>
+              <p>5 Travellers</p>
+            </div>
+          </div>
+
+          <!-- SEARCH CARD -->
+          <div class="swiper-slide-history">
+            <div id="card_search_2" class="card_search" onclick="app.searchHistorySelect('2',3)">
+              <p>Lagos</p>
+              <p>New York</p>
+              <div class="card_suggestion_destination card_suggestion_destination_active">
+                LOS
+                <img id="separator_plane_suggestion_2" class="separator_plane_suggestion" src="assets/image/plane_black.svg">
+                <img id="separator_plane_suggestion_white_2" class="separator_plane_suggestion hidewhitePlane" src="assets/image/plane.svg">
+
+                JFK
+              </div>
+              <p>5 Travellers</p>
+            </div>
+          </div>
+
+          <!-- SEARCH CARD -->
+          <div class="swiper-slide-history">
+            <div id="card_search_3" class="card_search" onclick="app.searchHistorySelect('3', 3)">
+              <p>Lagos</p>
+              <p>New York</p>
+              <div class="card_suggestion_destination card_suggestion_destination_active">
+                LOS
+                <img id="separator_plane_suggestion_white_3" class="separator_plane_suggestion hidewhitePlane" src="assets/image/plane.svg">
+                <img id="separator_plane_suggestion_3" class="separator_plane_suggestion " src="assets/image/plane_black.svg">
+                JFK
+              </div>
+              <p>5 Travellers</p>
+            </div>
+          </div>
+
+          end here
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- NEW VIEW -->
+<!-- SEARCH PRELOADER VIEW -->
+<div id="search_preloader" class="view" data-statusbar="white" >
+  <div class="main_preloader_container">
+    <header>
+      <img id="searchLogo" class="logo" src="assets/image/logo_nbox_black.svg" >
+    </header>
+
+    <!-- PRELOADER IMAGE -->
+    <div class="container_preloader">
+      <!-- <img id="sky" class="bg_preloader_day" src="assets/image/bg_night.jpg"> -->
+      <div id="sky" class="bg_preloader_day"></div>
+      <div id="sky_night" class="bg_preloader_night"></div>
+      <img id="sun" class="sun" src="assets/image/sun.png">
+      <img class="bg_preloader" src="assets/image/bg_window.png">
+
+    </div>
+    <footer>
+      <p class="header_text">  Searching for flights </p>
+
+      <!-- SEARCH DESTINATION -->
+      <div class="card_suggestion_destination" onclick="app.searchResult()">
+        LOS
+        <img  class="separator_plane_suggestion"src="assets/image/plane_black.svg">
+        JFK
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- NEW VIEW -->
+<!-- SEARCH RESULT VIEW -->
+<div id="searchResult" class="view" data-statusbar="white" >
+  <div class="toolbar">
+    <div class="toolbar_menu">
+      <img id="searchResultBack" src="assets/image/arrow_back_white.svg" onclick="app.searchResultBack()">
+      <div class="destination_details">
+        <p>One Way Trip</p>
+        <span class="separator_dot">.</span>
+        <p>1 Traveller</p>
+      </div>
+      <img id="searchResultRefresh" src="assets/image/refresh.svg" onclick="app.searchResultRefresh()">
+    </div>
+    <div class="search_toolbar_destination">
+      <div class="search_destination_alias">
+        LOS
+      </div>
+      <img class="search_separator_plane" src="assets/image/plane.svg">
+      <div class="search_destination_alias">
+        LHR
+      </div>
+    </div>
+    <div class="container_toolbar_options">
+      <div class="toolbar_options toolbar_options_1">
+        <div class="search_toolbar_option" onclick="app.filterPriceGroup()">
+          <img src="assets/image/tag.svg">
+          <p id="filterPriceGroup" class="">Price Per Person</p>
+        </div>
+        <div class="search_toolbar_option" onclick="app.filterResult()">
+          <img src="assets/image/filter.svg">
+          <p class="">Filter Results</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search_main_content">
+
+
+    <!-- SINGLE SERACH CARD -->
+    <div class="search_card" onclick="app.flightDetail()">
+      <div class="search_card_1">
+        <p class="flight_airline">British Airways</p>
+        <p class="flight_class">Economy</p>
+      </div>
+      <!-- <div> -->
+      <div class="search_card_2">
+        <img class="card_logo" src="assets/image/logo_british.svg">
+        <div class="search_card_destination_details">
+          <!-- DESTINATION CODE -->
+          <div class="search_card_destination">
+            <p>LOS</p>
+            <div class="destination_line">
+              <div class="destination_line_marker">
+              </div>
+            </div>
+            <p>LHR</p>
+          </div>
+          <div class="search_card_time">
+            <p>1:50PM</p>
+            <p class="destination_length">6h 57m</p>
+            <p>8:07PM</p>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <div class="search_card_3">
+        <p>Nonstop</p>
+        <div class="day">
+          <img class="card_icon_text" src="assets/image/moon.svg">
+          <p>Overnight</p>
+        </div>
+        <button class="pay_btn">
+          NGN <span id="btn_single_amount"> 398,500</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MULTI STOP SEARCH CARD -->
+
+    <div class="search_card" onclick="app.flightDetail()">
+      <div class="search_card_1">
+
+        <!-- FLIGHT AIRLINE AND CLASS -->
+        <p class="flight_airline">British Airways</p>
+        <p class="flight_class">Economy</p>
+      </div>
+      <div class="search_card_2">
+        <img class="card_logo" src="assets/image/logo_british.svg">
+        <div class="search_card_destination_details">
+
+          <!-- DESTINATION ABBREVIATION -->
+          <div class="search_card_destination">
+            <p>LOS</p>
+            <div class="destination_line">
+              <div class="destination_line_marker">
+              </div>
+            </div>
+            <p>LHR</p>
+          </div>
+
+          <!-- FLIGHT TIME -->
+          <div class="search_card_time">
+            <p>1:50PM</p>
+            <p class="destination_length">6h 57m</p>
+            <p>8:07PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLIGHT STOPS -->
+      <div class="search_card_3">
+        <p>1 Stop</p>
+      </div>
+      <hr class="multiple_separator_line">
+      <div class="search_card_1">
+
+        <!-- FLIGHT AIRLINE AND CLASS -->
+        <p class="flight_airline">British Airways</p>
+        <p class="flight_class">Economy</p>
+      </div>
+      <div class="search_card_2">
+        <img class="card_logo" src="assets/image/logo_british.svg">
+        <div class="search_card_destination_details">
+
+          <!-- DESTINATION ABBREVIATION -->
+          <div class="search_card_destination">
+            <p>LOS</p>
+            <div class="destination_line">
+              <div class="destination_line_marker">
+              </div>
+            </div>
+            <p>LHR</p>
+          </div>
+
+          <!-- FLIGHT TIME -->
+          <div class="search_card_time">
+            <p>1:50PM</p>
+            <p class="destination_length">6h 57m</p>
+            <p>8:07PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLIGHT STOPS -->
+      <div class="search_card_3">
+        <p>1 Stop</p>
+        <div class="day">
+          <img class="card_icon_text" src="assets/image/moon.svg">
+          <p>Overnight</p>
+        </div>
+
+        <!-- PAY BUTTON -->
+        <button  class="pay_btn">
+          NGN <span id="btn_multi_amount">398,500</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- NEW VIEW -->
+<!-- FLIGHT DETAIL VIEW -->
+<div id="flightDetail" class="view" data-statusbar="white" >
+  <div class="main_container">
+
+    <!-- MAIN CARD -->
+    <div class="card_main">
+
+      <div class="toolbar_menu">
+        <img id="flightDetailBack" src="assets/image/arrow_back_black.svg" onclick="app.flightDetailBack()">
+        <span class="ticket_title">TOTAL FARE</span>
+        <img src="assets/image/refresh.svg">
+      </div>
+
+
+      <!-- CARD HEADER -->
+      <div class="card_header">
+
+        <p class="ticket_price_amount"><span class="currency">NGN</span> 875,000<span class="currency">.00</span></p>
+
+        <button class="book_btn" onclick="app.travellerDetail()">
+          BOOK THIS FLIGHT
+          <div class="path">
+            <img class="motion_arrow" src="assets/image/arrow_next.svg">
+          </div>
+        </button>
+      </div>
+
+      <!-- CARD BODY -->
+      <div class="card_body">
+
+        <!-- OUTBOUND FLIGHT -->
+        <div class="container_card_payment">
+          <div class="payment_title">
+            <img class="" src="assets/image/plane_black_medium.svg">
+            <div class="payment_details">
+              <p class="payment_date">Nov 11, 2017</p>
+              <p class="payment_type">Outbound Flight</p>
+            </div>
+          </div>
+          <div class="card_payment">
+            <div class="card_payment_1">
+              <img class="card_logo" src="assets/image/logo_ua.svg">
+              <div>
+                <p class="card_payment_flight_title">United Airlines</p>
+                <p class="card_payment_flight_alias">Flight UA 149</p>
+              </div>
+            </div>
+            <div class="search_card_destination_details">
+              <div class="card_payment_destination">
+                <p>Lagos</p>
+                <p>Houston</p>
+              </div>
+              <div class="search_card_destination">
+                <p class="card_payment_time">1:05 PM</p>
+                <div class="destination_line">
+                  <div class="destination_line_marker">
+                  </div>
+                </div>
+                <p class="card_payment_time">8:07 AM</p>
+              </div>
+              <div class="search_card_3">
+                <p>LOS</p>
+                <div class="day">
+                  <img class="card_icon_text" src="assets/image/moon.svg">
+                  <p> 10h 27m</p>
+                </div>
+                <p>IAH</p>
+              </div>
+              <div class="card_progressbar">
+                <div class="card_progress">
+                  <span>Layover in Houston</span>
+                </div>
+                2h 22m
+              </div>
+              <div class="card_payment_1">
+                <img class="card_logo" src="assets/image/logo_aa.svg">
+                <div>
+                  <p class="card_payment_flight_title">American Airlines</p>
+                  <p class="card_payment_flight_alias">Flight AA 247</p>
+                </div>
+              </div>
+              <div class="search_card_destination_details">
+                <div class="card_payment_destination">
+                  <p>Houston</p>
+                  <p>San Francisco</p>
+                </div>
+                <div class="search_card_destination">
+                  <p class="card_payment_time">10:45 AM</p>
+                  <div class="destination_line">
+                    <div class="destination_line_marker">
+                    </div>
+                  </div>
+                  <p class="card_payment_time">12:07 PM</p>
+                </div>
+                <div class="search_card_3">
+                  <p>LOS</p>
+                  <div class="day">
+                    <img class="card_icon_text" src="assets/image/moon.svg">
+                    <p> 10h 27m</p>
+                  </div>
+                  <p>SFO</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+          </div>
+        </div>
+
+        <!-- INBOUND FLIGHT -->
+        <div class="container_card_payment">
+          <div class="payment_title">
+            <img class="" src="assets/image/plane_black_medium_back.svg">
+            <div class="payment_details">
+              <p class="payment_date">Nov 11, 2017</p>
+              <p class="payment_type">Inbound Flight</p>
+            </div>
+          </div>
+          <div class="card_payment">
+            <div class="card_payment_1">
+              <img class="card_logo" src="assets/image/logo_ua.svg">
+              <div>
+                <p class="card_payment_flight_title">United Airlines</p>
+                <p class="card_payment_flight_alias">Flight UA 149</p>
+              </div>
+            </div>
+            <div class="search_card_destination_details">
+              <div class="card_payment_destination">
+                <p>Lagos</p>
+                <p>Houston</p>
+              </div>
+              <div class="search_card_destination">
+                <p class="card_payment_time">1:05 PM</p>
+                <div class="destination_line">
+                  <div class="destination_line_marker">
+                  </div>
+                </div>
+                <p class="card_payment_time">8:07 AM</p>
+              </div>
+              <div class="search_card_3">
+                <p>LOS</p>
+                <div class="day">
+                  <img class="card_icon_text" src="assets/image/moon.svg">
+                  <p> 10h 27m</p>
+                </div>
+                <p>IAH</p>
+              </div>
+              <div class="card_progressbar_1">
+                <div class="card_progress_1">
+                  <span>Change Airport - ORY to CDG </span>
+                </div>
+                2h 22m
+              </div>
+              <div class="card_payment_1">
+                <img class="card_logo" src="assets/image/logo_aa.svg">
+                <div>
+                  <p class="card_payment_flight_title">American Airlines</p>
+                  <p class="card_payment_flight_alias">Flight AA 247</p>
+                </div>
+              </div>
+              <div class="search_card_destination_details">
+                <div class="card_payment_destination">
+                  <p>Houston</p>
+                  <p>San Francisco</p>
+                </div>
+                <div class="search_card_destination">
+                  <p class="card_payment_time">10:45 AM</p>
+                  <div class="destination_line">
+                    <div class="destination_line_marker">
+                    </div>
+                  </div>
+                  <p class="card_payment_time">12:07 PM</p>
+                </div>
+                <div class="search_card_3">
+                  <p>LOS</p>
+                  <div class="day">
+                    <img class="card_icon_text" src="assets/image/moon.svg">
+                    <p> 10h 27m</p>
+                  </div>
+                  <p>SFO</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END TRAVELLER -->
+
+<!-- NEW VIEW -->
+<!-- FLIGHT DETAIL VIEW -->
+<div id="travellerDetail" class="view" data-statusbar="white" >
+  <!-- TRAVELER CARD -->
+  <div class="container_card_traveller">
+    <div class="card_traveller_header">
+      <img id="travellerBack" src="assets/image/arrow_back_white.svg" onclick="app.travellerBack()">
+      <p>  Who's Travelling ?</p>
+      <img src="assets/image/arrow_right_blue.svg">
+    </div>
+    <div class="card_traveller_body">
+      <div class="card_traveller_options">
+        <p>Adult 1</p>
+        <div class="card_traveller_contact" onclick="app.selectContacts()">
+          <img src="assets/image/contact_blue.svg">
+          <p>Select Saved Traveller</p>
+        </div>
+      </div>
+      <div class="card_traveller">
+        <div class="card_traveller_head">
+        <p>Select a Title</p>
+
+        </div>
+        <div class="card_traveller_options">
+          <div id="traveller_title_1" class="card_traveller_option " onclick="app.titleSelect('1',3)">
+            MR
+          </div>
+          <div id="traveller_title_2" class="card_traveller_option" onclick="app.titleSelect('2',3)">
+            MRS
+          </div>
+          <div id="traveller_title_3" class="card_traveller_option" onclick="app.titleSelect('3',3)">
+            MISS
+          </div>
+        </div>
+        <div class="card_traveller_form">
+          <input id="traveller_firstname" type="text" placeholder="First/Given Name (As on passport)">
+          <input id="traveller_midname" type="text" placeholder="Middle Name">
+          <input id="traveller_surname" type="text" placeholder="Surname (As on passport)">
+        </div>
+
+        <p>Date of Birth</p>
+        <div class="card_traveller_options">
+          <div id="travellerDobMonth" class="card_traveller_option card_traveller_option_active" onclick="app.ShowModalTravellerDatepicker()">
+            JUNE
+          </div>
+          <div id="travellerDobDate" class="card_traveller_option card_traveller_option_active" onclick="app.ShowModalTravellerDatepicker()">
+            30
+          </div>
+          <div id="travellerDobYear" class="card_traveller_option card_traveller_option_active" onclick="app.ShowModalTravellerDatepicker()">
+            1987
+          </div>
+        </div>
+        <div class="card_traveller_save" onclick="app.addContact()">
+          <img class="card_traveller_save_image" src="assets/image/save.svg">
+          <p>Save Contact</p>
+        </div>
+      </div>
+      <div class="container_btn_next_traveller">
+        <button class="book_btn btn_next_traveller">
+          NEXT TRAVELLER
+          <div class="path">
+            <img class="btn_icon motion_arrow" src="assets/image/arrow_next.svg">
+          </div>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- DATE PICKER MODAL -->
+<div id="modalDatepicker" class="">
+
+  <div class="modal">
+
+
+    <div class="modal_header">
+      <div class="modal_action" onclick="app.closeDatepickerModal()">
+        <img src="assets/image/cancel.svg">
+      </div>
+
+      <div class="modal_date_details">
+        <div class="modal_date_detail">
+          <span> Departure <p id="modalDeparture" class="modal_date">Select a date</p></span>
+
+        </div>
+        <div class="modal_date_detail">
+          <span> Return <p id="modalReturn" class="modal_date">select a date</p></span>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div id="datepicker" class="modal_datepicker" data-language='en'></div>
+
+  </div>
+
+</div>
+
+
+<!--TRAVELLER PICKER MODAL-->
+
+<div id="modalTravellerPicker">
+  <div class="modal">
+
+    <div class="modal_header">
+      <div class="modal_action" onclick="app.closeTravellerpickerModal()">
+        <img src="assets/image/cancel.svg">
+      </div>
+
+      <div class="menu_dropdown_header ">
+        <span class="menu_dropdown_header_title">How many people are travelling ?</span>
+      </div>
+
+
+    </div>
+    <!-- PEOPLE MENU -->
+    <div class="menu_dropdown">
+
+      <div class="menu_dropdown_lists">
+        <div class="menu_dropdown_list">
+          <div class="menu_dropdown_list_traveller">
+            <p class="menu_dropdown_list_age_grade">Adult</p>
+            <p class="menu_dropdown_list_age">12+yrs</p>
+          </div>
+          <div class="menu_dropdown_list_select">
+            <button class="menu_dropdown_list_count" onclick="app.decrement('adultCount')">
+              <img src="assets/image/decrease.svg">
+            </button>
+            <p id="adultCount" class="menu_dropdown_list_counter"> 12</p>
+            <button class="menu_dropdown_list_count" onclick="app.increment('adultCount')" >
+              <img src="assets/image/increase.svg">
+            </button>
+          </div>
+        </div>
+        <div class="menu_dropdown_list menu_dropdown_list_even">
+          <div class="menu_dropdown_list_traveller">
+            <p class="menu_dropdown_list_age_grade">Children</p>
+            <p class="menu_dropdown_list_age">2 - 11yrs</p>
+          </div>
+          <div class="menu_dropdown_list_select">
+            <button class="menu_dropdown_list_count" onclick="app.decrement('childrenCount')">
+              <img src="assets/image/decrease.svg">
+            </button>
+            <p id="childrenCount" class="menu_dropdown_list_counter">23</p>
+            <button class="menu_dropdown_list_count" onclick="app.increment('childrenCount')" >
+              <img src="assets/image/increase.svg">
+            </button>
+          </div>
+        </div>
+        <div class="menu_dropdown_list ">
+          <div class="menu_dropdown_list_traveller">
+            <p class="menu_dropdown_list_age_grade">Infants</p>
+            <p class="menu_dropdown_list_age">under 2yrs</p>
+          </div>
+          <div class="menu_dropdown_list_select">
+            <button class="menu_dropdown_list_count" onclick="app.decrement('infantCount')">
+              <img src="assets/image/decrease.svg">
+            </button>
+            <p id="infantCount" class="menu_dropdown_list_counter">56</p>
+            <button class="menu_dropdown_list_count" onclick="app.increment('infantCount')">
+              <img src="assets/image/increase.svg">
+            </button>
+          </div>
+        </div>
+        <div class="container_menu_list_btn">
+          <button class="book_btn menu_list_btn" onclick="app.travellerNext()">
+            CONTINUE
+            <span class="path">
+              <img class="icon_text motion_arrow" src="assets/image/arrow_next.svg">
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!--CABIN CLASS PICKER-->
+
+<div id="modalCabinClassPicker">
+  <div class="modal">
+
+
+    <div class="modal_header">
+      <div class="modal_action" onclick="app.closeCabinpickerModal()">
+        <img src="assets/image/cancel.svg">
+      </div>
+
+      <div class="menu_dropdown_header">
+        <span class="menu_dropdown_header_title">Select a Cabin Class</span>
+      </div>
+
+
+    </div>
+    <div class="modal_body">
+
+      <div id="cabin_menu_list_1" class="modal_traveller_option" onclick="app.cabinSelect('1','First Class', 3)">
+        First Class
+      </div>
+      <div id="cabin_menu_list_2" class="modal_traveller_option modal_traveller_option_active" onclick="app.cabinSelect('2','Business', 3)">
+        <!--<img class="menu_list_indicator" src="assets/image/plane.svg">-->
+        Business
+      </div>
+      <div id="cabin_menu_list_3" class="modal_traveller_option" onclick="app.cabinSelect('3','Economy', 3)">
+        Economy
+      </div>
+      <div class="container_menu_list_btn">
+        <button class="book_btn menu_list_btn " onclick="app.cabinClassNext()">
+          CONTINUE
+          <span class="path">
+            <img class="icon_text motion_arrow" src="assets/image/arrow_next.svg">
+          </span>
+        </button>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+</div>
+
+<!--TRAVELLER PICKER DATE-->
+<div id="modalTravellerDatepicker">
+  <div class="modal">
+
+    <div class="modal_header">
+      <div class="modal_action" onclick="app.closeTravellerDatepickerModal()">
+        <img src="assets/image/cancel.svg">
+      </div>
+
+      <div class="menu_dropdown_header ">
+        <span class="menu_dropdown_header_title">Select Date of Birth</span>
+      </div>
+
+
+    </div>
+
+    <div id="datepickerTraveller" class="modal_datepicker" data-language='en'></div>
+
+  </div>
+</div>
+
+    <!--CONTACT LIST-->
+    <div id="contactsList" class="contacts_list">
+      <div class="contacts_list_container">
+      <div id="contact_list_items" class="contact_list_items">
+      <!--<div class="contact_list_item" onclick="app.selectedContactsItem()">-->
+        <!--<p>Mr John Smith</p>-->
+      <!--</div>-->
+      <!--<div class="contact_list_item" onclick="app.selectedContactsItem()">-->
+        <!--<p>Mr John Smith</p>-->
+      <!--</div>-->
+      <!--<div class="contact_list_item" onclick="app.selectedContactsItem()">-->
+        <!--<p>Mr John Smith</p>-->
+      <!--</div>-->
+      <!--<div class="contact_list_item" onclick="app.selectedContactsItem()">-->
+        <!--<p>Mr John Smith</p>-->
+      <!--</div>-->
+    </div>
+    </div>
+      <div class="contact_listed"></div>
+    </div>
+
+<!--FILTER RESULT PICKER-->
+<div id="modalFilterResult">
+  <div class="modal">
+
+    <div class="modal_header">
+      <div class="modal_action" onclick="app.closeFilterResultModal()">
+        <img src="assets/image/cancel.svg">
+      </div>
+
+      <div class="menu_dropdown_header ">
+        <span class="menu_dropdown_header_title">Select Date of Birth</span>
+      </div>
+
+
+    </div>
+
+
+    <div class="modal_body">
+      <div id="filter_result_1" class="modal_traveller_option" onclick="app.filterResultSelect('1', 2)">
+        Time to Complete Journey
+      </div>
+      <div id="filter_result_2" class="modal_traveller_option modal_traveller_option_active" onclick="app.filterResultSelect('2', 2)">
+        <!--<img class="menu_list_indicator" src="assets/image/plane.svg">-->
+        Number of Stops
+      </div>
+
+      <div class="container_menu_list_btn">
+        <button class="book_btn " onclick="app.cabinClassNext()">
+          CONTINUE
+          <span class="path">
+            <img class="icon_text motion_arrow" src="assets/image/arrow_next.svg">
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!--SIDENAV-->
+<div id="homeMenu">
+  <div class="modal_header">
+    <div class="modal_action" onclick="app.closeHomeMenu()">
+      <img src="assets/image/cancel.svg">
+    </div>
+
+    <div class="menu_dropdown_header sidenav_header">
+      <img class="sidenav_avatar" src="assets/image/user.svg"/>
+      <span class="menu_dropdown_header_title">
+        Hello, Funmi
+      </span>
+    </div>
+
+
+  </div>
+
+  <div class="modal_body">
+    <div class="modal_traveller_option sidenav_list" onclick="app.filterResultSelect('1', 2)">
+      <img class="sidenav_icon" src="assets/image/ticket.svg"> My Tickets
+    </div>
+    <div class="modal_traveller_option sidenav_list" onclick="app.filterResultSelect('2', 2)">
+      <img class="sidenav_icon" src="assets/image/wallet.svg"> Travel Wallet
+    </div>
+    <div class="modal_traveller_option sidenav_list" onclick="app.filterResultSelect('2', 2)">
+      <img class="sidenav_icon" src="assets/image/history.svg"> History
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+<audio id="soundPlayer"></audio>
+
+<script src="cordova.js"></script>
+
+<script src="views/views.js"></script>
+<script src="gsap/css.js"></script>
+<script src="gsap/easepack.js"></script>
+<script src="gsap/TweenLite.min.js"></script>
+<script src="gsap/CSSPlugin.min.js"></script>
+<script src="gsap/ScrollToPlugin.min.js"></script>
+<script src="assets/js/fastclick.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/jquery-3.2.1.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/daterangepicker.js"></script>
+<script src="assets/js/datepicker.min.js"></script>
+<script src="assets/js/datepicker.en.js"></script>
+
+
+
+<script src="assets/js/app.js"></script>
+</div>
+
+</body>
+
+</html>
