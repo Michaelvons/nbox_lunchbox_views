@@ -114,8 +114,10 @@ var app = {
     //
 
 
-    showDatepickerModal: function () {
-
+    gotoCategoryPage: function () {
+      views.goto("page-category", function () {
+          console.log("nav to page-category");
+      })
     },
 
 //
@@ -304,7 +306,6 @@ var app = {
             if (app.platform == "IOS") StatusBar.styleLightContent();
         }
         app.statusBarColor = color;
-
     },
 
 

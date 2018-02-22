@@ -8,6 +8,10 @@
   <title>Nairabox Lunchbox</title>
   <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
   <link rel="stylesheet" href="views/views.css" type="text/css"/>
+  <!-- CUSTOM STYLE -->
+  <link rel="stylesheet" href="../../css/alertify.min.css"/>
+  <!--  -->
+
 </head>
 
 <body class="body" onresize="views.resize()">
@@ -17,33 +21,173 @@
 
     <!-- HOME VIEW / SCREENSAVER VIEW  -->
     <div id="home" class="view" data-statusbar="white" data-target="homeMenu" data-type="controller">
-      <div class="screensaver-main-content">
-Hello
-WOrld
+      <div class="screensaver-main-content" onclick="app.gotoCategoryPage()">
       </div>
+    </div>
+
+    <!-- SEARCH PRELOADER VIEW -->
+    <div id="page-category" class="view" data-statusbar="white" >
+      <div class="main-content">
+        <div class="main-header">
+          <p class="main-title">Company Name</p>
+          <p class="main-subtitle">Location</p>
+          <p class="main-caption">WHAT WILL YOU LIKE TO EAT ?</p>
         </div>
 
-        <!-- SEARCH PRELOADER VIEW -->
-        <div id="search_preloader" class="view" data-statusbar="white" >
-
+        <div class="card-group">
+          <div class="card card-active">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">FAST FOOD</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">ORIENTAL</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">CONTINENTAL</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
         </div>
 
-        <!--TRAVELLER PICKER MODAL-->
-        <div id="modalTravellerPicker">
-
+        <!-- SECOND CARD GRID -->
+        <div class="card-group">
+          <div class="card">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">AFRICAN</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">BUKKA</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <img class="card-image" src="assets/image/healthyfood.png">
+              <div class="card-caption">
+                <p class="card-title">HEALTY FOODS</p>
+                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
         </div>
+        
+        <!-- BASKET -->
+        <div class="basket">
+          <div class="basket-table">
+            <table>
+              <tr>
+                <th>BUNDLE NAME</th>
+                <th>UNIT PRICE</th>
+                <th>QUANTITY</th>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Bundle title title title </td>
+                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
+                <td>2</td>
+              </tr>
+            </table>
+          </div>
+          <div class="basket-total">
+            <div>
+              <div class="basket-total-row">
+                <span>Total Bundle</span>
+                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+              </div>
+              <!-- <div class="basket-total-row"></div> -->
+              <div class="basket-total-row">
+                <span>Delivery</span>
+                <p><span class="currency">NGN</span>300.<span class="currency">00</span></p>
+              </div>
+              <hr>
+              <div class="basket-total-row basket-total-row-total">
+                <span>Total Bundle</span>
+                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+              </div>
+            </div>
 
-        <audio id="soundPlayer"></audio>
-        <script src="cordova.js"></script>
-        <script src="views/views.js"></script>
-        <script src="gsap/css.js"></script>
-        <script src="gsap/easepack.js"></script>
-        <script src="gsap/TweenLite.min.js"></script>
-        <script src="gsap/CSSPlugin.min.js"></script>
-        <script src="gsap/ScrollToPlugin.min.js"></script>
-        <script src="assets/js/fastclick.js"></script>
-        <script src="assets/js/jquery-3.2.1.js"></script>
-        <script src="assets/js/app.js"></script>
+            <button class="green-button">
+              PROCEED TO CHECKOUT
+            </button>
+          </div>
+        </div>
       </div>
-    </body>
-    </html>
+    </div>
+
+
+    <audio id="soundPlayer"></audio>
+    <script src="cordova.js"></script>
+    <script src="views/views.js"></script>
+    <script src="gsap/css.js"></script>
+    <script src="gsap/easepack.js"></script>
+    <script src="gsap/TweenLite.min.js"></script>
+    <script src="gsap/CSSPlugin.min.js"></script>
+    <script src="gsap/ScrollToPlugin.min.js"></script>
+    <script src="assets/js/fastclick.js"></script>
+    <script src="assets/js/jquery-3.2.1.js"></script>
+
+    <!-- CUSTOM PLUGINS -->
+    <script src="../../pages/category/index.js"></script>
+    <script src="../../js/alertify.min.js"></script>
+    <!--  -->
+
+
+    <script src="assets/js/app.js"></script>
+  </div>
+</body>
+</html>

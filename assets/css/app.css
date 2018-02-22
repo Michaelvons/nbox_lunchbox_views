@@ -128,10 +128,264 @@ input:focus, textarea:focus, img:focus, div:focus, button:focus {
 /*  */
 /* CUSTOM STYLING */
 /*  */
-/*  */
+
+/* DEV DIMENSION 1024 x 583 */
+
+@font-face {
+  font-family: Montserrat-Black;
+  src: url(../font/Montserrat-Black.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-ExtraBold;
+  src: url(../font/Montserrat-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url(../font/Montserrat-Bold.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Semibold;
+  src: url(../font/Montserrat-Semibold.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Medium;
+  src: url(../font/Montserrat-Medium.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url(../font/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-ExtraLight;
+  src: url(../font/Montserrat-ExtraLight.ttf);
+}
+
+body{
+  margin: 0px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  letter-spacing: 1px;
+  font-family: Montserrat-Regular;
+}
 
 .screensaver-main-content{
   width: 100%;
   height: 100vh;
   background-image: url("../image/healthyfood.png");
+}
+
+.main-content{
+  background-color: black;
+  margin: 0px;
+  width: 100%;
+  height: auto;
+  background-image: url("../image/background.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.main-header{
+  color: white;
+  padding: 72px 24px 24px 24px;
+}
+
+.main-title{
+  font-family: Montserrat-Semibold;
+  font-size: 36px;
+  margin: 0px;
+}
+
+.main-subtitle{
+  font-family: Montserrat-Regular;
+  font-size: 20px;
+  margin: 0px;
+}
+
+/* .main-header p{
+margin: 0px;
+} */
+
+.main-caption{
+  font-family: Montserrat-ExtraBold;
+  font-size: 54px;
+  margin-top: 72px;
+  width: 650px;
+}
+
+.card-caption{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .card-caption p{
+margin: 0px;
+} */
+
+.card-image{
+  width: 100%;
+  padding: 40px 0px;
+}
+
+.card{
+  flex-direction: column;
+  color: white;
+  display: flex;
+  flex-grow: 1;
+  margin: 10px;
+  height: 300px;
+  flex-basis: 30%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  height: auto;
+}
+
+.card-active{
+  background-color: #75ac65;
+  opacity: 1 !important;
+}
+
+.card-group{
+  display: flex;
+  flex-direction: row;
+  margin: 0px 16px;
+}
+
+
+.card-background{
+  position: absolute;
+  opacity: .05;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.card-content{
+  z-index: 3;
+  padding: 0px 32px 40px 32px;
+}
+
+.card-description{
+  font-size: 18px;
+  font-family:Montserrat-ExtraLight;
+  text-align: center;
+  margin: 6px 0px 0px 0px;
+}
+
+.card-title{
+  font-size: 28px;
+  font-family: Montserrat-ExtraBold;
+  margin: 0px;
+}
+
+
+.basket{
+  background-color: white;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 32px 32px 40px 32px;
+
+
+}
+
+table tr:nth-child(even) {
+  background-color: #eee;
+}
+table tr:nth-child(odd) {
+  background-color:#fff;
+}
+
+table th {
+  color: #949494;
+  font-size: 12px;
+  font-family: Montserrat-Bold;
+}
+
+table {
+  width:100%;
+}
+table, th, td {
+  border: none;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  font-family: Montserrat-Medium;
+  font-size: 18px;
+}
+
+.currency{
+  font-size: 14px;
+}
+
+
+.basket-total-row{
+  display: flex;
+  justify-content: space-between;
+  font-family: Montserrat-Medium;
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+.basket-total-row-total{
+  font-family: Montserrat-Semibold;
+}
+
+.basket-total{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.basket-total p{
+  margin: 0px;
+}
+
+.basket-table{
+  flex-grow: 2;
+  margin-right: 48px;
+}
+
+hr{
+  border: none;
+  height: 2px;
+  /* Set the hr color */
+  color: black; /* old IE */
+  background-color: black; /* Modern Browsers */
+}
+
+
+.green-button{
+  background-color: #008042;
+}
+
+button{
+  border: none;
+  border-radius: 4px;
+  height: 48px;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+  font-family: Montserrat-Medium;
+}
+
+.card-bundle-title{
+  font-size: 21px;
+  font-family: Montserrat-Medium;
+  text-align: center;
 }
