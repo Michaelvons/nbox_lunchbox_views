@@ -5,6 +5,7 @@ var app = {
   versionNumber: 1,
   buildNumber: 1,
   isBackground: false,
+  BASE_URL: "http://staging.nairabox.com/foodhub/",
 
   start: function () {
 
@@ -189,7 +190,7 @@ var app = {
 
       //GET SCREENSAVERS
       $.ajax({
-        url: screensavers.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
+        url: app.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
         type: "GET",
         crossDomain: true,
         contentType: "application/json"
@@ -200,7 +201,19 @@ var app = {
 
         for (var i = 0; i < screensavers.message.length; i++) {
 
-console.log(screensavers.message[i].image);
+          console.log(screensavers.message[i].image);
+          $( "#screensaver-swiper-wrapper" ).append( "<div class='swiper-slide'><img class='screensaver' src='" + screensavers.message[i].image + "'></div>" );
+          var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal',
+            loop: true,
+             autoHeight: true,
+             spaceBetween:0,
+             effect:'fade',
+            autoplay: {
+              delay: 5000,
+            },
+
+          })
 
           // $("#screensaversTable").append("<tr>"
           // + "<td><img src='" + screensavers.message[i].image + "' style='width: 70px;margin-left: 32px'></td>"
