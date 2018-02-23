@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="views/views.css" type="text/css"/>
   <!-- CUSTOM STYLE -->
   <link rel="stylesheet" href="assets/css/swiper.min.css"/>
+  <link rel="stylesheet" href="assets/css/alertify.min.css"/>
+
   <!--  -->
 
 </head>
@@ -42,6 +44,7 @@
       <div class="setup-main-content">
         <p class="setup-title">Device Setup</p>
         <div class="setup-form">
+          <input type="text" placeholder="Enter terminal ID">
           <input type="text" placeholder="Enter location ID">
           <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button>
         </div>
@@ -204,7 +207,7 @@
               </div>
             </div>
 
-            <button class="green-button">
+            <button class="green-button" onclick="app.showModalCheckout()">
               PROCEED TO CHECKOUT
             </button>
           </div>
@@ -354,7 +357,7 @@
               </div>
             </div>
 
-            <button class="green-button">
+            <button class="green-button" onclick="app.showModalCheckout()">
               PROCEED TO CHECKOUT
             </button>
           </div>
@@ -363,11 +366,11 @@
     </div>
 
     <!-- MODAL - BUNDLE DETAIL -->
-    <div id="modalBundleDetail">
+    <!-- <div id="modalBundleDetail">
       <div class="modal">
         <p>Modal Here</p>
       </div>
-    </div>
+    </div> -->
 
     <audio id="soundPlayer"></audio>
     <script src="cordova.js"></script>
@@ -381,7 +384,9 @@
     <script src="assets/js/jquery-3.2.1.js"></script>
 
     <!-- CUSTOM PLUGINS -->
-    <script src="assets/js/swiper.min.js"></script> -->
+    <script src="assets/js/swiper.min.js"></script>
+    <script src="assets/js/alertify.min.js"></script>
+
     <!--  -->
 
 

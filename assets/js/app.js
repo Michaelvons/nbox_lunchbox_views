@@ -175,7 +175,7 @@ var app = {
       app.element("card-bundle-" + cards[i]).classList.remove("card-active");
     }
 
-    views.flash("modalBundleDetail");
+    //  views.flash("modalBundleDetail");
   },
 
   gotoSetupPage:function () {
@@ -184,246 +184,256 @@ var app = {
     })
   },
 
-  gotoScreensaverPage:function () {
-    views.goto("page-screensaver", function () {
-      console.log("nav to page-screensaver");
-
-      //GET SCREENSAVERS
-      $.ajax({
-        url: app.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
-        type: "GET",
-        crossDomain: true,
-        contentType: "application/json"
-      }).done(function (screensavers) {
-
-        console.log(screensavers);
+  showModalCheckout:function(){
+    var bundleDetailstemplate = "<div>"
+    "<p>Bundle details</p>"
+    + "</div>";
 
 
-        for (var i = 0; i < screensavers.message.length; i++) {
+    alertify.confirm(bundleDetailstemplate,
+  ).set({movable:false, padding: false,frameless:true,transition: 'flipx'}).show();
+},
 
-          console.log(screensavers.message[i].image);
-          $( "#screensaver-swiper-wrapper" ).append( "<div class='swiper-slide'><img class='screensaver' src='" + screensavers.message[i].image + "'></div>" );
-          var mySwiper = new Swiper ('.swiper-container', {
-            direction: 'horizontal',
-            loop: true,
-             autoHeight: true,
-             spaceBetween:0,
-             effect:'fade',
-            autoplay: {
-              delay: 5000,
-            },
+gotoScreensaverPage:function () {
+  views.goto("page-screensaver", function () {
+    console.log("nav to page-screensaver");
 
-          })
+    //GET SCREENSAVERS
+    $.ajax({
+      url: app.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
+      type: "GET",
+      crossDomain: true,
+      contentType: "application/json"
+    }).done(function (screensavers) {
 
-          // $("#screensaversTable").append("<tr>"
-          // + "<td><img src='" + screensavers.message[i].image + "' style='width: 70px;margin-left: 32px'></td>"
-          // + "<td><img>" + screensavers.message[i].name + "</td>"
-          // + "<td>" + screensavers.message[i].status + "</td>"
-          // + "<td class='btn_table_container'><button class='btn_table' onclick='screensavers.editScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\")'><i class='fa fa-pencil icon_green' aria-hidden='true'></i><button class='btn_table' onclick='screensavers.activateScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\",\"" + screensavers.message[i].image + "\")'><i class='icon_green fa fa-power-off' aria-hidden='true'></i></button><button class='btn_table' onclick='screensavers.deleteScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\", \"" + screensavers.message[i].image + "\")'><i class='icon_red fa fa-trash-o' aria-hidden='true'></i></button></td>"
-          // + "</tr>");
-        }
-
-      });
+      console.log(screensavers);
 
 
-    })
+      for (var i = 0; i < screensavers.message.length; i++) {
 
+        console.log(screensavers.message[i].image);
+        $( "#screensaver-swiper-wrapper" ).append( "<div class='swiper-slide'><img class='screensaver' src='" + screensavers.message[i].image + "'></div>" );
+        var mySwiper = new Swiper ('.swiper-container', {
+          direction: 'horizontal',
+          loop: true,
+          autoHeight: true,
+          spaceBetween:0,
+          effect:'fade',
+          autoplay: {
+            delay: 5000,
+          },
 
-  },
+        })
 
-  //
-  //END APP LOGIC
-  //
-
-
-  //•••••• BASIC APP LOGIC ••••••/
-
-  isValidEmail: function (email) {
-    if (email == "") return false;
-    var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    if (regex.test(email)) return true;
-    else return false;
-  },
-
-  valueOf: function (element) {
-    return app.element(element).value;
-  },
-
-  send: function (url, data, callback, errorCallback) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (xhttp.readyState == 4) {
-        if (xhttp.status == 200) {
-          var response = JSON.parse(xhttp.responseText);
-
-          if (app.debugMode) console.log(response);
-          if (callback) callback(response);
-        }
-        else return errorCallback ? errorCallback() : app.offline(xhttp.status);
+        // $("#screensaversTable").append("<tr>"
+        // + "<td><img src='" + screensavers.message[i].image + "' style='width: 70px;margin-left: 32px'></td>"
+        // + "<td><img>" + screensavers.message[i].name + "</td>"
+        // + "<td>" + screensavers.message[i].status + "</td>"
+        // + "<td class='btn_table_container'><button class='btn_table' onclick='screensavers.editScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\")'><i class='fa fa-pencil icon_green' aria-hidden='true'></i><button class='btn_table' onclick='screensavers.activateScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\",\"" + screensavers.message[i].image + "\")'><i class='icon_green fa fa-power-off' aria-hidden='true'></i></button><button class='btn_table' onclick='screensavers.deleteScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\", \"" + screensavers.message[i].image + "\")'><i class='icon_red fa fa-trash-o' aria-hidden='true'></i></button></td>"
+        // + "</tr>");
       }
-    };
 
-    var request = "";
-    var i = 0;
-    var length = Object.keys(data).length;
-
-    for (var key in data) {
-      request += (key + "=" + encodeURIComponent(data[key]) + "&");
-    }
-
-    request += "nocache=" + new Date().getTime();
-
-    xhttp.open("POST", url, true);
-    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhttp.send(request);
-  },
-  sendRaw: function (url, data, callback, errorCallback) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (xhttp.readyState == 4) {
-        if (xhttp.status == 200) {
-          var response = JSON.parse(xhttp.responseText);
-
-          if (app.debugMode) console.log(response);
-          if (callback) callback(response);
-        }
-        else return errorCallback ? errorCallback() : app.offline(xhttp.status);
-      }
-    };
-    xhttp.open("POST", url, true);
-
-    xhttp.send(data);
-  },
-
-
-  showBusy: function () {
-    views.locked = true;
-    app.element("busyUIView").style.display = "block";
-  },
-
-  hideBusy: function () {
-    views.locked = false;
-    app.element("busyUIView").style.display = "none";
-  },
-  doEdit: function (callback) {
-    views.flash('editUIView', function () {
-      callback();
-    })
-  },
-  alert: function (caption, message) {
-    if (app.isLiveApp) {
-      setTimeout(function () {
-        navigator.notification.alert(message, function () {
-        }, caption, 'Okay');
-      }, 50);
-    }
-    else alert(message ? message : caption);
-  },
-
-  toast: function (message, long) {
-    var duration = long ? 4000 : 2000;
-    var options = {
-      message: message,
-      duration: duration,
-      position: "bottom",
-      addPixelsY: -200,
-    };
-
-    if (app.isLiveApp) window.plugins.toast.showWithOptions(options);
-    else console.log(message);
-  },
-
-  offline: function () {
-    app.hideBusy();
-    var showMessage = true;
-
-    if (showMessage) app.alert("Can't reach servers", "You may be offline. Please check your internet connection and try again.");
-  },
-
-  toTitleCase: function (string) {
-    string = string.replace("-", " ");
-
-    return string.replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-  },
 
-  element: function (element) {
-    return document.getElementById(element);
-    if (window[element]) return window[element];
-    return window[element] = document.getElementById(element);
-  },
-  Kformatter: function (num) {
-    num = Math.round(num);
-    return num > 999 ? (num / 1000).toFixed(1) + 'k' : num
 
-  },
-  numberFormat: function (amount, currency, decimal) {
-    amount = Number(amount).toFixed(2).toString();
+  })
 
-    var x = amount.split('.');
-    var x1 = x[0], x2 = x[1];
 
-    if (decimal) {
-      if (!x2) x2 = "00";
-      else if (x2.length == 1) x2 = x2 + "0";
-      x2 = "." + x2;
+},
+
+//
+//END APP LOGIC
+//
+
+
+//•••••• BASIC APP LOGIC ••••••/
+
+isValidEmail: function (email) {
+  if (email == "") return false;
+  var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  if (regex.test(email)) return true;
+  else return false;
+},
+
+valueOf: function (element) {
+  return app.element(element).value;
+},
+
+send: function (url, data, callback, errorCallback) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (xhttp.readyState == 4) {
+      if (xhttp.status == 200) {
+        var response = JSON.parse(xhttp.responseText);
+
+        if (app.debugMode) console.log(response);
+        if (callback) callback(response);
+      }
+      else return errorCallback ? errorCallback() : app.offline(xhttp.status);
     }
-    else x2 = "";
+  };
 
-    var rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + ',' + '$2');
-    }
+  var request = "";
+  var i = 0;
+  var length = Object.keys(data).length;
 
-    if (currency) return currency + " " + x1 + x2;
-    else return x1 + x2;
-  },
-
-  isPlural: function (count, term, plural) {
-    if (count == 1) return count + " " + term;
-    else return count + " " + ((plural) ? plural : term + "s");
-  },
-
-  isDigitsOnly: function (string) {
-    "use strict";
-
-    return (!isNaN(parseInt(string)) && isFinite(string));
-  },
-
-  htmlText: function (string) {
-    return string.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  },
-
-  currentTime: function () {
-    var date = new Date();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    hours = (hours >= 10) ? hours : '0' + hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-    var time = hours + ':' + minutes + ' ' + ampm;
-    return months[date.getMonth()] + " " + date.getDate() + " @ " + time;
-  },
-
-  changeStatusBarColorTo: function (color) {
-    if (app.isLiveApp && app.statusBarColor !== color) {
-      StatusBar.backgroundColorByHexString(color);
-      if (app.platform == "IOS") StatusBar.styleLightContent();
-    }
-    app.statusBarColor = color;
-  },
-
-
-  exitApplication: function () {
-    if (!app.isLiveApp) console.log("Application Closed.")
-    else navigator.app.exitApp();
+  for (var key in data) {
+    request += (key + "=" + encodeURIComponent(data[key]) + "&");
   }
+
+  request += "nocache=" + new Date().getTime();
+
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.send(request);
+},
+sendRaw: function (url, data, callback, errorCallback) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (xhttp.readyState == 4) {
+      if (xhttp.status == 200) {
+        var response = JSON.parse(xhttp.responseText);
+
+        if (app.debugMode) console.log(response);
+        if (callback) callback(response);
+      }
+      else return errorCallback ? errorCallback() : app.offline(xhttp.status);
+    }
+  };
+  xhttp.open("POST", url, true);
+
+  xhttp.send(data);
+},
+
+
+showBusy: function () {
+  views.locked = true;
+  app.element("busyUIView").style.display = "block";
+},
+
+hideBusy: function () {
+  views.locked = false;
+  app.element("busyUIView").style.display = "none";
+},
+doEdit: function (callback) {
+  views.flash('editUIView', function () {
+    callback();
+  })
+},
+alert: function (caption, message) {
+  if (app.isLiveApp) {
+    setTimeout(function () {
+      navigator.notification.alert(message, function () {
+      }, caption, 'Okay');
+    }, 50);
+  }
+  else alert(message ? message : caption);
+},
+
+toast: function (message, long) {
+  var duration = long ? 4000 : 2000;
+  var options = {
+    message: message,
+    duration: duration,
+    position: "bottom",
+    addPixelsY: -200,
+  };
+
+  if (app.isLiveApp) window.plugins.toast.showWithOptions(options);
+  else console.log(message);
+},
+
+offline: function () {
+  app.hideBusy();
+  var showMessage = true;
+
+  if (showMessage) app.alert("Can't reach servers", "You may be offline. Please check your internet connection and try again.");
+},
+
+toTitleCase: function (string) {
+  string = string.replace("-", " ");
+
+  return string.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+},
+
+element: function (element) {
+  return document.getElementById(element);
+  if (window[element]) return window[element];
+  return window[element] = document.getElementById(element);
+},
+Kformatter: function (num) {
+  num = Math.round(num);
+  return num > 999 ? (num / 1000).toFixed(1) + 'k' : num
+
+},
+numberFormat: function (amount, currency, decimal) {
+  amount = Number(amount).toFixed(2).toString();
+
+  var x = amount.split('.');
+  var x1 = x[0], x2 = x[1];
+
+  if (decimal) {
+    if (!x2) x2 = "00";
+    else if (x2.length == 1) x2 = x2 + "0";
+    x2 = "." + x2;
+  }
+  else x2 = "";
+
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  }
+
+  if (currency) return currency + " " + x1 + x2;
+  else return x1 + x2;
+},
+
+isPlural: function (count, term, plural) {
+  if (count == 1) return count + " " + term;
+  else return count + " " + ((plural) ? plural : term + "s");
+},
+
+isDigitsOnly: function (string) {
+  "use strict";
+
+  return (!isNaN(parseInt(string)) && isFinite(string));
+},
+
+htmlText: function (string) {
+  return string.replace(/(?:\r\n|\r|\n)/g, '<br />');
+},
+
+currentTime: function () {
+  var date = new Date();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  hours = (hours >= 10) ? hours : '0' + hours;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+
+  var time = hours + ':' + minutes + ' ' + ampm;
+  return months[date.getMonth()] + " " + date.getDate() + " @ " + time;
+},
+
+changeStatusBarColorTo: function (color) {
+  if (app.isLiveApp && app.statusBarColor !== color) {
+    StatusBar.backgroundColorByHexString(color);
+    if (app.platform == "IOS") StatusBar.styleLightContent();
+  }
+  app.statusBarColor = color;
+},
+
+
+exitApplication: function () {
+  if (!app.isLiveApp) console.log("Application Closed.")
+  else navigator.app.exitApp();
+}
 };
 
 if (/Android [4-6]/.test(navigator.appVersion)) {

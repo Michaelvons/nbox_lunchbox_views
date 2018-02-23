@@ -542,13 +542,14 @@ button:hover{
   flex-direction: column;
 }
 
-input{
-  background-color: #f2f2f2;
-  border: 2px solid #c8c8c8;
-  color: #4a4a4a;
-  font-size: 18px;
-  padding: 16px 8px;
-  border-radius: 6px;
+input {
+    background-color: #f2f2f2;
+    border: 2px solid #c8c8c8;
+    color: #4a4a4a;
+    font-size: 18px;
+    padding: 16px 8px;
+    margin-top: 16px;
+    border-radius: 6px;
 }
 
 .setup-title{
@@ -566,3 +567,23 @@ input{
     width: 100vw;
     height: 100vh;
 }
+
+
+.alertify .ajs-dimmer, .alertify .ajs-modal{
+  display: flex;
+  justify-content: center;
+}
+
+.alertify .ajs-dialog{
+  min-height: auto;
+  max-width:auto;
+  width: 90%;
+  margin:0px;
+  padding: 0px;
+  border-radius: 10px;
+  height: 600px;
+}
+
+.alertify .ajs-dimmer{
+    opacity: .8 !important;
+  }
