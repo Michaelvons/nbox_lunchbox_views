@@ -483,9 +483,9 @@ button:hover{
   }
 }
 /* @keyframes NAME-YOUR-ANIMATION {
-  0%   { opacity: 0; }
-  50%   { opacity: .5; }
-  100% { opacity: 1; }
+0%   { opacity: 0; }
+50%   { opacity: .5; }
+100% { opacity: 1; }
 } */
 
 
@@ -543,13 +543,13 @@ button:hover{
 }
 
 input {
-    background-color: #f2f2f2;
-    border: 2px solid #c8c8c8;
-    color: #4a4a4a;
-    font-size: 18px;
-    padding: 16px 8px;
-    margin-top: 16px;
-    border-radius: 6px;
+  background-color: #f2f2f2;
+  border: 2px solid #c8c8c8;
+  color: #4a4a4a;
+  font-size: 18px;
+  padding: 16px 8px;
+  margin-top: 16px;
+  border-radius: 6px;
 }
 
 .setup-title{
@@ -564,8 +564,8 @@ input {
 }
 
 .swiper-container {
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 
@@ -575,20 +575,25 @@ input {
 }
 
 .alertify .ajs-dialog {
-    position: relative;
-    margin: 40% auto !important;
-    min-height: 110px;
-    max-width: initial !important;
-    padding: 24px 24px 0 24px;
-    outline: 0;
-    width: 70%;
-    height: auto;
-    background-color: #fff;
+  position: relative;
+  margin: 40% auto !important;
+  min-height: 110px;
+  max-width: initial !important;
+  padding: 24px 24px 0 24px;
+  outline: 0;
+  width: 70%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 .alertify .ajs-dimmer{
-    opacity: .8 !important;
-  }
+  opacity: .8 !important;
+}
+
+.alertify.ajs-frameless .ajs-body .ajs-content{
+  border-radius: 10px;
+}
 
 
 .bundle-details{
@@ -628,9 +633,9 @@ input {
 .bundle-overlay-text{
   position: absolute;
   top: 40%;
-  left: 24px;
+  left: 40px;
   color: white;
-  font-size: 36px;
+  font-size: 42px;
   font-family: Montserrat-Medium;
   width: 400px;
 
@@ -645,7 +650,7 @@ input {
 }
 
 .bundle-content{
-  padding: 24px 32px;
+  padding: 40px;
 }
 
 .bundle-details-text{
@@ -659,4 +664,43 @@ input {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 32px;
+}
+
+.bundle-details-basket{
+  flex-grow: 1;
+  display: flex;
+  margin-left: 40px;
+}
+
+.bundle-details-menu{
+  flex-grow: 1;
+}
+
+
+.bundle-count{
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.bundle-count button{
+  /* padding: 8px; */
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  color: #4e4e4e;
+  font-size: 32px;
+  font-family: Montserrat-Medium;
+  display: flex;
+  justify-content: center;
+}
+
+
+.bundle-count-figure{
+  margin: 0px 16px;
+}
+
+
+.basket-total-row-quantity{
+  margin: 24px 0px;
 }
