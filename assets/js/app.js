@@ -185,13 +185,26 @@ var app = {
   },
 
   showModalCheckout:function(){
-    var bundleDetailstemplate = "<div>"
-    "<p>Bundle details</p>"
+    var bundleDetailstemplate = "<div class='bundle-details'>"
+    +"<div class='bundle-header'>"
+    +"<div id='bundle-overlay-image' class='bundle-overlay-image'></div>"
+
+  //  +"<img class='bundle-overlay-image' src='assets/image/healthyfood.png'>"
+    +"<div class='bundle-overlay'></div>"
+    +"<div class='bundle-overlay-text'>Bundle title title</div>"
+    +"</div>"
+    +"<div>Bundle Content</div>"
+
     + "</div>";
+
+    //document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
 
 
     alertify.confirm(bundleDetailstemplate,
   ).set({movable:false, padding: false,frameless:true,transition: 'flipx'}).show();
+
+  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
+
 },
 
 gotoScreensaverPage:function () {

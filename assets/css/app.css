@@ -578,7 +578,8 @@ input {
   min-height: auto;
   max-width:auto;
   width: 90%;
-  margin:0px;
+  /* margin:0px; */
+  margin: 25% auto !important;
   padding: 0px;
   border-radius: 10px;
   height: 600px;
@@ -587,3 +588,25 @@ input {
 .alertify .ajs-dimmer{
     opacity: .8 !important;
   }
+
+
+.bundle-details{
+  color: #4a4a4a;
+}
+
+
+.bundle-header{
+  width: 100%;
+}
+
+.bundle-overlay-image{
+  width: 100%;
+  height: 40%;
+  background-position: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.bundle-overlay{
+  width: 100%;
+}
