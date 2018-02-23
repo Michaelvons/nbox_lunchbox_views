@@ -697,7 +697,7 @@ var views = {
 		if (!views.isPersistentView(view.id)) {
 			views.UIController.removeChild(view);
 			if (views.debug) console.log("views.dispose(): Removed", view.id, "from stack");
-		
+
 		}
 	},
 

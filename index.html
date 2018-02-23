@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
   <link rel="stylesheet" href="views/views.css" type="text/css"/>
   <!-- CUSTOM STYLE -->
-  <!-- <link rel="stylesheet" href="../../css/alertify.min.css"/> -->
+  <link rel="stylesheet" href="assets/css/swiper.min.css"/>
   <!--  -->
 
 </head>
@@ -20,8 +20,58 @@
   <div id="UIViews" class="views">
 
     <!-- HOME VIEW / SCREENSAVER VIEW  -->
-    <div id="home" class="view" data-statusbar="white" data-target="homeMenu" data-type="controller">
-      <div class="screensaver-main-content" onclick="app.gotoCategoryPage()">
+    <div id="page-launch" class="view" data-statusbar="white" data-target="homeMenu" data-type="controller">
+      <div class="setup-main-content">
+        <div class="setup-logo">
+          <img src="assets/image/nbox_logo_white.png">
+          <span>Lunchbox</span>
+        </div>
+
+        <div class="setup-preloaders">
+          <img id="drink" class="setup-preloader" src="assets/image/drink.png">
+          <img id="chicken" class="setup-preloader" src="assets/image/chicken.png">
+          <img id="pizza" class="setup-preloader" src="assets/image/pizza.png">
+        </div>
+        <p> checking for config file ...</p>
+        <button class="setup-button" onclick="app.gotoSetupPage()">SETUP THIS DEVICE</button>
+      </div>
+    </div>
+
+    <!-- SETUP VIEW -->
+    <div id="page-setup" class="view" data-statusbar="white" >
+      <div class="setup-main-content">
+        <p class="setup-title">Device Setup</p>
+        <div class="setup-form">
+          <input type="text" placeholder="Enter location ID">
+          <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSAVER VIEW -->
+    <div id="page-screensaver" class="view" data-statusbar="white" >
+      <div class="screensaver-main-content">
+        <div id="screensaver"></div>
+        <!-- Slider main container -->
+<div class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+        ...
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+</div>
       </div>
     </div>
 
@@ -348,8 +398,7 @@
     <script src="assets/js/jquery-3.2.1.js"></script>
 
     <!-- CUSTOM PLUGINS -->
-    <!-- <script src="../../pages/category/index.js"></script>
-    <script src="../../js/alertify.min.js"></script> -->
+    <script src="assets/js/swiper.min.js"></script> -->
     <!--  -->
 
 

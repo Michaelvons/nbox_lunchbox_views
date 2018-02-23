@@ -178,7 +178,7 @@ body{
 .screensaver-main-content{
   width: 100%;
   height: 100vh;
-  background-image: url("../image/healthyfood.png");
+  /* background-image: url("../image/healthyfood.png"); */
 }
 
 .main-content{
@@ -401,4 +401,168 @@ button:hover{
 
 .modal{
   height: 100vh;
+}
+
+.setup-main-content{
+  background-color: #75ac65;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* padding: 64px; */
+  align-items: center;
+  flex-direction: column;
+}
+
+.setup-logo{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.setup-logo img{
+  width: 120px;
+  height: 120px;
+  margin-right:16px;
+}
+
+.setup-logo span{
+  font-size: 100px;
+  color: white;
+  font-family: Montserrat-Medium;
+}
+
+.setup-preloader{
+  width: 30px;
+  height: 30px;
+}
+
+.setup-preloaders{
+  margin-top: 64px;
+}
+
+
+
+@-webkit-keyframes NAME-YOUR-ANIMATION {
+  from {
+    opacity: 0;
+    transform:scale(0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform:scale(1.4);
+    transform: none;
+  }
+}
+@-moz-keyframes NAME-YOUR-ANIMATION {
+  from {
+    opacity: 0;
+    transform:scale(0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform:scale(1.4);
+    transform: none;
+  }
+}
+@-o-keyframes NAME-YOUR-ANIMATION {
+  from {
+    opacity: 0;
+    transform:scale(0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform:scale(1.4);
+    transform: none;
+  }
+}
+/* @keyframes NAME-YOUR-ANIMATION {
+  0%   { opacity: 0; }
+  50%   { opacity: .5; }
+  100% { opacity: 1; }
+} */
+
+
+@keyframes NAME-YOUR-ANIMATION {
+  from {
+    opacity: 0;
+    transform:scale(1.4);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform:scale(1.4);
+    transform: none;
+  }
+}
+
+#pizza {
+  -webkit-animation: NAME-YOUR-ANIMATION 3s infinite;
+  -moz-animation:    NAME-YOUR-ANIMATION 3s infinite;
+  -o-animation:      NAME-YOUR-ANIMATION 3s infinite;
+  animation:         NAME-YOUR-ANIMATION 3s infinite;
+}
+
+#chicken {
+  -webkit-animation: NAME-YOUR-ANIMATION 5s infinite;
+  -moz-animation:    NAME-YOUR-ANIMATION 5s infinite;
+  -o-animation:      NAME-YOUR-ANIMATION 5s infinite;
+  animation:         NAME-YOUR-ANIMATION 5s infinite;
+}
+
+#drink {
+  -webkit-animation: NAME-YOUR-ANIMATION 7s infinite;
+  -moz-animation:    NAME-YOUR-ANIMATION 7s infinite;
+  -o-animation:      NAME-YOUR-ANIMATION 7s infinite;
+  animation:         NAME-YOUR-ANIMATION 7s infinite;
+}
+
+
+.setup-button{
+  width: 300px;
+  background-color: #ED9B40;
+  color: #f2f2f2;
+  font-family: Montserrat-Bold;
+  margin-top: 32px;
+  /* box-shadow: 0px 2px 4px 0px #a2a2a2; */
+}
+
+.setup-form{
+  background-color: white;
+  padding: 32px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  background-color: #f2f2f2;
+  border: 2px solid #c8c8c8;
+  color: #4a4a4a;
+  font-size: 18px;
+  padding: 16px 8px;
+  border-radius: 6px;
+}
+
+.setup-title{
+  color: white;
+  font-size: 40px;
+}
+
+
+.screensaver{
+  width: 100%;
+  height: 100vh;
+}
+
+.swiper-container {
+    width: 600px;
+    height: 300px;
 }

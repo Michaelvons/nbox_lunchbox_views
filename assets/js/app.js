@@ -5,6 +5,8 @@ var app = {
   versionNumber: 1,
   buildNumber: 1,
   isBackground: false,
+  BASE_URL: "http://staging.nairabox.com/foodhub/",
+
 
   start: function () {
 
@@ -71,7 +73,8 @@ var app = {
 
     app.CalculateViewPort();
 
-    views.start("home", function () {
+    views.start("page-launch", function () {
+
 
     });
 
@@ -173,7 +176,62 @@ var app = {
       app.element("card-bundle-" + cards[i]).classList.remove("card-active");
     }
 
-    views.peek("modalBundleDetail");
+    views.flash("modalBundleDetail");
+  },
+
+  gotoSetupPage:function () {
+    views.goto("page-setup", function () {
+      console.log("nav to page-setup");
+    })
+  },
+
+  gotoScreensaverPage:function () {
+    views.goto("page-screensaver", function () {
+      console.log("nav to page-screensaver");
+
+      //GET SCREENSAVERS
+      $.ajax({
+        url: app.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
+        type: "GET",
+        crossDomain: true,
+        contentType: "application/json"
+      }).done(function (screensavers) {
+
+        console.log(screensavers);
+
+        for (var i = 0; i < screensavers.message.length; i++) {
+
+          console.log(screensavers.message[i].image);
+
+          //document.getElementById("screensaver").innerHTML = "<img class='screensaver' src='" + screensavers.message[0].image + "'>"
+          var mySwiper = new Swiper ('.swiper-container', {
+            // Optional parameters
+            direction: 'horizontal',
+            loop: true,
+            autoplay: {
+              delay: 5000,
+            },
+
+            // If we need pagination
+            pagination: {
+              el: '.swiper-pagination',
+            },
+
+            // Navigation arrows
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+
+            // And if we need scrollbar
+            scrollbar: {
+              el: '.swiper-scrollbar',
+            },
+          })
+        }
+      });
+
+    })
   },
 
   //
