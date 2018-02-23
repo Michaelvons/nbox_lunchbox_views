@@ -176,15 +176,7 @@ var app = {
     }
 
     //  views.flash("modalBundleDetail");
-  },
 
-  gotoSetupPage:function () {
-    views.goto("page-setup", function () {
-      console.log("nav to page-setup");
-    })
-  },
-
-  showModalCheckout:function(){
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
     +"<div id='bundle-overlay-image' class='bundle-overlay-image'></div>"
@@ -239,22 +231,31 @@ var app = {
         +"</div>"
       +"</div>"
 
-    +"  <button class='green-button' onclick='app.showModalCheckout()''>"
-    +  "  PROCEED TO CHECKOUT"
-  +"    </button>"
-  +"  </div>"
+    +"<button class='green-button' onclick='app.showModalCheckout()''>"
+    +"ADD TO BASKET"
+  +"</button>"
+  +"</div>"
     +"</div>"
     +"<div>"
     +"</div>"
     + "</div>";
 
-    //document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
-
-
     alertify.confirm(bundleDetailstemplate,
   ).set({movable:false, padding: false,frameless:true,transition: 'flipx'}).show();
 
   document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
+
+
+
+  },
+
+  gotoSetupPage:function () {
+    views.goto("page-setup", function () {
+      console.log("nav to page-setup");
+    })
+  },
+
+  showModalCheckout:function(){
 
 },
 
