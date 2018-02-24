@@ -183,7 +183,7 @@ var app = {
 
   //  +"<img class='bundle-overlay-image' src='assets/image/healthyfood.png'>"
     +"<div class='bundle-overlay'></div>"
-    +"<div class='bundle-overlay-text'>Bundle title title title title</div>"
+    +"<div class='bundle-overlay-text'>Bundle title </div>"
     +"</div>"
     +"<div class='bundle-content'>"
     + "<div>"
@@ -197,19 +197,19 @@ var app = {
                 +    "<th>MENU</th>"
                 +  "</tr>"
                 +  "<tr>"
-                +    "<td>Bundle title title title </td>"
+                +    "<td>Menu title 12 </td>"
                 +  "</tr>"
                 +  "<tr>"
-                +    "<td>Bundle title title title </td>"
+                +    "<td>Menu title 9 </td>"
                 +  "</tr>"
                 +  "<tr>"
-              +    "<td>Bundle title title title </td>"
+              +    "<td>Menu title 16 </td>"
               +    "</tr>"
               +    "<tr>"
-              +      "<td>Bundle title title title </td>"
+              +      "<td>Menu title 1 </td>"
               +  "  </tr>"
               +    "<tr>"
-              +      "<td>Bundle title title title </td>"
+              +      "<td>Menu title 4 </td>"
               +    "</tr>"
               +  "</table>"
     +"</div>"
@@ -227,7 +227,7 @@ var app = {
         +"<hr>"
         +"<div class='basket-total-row basket-total-row-total'>"
         +  "<span>Total</span>"
-        +  "<p><span class='currency'>NGN</span>4,800.<span class='currency'>00</span></p>"
+        +  "<p><span class='currency'>NGN</span>14,400.<span class='currency'>00</span></p>"
         +"</div>"
       +"</div>"
 
@@ -241,7 +241,7 @@ var app = {
     + "</div>";
 
     alertify.confirm(bundleDetailstemplate,
-  ).set({movable:false, padding: false,frameless:true,transition: 'flipx'}).show();
+  ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
   document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
 

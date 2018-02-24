@@ -231,7 +231,8 @@ margin: 0px;
 } */
 
 .card-image{
-  width: 100%;
+  width: 250px;
+  height: 250px;
   padding: 40px 0px;
 }
 
@@ -273,6 +274,9 @@ margin: 0px;
 .card-content{
   z-index: 3;
   padding: 0px 32px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-description{
@@ -703,4 +707,10 @@ input {
 
 .basket-total-row-quantity{
   margin: 24px 0px;
+}
+
+
+.main-header-nav{
+  display: flex;
+  justify-content: space-between;
 }

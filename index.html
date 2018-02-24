@@ -65,8 +65,15 @@
     <div id="page-category" class="view" data-statusbar="white" >
       <div class="main-content">
         <div class="main-header">
+          <div class="main-header-nav">
+            <div>
+              <img src="assets/image/back.png" style="display:none">
+            </div>
+            <div>
           <p class="main-title">Company Name</p>
           <p class="main-subtitle">Location</p>
+        </div>
+        </div>
           <p class="main-caption">WHAT WILL YOU LIKE TO EAT ?</p>
         </div>
 
@@ -74,10 +81,10 @@
           <!-- CARD 1 -->
           <div id="card-category-1" class="card card-active" onclick="app.gotoBundlePage('1',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/fastfood.png">
               <div class="card-caption">
                 <p class="card-title">FAST FOOD</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description">A mix of snack and quick meals</p>
               </div>
             </div>
             <div class="card-background">
@@ -87,10 +94,10 @@
           <!-- CARD 2 -->
           <div id="card-category-2" class="card" onclick="app.gotoBundlePage('2',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/oriental.png">
               <div class="card-caption">
                 <p class="card-title">ORIENTAL</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description">Spicy meals using recipes from Chinese and Japanese.</p>
               </div>
             </div>
             <div class="card-background">
@@ -100,10 +107,10 @@
           <!-- CARD 3 -->
           <div id="card-category-3" class="card" onclick="app.gotoBundlePage('3',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/continental.png">
               <div class="card-caption">
                 <p class="card-title">CONTINENTAL</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description"> Dishes bettter-known from Western European countries.</p>
               </div>
             </div>
             <div class="card-background">
@@ -116,10 +123,10 @@
           <!-- CARD 4 -->
           <div id="card-category-4" class="card" onclick="app.gotoBundlePage('4',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/african.png">
               <div class="card-caption">
                 <p class="card-title">AFRICAN</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description">A blend of meals from Nigeria and Ghana.</p>
               </div>
             </div>
             <div class="card-background">
@@ -129,10 +136,10 @@
           <!-- CARD 4 -->
           <div id="card-category-5" class="card" onclick="app.gotoBundlePage('5',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/bukka.png">
               <div class="card-caption">
                 <p class="card-title">BUKKA</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description">Delicious traditional meals from the neighbourhood.</p>
               </div>
             </div>
             <div class="card-background">
@@ -145,7 +152,7 @@
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
                 <p class="card-title">HEALTY FOODS</p>
-                <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="card-description">Meals for a healthy living</p>
               </div>
             </div>
             <div class="card-background">
@@ -163,29 +170,29 @@
                 <th>QUANTITY</th>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
+                <td>Bundle title 7 </td>
+                <td><span class="currency">NGN</span>1,250.<span class="currency">00</span></td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Bundle title 2 </td>
                 <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
                 <td>2</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>Bundle title 8 </td>
+                <td><span class="currency">NGN</span>3,920.<span class="currency">00</span></td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>Bundle title 10 </td>
+                <td><span class="currency">NGN</span>6,135.<span class="currency">00</span></td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
+                <td>Bundle title 5 </td>
                 <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>1</td>
               </tr>
             </table>
           </div>
@@ -193,20 +200,19 @@
             <div>
               <div class="basket-total-row">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>26,905.<span class="currency">00</span></p>
               </div>
               <!-- <div class="basket-total-row"></div> -->
               <div class="basket-total-row">
                 <span>Delivery</span>
-                <p><span class="currency">NGN</span>300.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>600.<span class="currency">00</span></p>
               </div>
               <hr>
               <div class="basket-total-row basket-total-row-total">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>27,505.<span class="currency">00</span></p>
               </div>
             </div>
-
             <button class="green-button" onclick="app.showModalCheckout()">
               PROCEED TO CHECKOUT
             </button>
@@ -219,18 +225,25 @@
     <div id="page-bundle" class="view" data-statusbar="white" >
       <div class="main-content">
         <div class="main-header">
+          <div class="main-header-nav">
+            <div onclick="app.gotoCategoryPage()">
+              <img src="assets/image/back.png">
+            </div>
+            <div>
           <p class="main-title">Company Name</p>
           <p class="main-subtitle">Location</p>
-          <p class="main-caption">SELECT A BUNDLE</p>
+        </div>
+        </div>
+          <p class="main-caption"> SELECT A BUNDLE</p>
         </div>
 
         <div class="card-group">
           <!-- CARD 1 -->
           <div id="card-bundle-1" class="card card-active" onclick="app.showModalBundleDetail('1',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/fastfood.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 7</p>
               </div>
             </div>
             <div class="card-background">
@@ -240,9 +253,9 @@
           <!-- CARD 2 -->
           <div id="card-bundle-2" class="card" onclick="app.showModalBundleDetail('2',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/oriental.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 2</p>
               </div>
             </div>
             <div class="card-background">
@@ -252,9 +265,9 @@
           <!-- CARD 3 -->
           <div id="card-bundle-3" class="card" onclick="app.showModalBundleDetail('3',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/continental.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 8</p>
               </div>
             </div>
             <div class="card-background">
@@ -267,9 +280,9 @@
           <!-- CARD 4 -->
           <div id="card-bundle-4" class="card" onclick="app.showModalBundleDetail('4',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/african.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 10</p>
               </div>
             </div>
             <div class="card-background">
@@ -279,9 +292,9 @@
           <!-- CARD 5 -->
           <div id="card-bundle-5" class="card" onclick="app.showModalBundleDetail('5',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
+              <img class="card-image" src="assets/image/bukka.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 5</p>
                 <!-- <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p> -->
               </div>
             </div>
@@ -294,7 +307,7 @@
             <div class="card-content">
               <img class="card-image" src="assets/image/healthyfood.png">
               <div class="card-caption">
-                <p class="card-bundle-title">Bundle title title title title</p>
+                <p class="card-bundle-title">Bundle title 12</p>
                 <!-- <p class="card-description">Lorem ipsum dolor sit amet, consectetur</p> -->
               </div>
             </div>
@@ -313,29 +326,29 @@
                 <th>QUANTITY</th>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
+                <td>Bundle title 7 </td>
+                <td><span class="currency">NGN</span>1,250.<span class="currency">00</span></td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Bundle title 2 </td>
                 <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
                 <td>2</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>Bundle title 8 </td>
+                <td><span class="currency">NGN</span>3,920.<span class="currency">00</span></td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>Bundle title 10 </td>
+                <td><span class="currency">NGN</span>6,135.<span class="currency">00</span></td>
+                <td>1</td>
               </tr>
               <tr>
-                <td>Bundle title title title </td>
+                <td>Bundle title 5 </td>
                 <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Bundle title title title </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
+                <td>1</td>
               </tr>
             </table>
           </div>
@@ -343,17 +356,17 @@
             <div>
               <div class="basket-total-row">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>26,905.<span class="currency">00</span></p>
               </div>
               <!-- <div class="basket-total-row"></div> -->
               <div class="basket-total-row">
                 <span>Delivery</span>
-                <p><span class="currency">NGN</span>300.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>600.<span class="currency">00</span></p>
               </div>
               <hr>
               <div class="basket-total-row basket-total-row-total">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>4,800.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span>27,505.<span class="currency">00</span></p>
               </div>
             </div>
 
