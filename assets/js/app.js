@@ -163,7 +163,7 @@ var app = {
       //   console.log("nav to page-screensaver");
       // })
 
-        app.gotoScreensaverPage();
+      app.gotoScreensaverPage();
 
     });
 
@@ -175,12 +175,12 @@ var app = {
 
 
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-      console.log("storedSetup");
-      console.log(storedSetup);
-      console.log(storedSetup[0].locationName);
-    //  $("locationName").html = storedSetup[0].locationName;
-       app.element("locationName").innerHTML= storedSetup[0].locationName;
-       app.element("locationCity").innerHTML= storedSetup[0].locationCity;
+      // console.log("storedSetup");
+      // console.log(storedSetup);
+      // console.log(storedSetup[0].locationName);
+      //  $("locationName").html = storedSetup[0].locationName;
+      app.element("locationName").innerHTML= storedSetup[0].locationName;
+      app.element("locationCity").innerHTML= storedSetup[0].locationCity;
 
     })
   },
@@ -338,16 +338,20 @@ var app = {
   },
 
   gotoScreensaverPage:function () {
-    var storedSetup = JSON.parse(localStorage.getItem("setup"));
-    console.log("storedSetup");
-    console.log(storedSetup);
+
     views.goto("page-screensaver", function () {
+
+      var storedSetup = JSON.parse(localStorage.getItem("setup"));
+      console.log("storedSetup");
+      console.log(storedSetup);
+      console.log(storedSetup[0].cityID);
+      var cityID = storedSetup[0].cityID;
 
       console.log("nav to page-screensaver");
 
       //GET SCREENSAVERS
       $.ajax({
-        url: app.BASE_URL + "city/screensavers/all?city_id=" + "5a841bcc830f783a39292ebc",
+        url: app.BASE_URL + "city/screensavers/all?city_id=" + cityID,
         type: "GET",
         crossDomain: true,
         contentType: "application/json"
