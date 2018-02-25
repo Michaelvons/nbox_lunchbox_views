@@ -113,11 +113,75 @@ var app = {
   //
   // APP LOGIC STARTS
   //
+  setupDevice:function(){
+    var locationID = $("#locationID").val();
+    var terminalID = $("#terminalID").val();
 
+    console.log("locationID");
+    console.log(locationID);
+    console.log("terminalID");
+    console.log(terminalID);
+
+    $.ajax({
+      url: app.BASE_URL + "locations/all",
+      type: "GET",
+      crossDomain: true,
+      contentType: "application/json"
+    }).done(function (locations) {
+
+      console.log(locations);
+
+      // LOOP THROUGH ARRAYS TO FIND OBJECT WHERE LOCATION ID EQUALS
+      for (var i = 0; i < locations.message.length; i++) {
+        var aliasID = locations.message[i].alias_id;
+
+        console.log("aliasID");
+        console.log(aliasID);
+
+        if(locationID === aliasID){
+          console.log("We found it");
+          console.log(locations.message[i].location);
+          console.log(locations.message[i].city);
+          console.log(locations.message[i].alias_id);
+          $("#locationName").html = locations.message[i].location;
+
+          locationName = locations.message[i].location;
+          locationCity = locations.message[i].city;
+          cityID = locations.message[i].city_id;
+
+          var setup =[];
+          setupArray = {terminalID: terminalID, locationName: locationName, locationCity: locationCity, cityID : cityID};
+
+          setup.unshift(setupArray);
+          localStorage.setItem("setup", JSON.stringify(setup));
+          break;
+        }
+      }
+
+      //  NAV TO SCREENSAVER PAGE BECAUSE THAT'S THE FLOW BEFORE CATEGORIES
+      // views.goto("page-screensaver", function (locationName) {
+      //   console.log("nav to page-screensaver");
+      // })
+
+        app.gotoScreensaverPage();
+
+    });
+
+  },
 
   gotoCategoryPage: function () {
     views.goto("page-category", function () {
       console.log("nav to page-category");
+
+
+      var storedSetup = JSON.parse(localStorage.getItem("setup"));
+      console.log("storedSetup");
+      console.log(storedSetup);
+      console.log(storedSetup[0].locationName);
+    //  $("locationName").html = storedSetup[0].locationName;
+       app.element("locationName").innerHTML= storedSetup[0].locationName;
+       app.element("locationCity").innerHTML= storedSetup[0].locationCity;
+
     })
   },
 
@@ -226,7 +290,7 @@ var app = {
     +"<p><span class='currency'>NGN</span>14,400.<span class='currency'>00</span></p>"
     +"</div>"
     +"</div>"
-    +"<button class='green-button' onclick='app.showModalCheckout()''>"
+    +"<button class='green-button'>"
     +"ADD TO BASKET"
     +"</button>"
     +"</div>"
@@ -249,11 +313,36 @@ var app = {
   },
 
   showModalCheckout:function(){
+    console.log("showModalCheckout clicked");
+
+    var bundleDetailstemplate = "<div class='checkout'>"
+    +"<div class='checkout-header'>"
+    //IMG Here
+    +"<img class='checkout-image' src='assets/image/checkout.png'>"
+    +"<p class='checkout-title'>Checkout</p>"
+    +"<div class='checkout-total'>"
+    +"<p class='checkout-total-title'>TOTAL</p>"
+    +"<p class='checkout-total-amount'><span class='currency checkout-currency'>NGN</span>27,505.<span class='currency checkout-currency'>00</span></p>"
+    +"</div>"
+    +"</div>"
+    +"<div class='checkout-body'>"
+    +"<input class='checkout-input' type='text' placeholder='Phone Number'>"
+    +"<input class='checkout-input' type='text' placeholder='Name'>"
+    +"<button class='checkout-button'><span>PAY</span><p><span class='currency'>NGN</span>600.<span class='currency'>00</span></p></button>"
+    +"</div>"
+    +"</div>";
+
+    alertify.confirm(bundleDetailstemplate,
+    ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
   },
 
   gotoScreensaverPage:function () {
+    var storedSetup = JSON.parse(localStorage.getItem("setup"));
+    console.log("storedSetup");
+    console.log(storedSetup);
     views.goto("page-screensaver", function () {
+
       console.log("nav to page-screensaver");
 
       //GET SCREENSAVERS
@@ -283,12 +372,6 @@ var app = {
 
           })
 
-          // $("#screensaversTable").append("<tr>"
-          // + "<td><img src='" + screensavers.message[i].image + "' style='width: 70px;margin-left: 32px'></td>"
-          // + "<td><img>" + screensavers.message[i].name + "</td>"
-          // + "<td>" + screensavers.message[i].status + "</td>"
-          // + "<td class='btn_table_container'><button class='btn_table' onclick='screensavers.editScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\")'><i class='fa fa-pencil icon_green' aria-hidden='true'></i><button class='btn_table' onclick='screensavers.activateScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\",\"" + screensavers.message[i].status + "\",\"" + screensavers.message[i].image + "\")'><i class='icon_green fa fa-power-off' aria-hidden='true'></i></button><button class='btn_table' onclick='screensavers.deleteScreensaver(\"" + screensavers.message[i]._id + "\", \"" + screensavers.message[i].name + "\", \"" + screensavers.message[i].image + "\")'><i class='icon_red fa fa-trash-o' aria-hidden='true'></i></button></td>"
-          // + "</tr>");
         }
 
       });

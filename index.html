@@ -44,9 +44,10 @@
       <div class="setup-main-content">
         <p class="setup-title">Device Setup</p>
         <div class="setup-form">
-          <input type="text" placeholder="Enter terminal ID">
-          <input type="text" placeholder="Enter location ID">
-          <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button>
+          <input id="terminalID" type="text" placeholder="Enter terminal ID">
+          <input id="locationID" type="text" placeholder="Enter location ID">
+          <button class="setup-button" onclick="app.setupDevice()">CONFIGURE DEVICE</button>
+          <!-- <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button> -->
         </div>
       </div>
     </div>
@@ -69,9 +70,9 @@
             <div>
               <img src="assets/image/back.png" style="display:none">
             </div>
-            <div>
-          <p class="main-title">Company Name</p>
-          <p class="main-subtitle">Location</p>
+            <div class="location-details">
+          <p id="locationName" class="main-title">Company Name</p>
+          <p id="locationCity" class="main-subtitle">Location</p>
         </div>
         </div>
           <p class="main-caption">WHAT WILL YOU LIKE TO EAT ?</p>
@@ -229,7 +230,7 @@
             <div onclick="app.gotoCategoryPage()">
               <img src="assets/image/back.png">
             </div>
-            <div>
+          <div class="location-details">
           <p class="main-title">Company Name</p>
           <p class="main-subtitle">Location</p>
         </div>
