@@ -246,8 +246,10 @@ var app = {
         // +"<div class='card-background'></div>"
         // +"</div>";
 
+        app.allMenu = bundles.message;
 
-        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(\"" + i + "\",6)'>"
+
+        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",6,\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\")'>"
         +"<div class='card-content'>"
         +"<img class='card-image' src='" + bundles.message[i].image +"'>"
         +"<div class='card-caption'>"
@@ -297,19 +299,31 @@ var app = {
     })
   },
 
-  showModalBundleDetail:function (cardID, cardLength) {
+  showModalBundleDetail:function (cardID, cardLength, description, price, name, image) {
+    console.log("cardID");
+    console.log(cardID);
+
+    var menuArray = app.allMenu[cardID];
+    console.log("menuArray");
+    console.log(menuArray);
 
     //ADD OR REMOVE CSS Class
     app.element("card-bundle-" + cardID).classList.add("card-active");
     cards = [];
     cardsLength = cardLength + 1;
+
+    console.log("cardsLength");
+    console.log(cardsLength);
     var inactiveCards;
 
-    for (var i = 1; i < cardsLength; i++) {
+    for (var i = 0; i < cardsLength; i++) {
       cards.push(i);
+
+      //console.log("cards array");
+      //  console.log(cards);
       //GET TAB INDEX WHEN TABS ARE CREATED
       if (cardLength == cards.length) {
-        cardIndex = cards.indexOf(parseInt(cardID));
+        cardIndex = cards.indexOf(cardID);
 
         //RETURN ARRAY OF INACTIVE TABS
         inactiveCards = cards.splice(cardIndex, 1);
@@ -326,34 +340,23 @@ var app = {
     +"<div class='bundle-header'>"
     +"<div id='bundle-overlay-image' class='bundle-overlay-image'></div>"
     +"<div class='bundle-overlay'></div>"
-    +"<div class='bundle-overlay-text'>Bundle title </div>"
+    +"<div class='bundle-overlay-text'>"+ name +" </div>"
     +"</div>"
     +"<div class='bundle-content'>"
     +"<div>"
     +"<p class='bundle-details-header'> DESCRIPTION</p>"
-    +"<p class='bundle-details-text'> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>"
+    +"<p class='bundle-details-text'>"+ description + "</p>"
     +"</div>"
     +"<div class='bundle-details-secondary'>"
     +"<div class='bundle-details-menu'>"
     +"<table>"
+    +"<thead>"
     +"<tr>"
     +"<th>MENU</th>"
     +"</tr>"
-    +"<tr>"
-    +"<td>Menu title 12 </td>"
-    +"</tr>"
-    +"<tr>"
-    +"<td>Menu title 9 </td>"
-    +"</tr>"
-    +"<tr>"
-    +"<td>Menu title 16 </td>"
-    +"</tr>"
-    +"<tr>"
-    +"<td>Menu title 1 </td>"
-    +"</tr>"
-    +"<tr>"
-    +"<td>Menu title 4 </td>"
-    +"</tr>"
+    +"</thead>"
+    +"<tbody id='bundleMenusTable'>"
+    +"</tbody>"
     +"</table>"
     +"</div>"
     +"<div class='bundle-details-basket'>"
@@ -361,7 +364,7 @@ var app = {
     +"<div>"
     +"<div class='basket-total-row'>"
     +"<span>Price</span>"
-    +"<p><span class='currency'>NGN</span>4,800.<span class='currency'>00</span></p>"
+    +"<p><span class='currency'>NGN </span>" + parseInt(price, 10).toLocaleString() + "<span class='currency'>.00</span></p>"
     +"</div>"
     +"<div class='basket-total-row basket-total-row-quantity'>"
     +"<span>Quantity</span>"
@@ -385,7 +388,17 @@ var app = {
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
-    document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
+    for (var i = 0; i < menuArray.menu.length; i++) {
+        var one = menuArray.menu[i];
+        $("#bundleMenusTable").append("<tr>"
+            + "<td>" + one.name + "</td>"
+            // + "<td>" + one.partner_name + "</td>"
+            // + "<td>NGN " + parseInt(one.price, 10).toLocaleString() + "</td>"
+            + "</tr>");
+    }
+
+    document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
+  //  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
 
   },
 
