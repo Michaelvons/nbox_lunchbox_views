@@ -181,6 +181,20 @@ var app = {
       //  $("locationName").html = storedSetup[0].locationName;
       app.element("locationName").innerHTML= storedSetup[0].locationName;
       app.element("locationCity").innerHTML= storedSetup[0].locationCity;
+      var cityID = storedSetup[0].cityID;
+
+      //GET SCREENSAVERS
+      $.ajax({
+        url: app.BASE_URL + "categories?city_id=" + cityID,
+        type: "GET",
+        crossDomain: true,
+        contentType: "application/json"
+      }).done(function (categories) {
+        console.log("categories");
+        console.log(categories);
+
+      });
+
 
     })
   },
@@ -356,12 +370,8 @@ var app = {
         crossDomain: true,
         contentType: "application/json"
       }).done(function (screensavers) {
-
         console.log(screensavers);
-
-
         for (var i = 0; i < screensavers.message.length; i++) {
-
           console.log(screensavers.message[i].image);
           $( "#screensaver-swiper-wrapper" ).append( "<div class='swiper-slide'><img class='screensaver' src='" + screensavers.message[i].image + "'></div>" );
           var mySwiper = new Swiper ('.swiper-container', {
@@ -373,17 +383,10 @@ var app = {
             autoplay: {
               delay: 5000,
             },
-
           })
-
         }
-
       });
-
-
     })
-
-
   },
 
   //
