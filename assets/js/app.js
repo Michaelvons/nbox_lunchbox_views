@@ -196,7 +196,7 @@ var app = {
 
         text = "";
         for (i = 0; i < categories.message.length; i++) {
-          text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6)'>"
+          text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6,\"" + categories.message[i]._id + "\")'>"
           +"<div class='card-content'>"
           +"<img class='card-image' src='" + categories.message[i].image +"'>"
           +"<div class='card-caption'>"
@@ -213,11 +213,62 @@ var app = {
     })
   },
 
-  gotoBundlePage: function ( cardID, cardLength) {
+  gotoBundlePage: function ( cardID, cardLength, categoryID) {
     console.log("cardID");
     console.log(cardID);
     console.log("cardLength");
     console.log(cardLength);
+    console.log("categoryID");
+    console.log(categoryID);
+
+
+    //GET BUNDLES
+    $.ajax({
+      url: app.BASE_URL + "bundles?category_id=" + categoryID,
+      type: "GET",
+      crossDomain: true,
+      contentType: "application/json"
+    }).done(function (bundles) {
+      console.log("bundles");
+      console.log(bundles);
+      console.log(bundles.message.length);
+
+      text = "";
+      for (i = 0; i < bundles.message.length; i++) {
+        // text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6,\"" + categories.message[i]._id + "\")'>"
+        // +"<div class='card-content'>"
+        // +"<img class='card-image' src='" + categories.message[i].image +"'>"
+        // +"<div class='card-caption'>"
+        // +"<p class='card-title'>" + categories.message[i].category + "</p>"
+        // +"<p class='card-description'>"+ categories.message[i].description +"</p>"
+        // +"</div>"
+        // +"</div>"
+        // +"<div class='card-background'></div>"
+        // +"</div>";
+
+
+        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(\"" + i + "\",6)'>"
+        +"<div class='card-content'>"
+        +"<img class='card-image' src='" + bundles.message[i].image +"'>"
+        +"<div class='card-caption'>"
+        +"<p class='card-bundle-title'>" + bundles.message[i].name + "</p>"
+        +"</div>"
+        +"</div>"
+        +"<div class='card-background'>"
+        +"</div>"
+        +"</div>";
+
+
+
+        app.element("cards-bundle").innerHTML = text;
+        console.log("repeating cards-bundle");
+      }
+    });
+
+
+
+
+
     //ADD OR REMOVE CSS Class
     app.element("card-category-" + cardID).classList.add("card-active");
     cards = [];
@@ -238,7 +289,7 @@ var app = {
     //REMOVE CSS PROPERTY TO INACTVE TABS
     for (var i = 0; i < cards.length; i++) {
       //  console.log(cards[i]);
-      app.element("card-category-" + cards[i]).classList.remove("card-active");
+      //  app.element("card-category-" + cards[i]).classList.remove("card-active");
     }
 
     views.goto("page-bundle", function () {
