@@ -338,6 +338,7 @@ var app = {
 
     var bundleCount = "bundleCount";
 
+
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
     +"<div id='bundle-overlay-image' class='bundle-overlay-image'></div>"
@@ -370,12 +371,12 @@ var app = {
     +"</div>"
     +"<div class='basket-total-row basket-total-row-quantity'>"
     +"<span>Quantity</span>"
-    +"<div class='bundle-count'><button onclick='app.decrement(\"" + bundleCount + "\")'>-</button><span id='bundleCount' class='bundle-count-figure'>3</span><button onclick='app.increment(\"" + bundleCount + "\")'>+</button></div>"
+    +"<div class='bundle-count'><button onclick='app.decrement(\"" + bundleCount + "\",\"" + price + "\" )'>-</button><span id='bundleCount' class='bundle-count-figure'>1</span><button onclick='app.increment(\"" + bundleCount + "\", \"" + price + "\")'>+</button></div>"
     +"</div>"
     +"<hr>"
     +"<div class='basket-total-row basket-total-row-total'>"
     +"<span>Total</span>"
-    +"<p><span class='currency'>NGN</span>14,400.<span class='currency'>00</span></p>"
+    +"<p><span class='currency'>NGN </span><span id='bundleTotal'>" + parseInt(price, 10).toLocaleString() + "</span><span class='currency'>.00</span></p>"
     +"</div>"
     +"</div>"
     +"<button class='green-button'>"
@@ -390,6 +391,8 @@ var app = {
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
+app.element("bundleMenusTable").innerHTML = "";
+
     for (var i = 0; i < menuArray.menu.length; i++) {
         var one = menuArray.menu[i];
         $("#bundleMenusTable").append("<tr>"
@@ -402,7 +405,7 @@ var app = {
 
   },
 
-  increment: function (identifier) {
+  increment: function (identifier, price) {
       console.log("increment for - " + identifier);
 
       count = parseInt(app.element(identifier).innerHTML);
@@ -410,19 +413,31 @@ var app = {
       app.element(identifier).innerHTML = count;
       console.log("value is - " + count);
       //app.element(identifier).innerHTML = "0";
+
+      //PERFORM MATHS
+    //  console.log("passed price");
+      console.log(price);
+      bundleTotal = price * count;
+      app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
+
   },
 
-  decrement: function (identifier) {
+  decrement: function (identifier, price) {
 
       console.log("decrement clicked");
       console.log("decrement for" + identifier);
       count = parseInt(app.element(identifier).innerHTML);
-      if (count == 0) {
-          app.element(identifier).innerHTML = "0";
+      if (count == 1) {
+          app.element(identifier).innerHTML = "1";
       } else {
           count -= 1;
           app.element(identifier).innerHTML = count;
       }
+
+      //PERFORM MATHS
+    //  console.log(price);
+      bundleTotal = price * count;
+      app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
   },
 
   gotoSetupPage:function () {

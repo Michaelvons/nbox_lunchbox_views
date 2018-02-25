@@ -349,6 +349,8 @@ th, td {
 
 .basket-total-row-total{
   font-family: Montserrat-Semibold;
+  margin-bottom: 32px;
+  margin-top: 16px;
 }
 
 .basket-total{
