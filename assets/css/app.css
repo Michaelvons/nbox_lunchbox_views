@@ -259,6 +259,7 @@ margin: 0px;
   display: flex;
   flex-direction: row;
   margin: 0px 16px;
+  flex-wrap: wrap;
 }
 
 
@@ -737,7 +738,7 @@ input {
 
 
 /* .checkout-header p{
-  margin: 0px;
+margin: 0px;
 } */
 
 .checkout-title{
@@ -795,6 +796,6 @@ input {
 
 .location-details{
   display: flex;
-flex-direction: column;
-align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 }

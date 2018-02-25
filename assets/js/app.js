@@ -192,9 +192,24 @@ var app = {
       }).done(function (categories) {
         console.log("categories");
         console.log(categories);
+        console.log(categories.message.length);
 
+        text = "";
+        for (i = 0; i < categories.message.length; i++) {
+          text += "<div id='card-category-1' class='card card-active' onclick='app.gotoBundlePage('1',6)'>"
+          +"<div class='card-content'>"
+          +"<img class='card-image' src='assets/image/fastfood.png'>"
+          +"<div class='card-caption'>"
+          +"<p class='card-title'>FAST FOOD</p>"
+          +"<p class='card-description'>A mix of snack and quick meals</p>"
+          +"</div>"
+          +"</div>"
+          +"<div class='card-background'></div>"
+          +"</div>";
+          app.element("cards-category").innerHTML = text;
+          console.log("repeating cards-category");
+        }
       });
-
     })
   },
 
