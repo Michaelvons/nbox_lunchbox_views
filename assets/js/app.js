@@ -336,6 +336,8 @@ var app = {
       app.element("card-bundle-" + cards[i]).classList.remove("card-active");
     }
 
+    var bundleCount = "bundleCount";
+
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
     +"<div id='bundle-overlay-image' class='bundle-overlay-image'></div>"
@@ -368,7 +370,7 @@ var app = {
     +"</div>"
     +"<div class='basket-total-row basket-total-row-quantity'>"
     +"<span>Quantity</span>"
-    +"<div class='bundle-count'><button>-</button><span class='bundle-count-figure'>3</span><button>+</button></div>"
+    +"<div class='bundle-count'><button onclick='app.decrement(\"" + bundleCount + "\")'>-</button><span id='bundleCount' class='bundle-count-figure'>3</span><button onclick='app.increment(\"" + bundleCount + "\")'>+</button></div>"
     +"</div>"
     +"<hr>"
     +"<div class='basket-total-row basket-total-row-total'>"
@@ -392,14 +394,35 @@ var app = {
         var one = menuArray.menu[i];
         $("#bundleMenusTable").append("<tr>"
             + "<td>" + one.name + "</td>"
-            // + "<td>" + one.partner_name + "</td>"
-            // + "<td>NGN " + parseInt(one.price, 10).toLocaleString() + "</td>"
             + "</tr>");
     }
 
     document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
   //  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
 
+  },
+
+  increment: function (identifier) {
+      console.log("increment for - " + identifier);
+
+      count = parseInt(app.element(identifier).innerHTML);
+      count += 1;
+      app.element(identifier).innerHTML = count;
+      console.log("value is - " + count);
+      //app.element(identifier).innerHTML = "0";
+  },
+
+  decrement: function (identifier) {
+
+      console.log("decrement clicked");
+      console.log("decrement for" + identifier);
+      count = parseInt(app.element(identifier).innerHTML);
+      if (count == 0) {
+          app.element(identifier).innerHTML = "0";
+      } else {
+          count -= 1;
+          app.element(identifier).innerHTML = count;
+      }
   },
 
   gotoSetupPage:function () {
