@@ -58,7 +58,7 @@
         <div id="screensaver"></div>
         <div class="swiper-container">
           <div id="screensaver-swiper-wrapper" class="swiper-wrapper" onclick="app.gotoCategoryPage()"></div>
-          </div>
+        </div>
       </div>
     </div>
 
@@ -71,95 +71,15 @@
               <img src="assets/image/back.png" style="display:none">
             </div>
             <div class="location-details">
-          <p id="locationName" class="main-title">Company Name</p>
-          <p id="locationCity" class="main-subtitle">Location</p>
-        </div>
-        </div>
+              <p id="locationName" class="main-title">Company Name</p>
+              <p id="locationCity" class="main-subtitle">Location</p>
+            </div>
+          </div>
           <p class="main-caption">WHAT WILL YOU LIKE TO EAT ?</p>
         </div>
 
-        <div id="cards-category" class="card-group">
-          <!-- CARD 1 -->
-          <div id="card-category-1" class="card card-active" onclick="app.gotoBundlePage('1',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/fastfood.png">
-              <div class="card-caption">
-                <p class="card-title">FAST FOOD</p>
-                <p class="card-description">A mix of snack and quick meals</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-
-          <!-- CARD 2 -->
-          <div id="card-category-2" class="card" onclick="app.gotoBundlePage('2',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/oriental.png">
-              <div class="card-caption">
-                <p class="card-title">ORIENTAL</p>
-                <p class="card-description">Spicy meals using recipes from Chinese and Japanese.</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-
-          <!-- CARD 3 -->
-          <div id="card-category-3" class="card" onclick="app.gotoBundlePage('3',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/continental.png">
-              <div class="card-caption">
-                <p class="card-title">CONTINENTAL</p>
-                <p class="card-description"> Dishes bettter-known from Western European countries.</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-        </div>
-
-        <!-- SECOND CARD GRID -->
-        <div class="card-group">
-          <!-- CARD 4 -->
-          <div id="card-category-4" class="card" onclick="app.gotoBundlePage('4',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/african.png">
-              <div class="card-caption">
-                <p class="card-title">AFRICAN</p>
-                <p class="card-description">A blend of meals from Nigeria and Ghana.</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-
-          <!-- CARD 4 -->
-          <div id="card-category-5" class="card" onclick="app.gotoBundlePage('5',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/bukka.png">
-              <div class="card-caption">
-                <p class="card-title">BUKKA</p>
-                <p class="card-description">Delicious traditional meals from the neighbourhood.</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-
-          <!-- CARD 6 -->
-          <div id="card-category-6" class="card" onclick="app.gotoBundlePage('6',6)">
-            <div class="card-content">
-              <img class="card-image" src="assets/image/healthyfood.png">
-              <div class="card-caption">
-                <p class="card-title">HEALTY FOODS</p>
-                <p class="card-description">Meals for a healthy living</p>
-              </div>
-            </div>
-            <div class="card-background">
-            </div>
-          </div>
-        </div>
+        <!-- LIST OF CATEGORY CARDS -->
+        <div id="cards-category" class="card-group"></div>
 
         <!-- BASKET -->
         <div class="basket">
@@ -230,11 +150,11 @@
             <div onclick="app.gotoCategoryPage()">
               <img src="assets/image/back.png">
             </div>
-          <div class="location-details">
-          <p class="main-title">Company Name</p>
-          <p class="main-subtitle">Location</p>
-        </div>
-        </div>
+            <div class="location-details">
+              <p class="main-title">Company Name</p>
+              <p class="main-subtitle">Location</p>
+            </div>
+          </div>
           <p class="main-caption"> SELECT A BUNDLE</p>
         </div>
 
@@ -381,30 +301,30 @@
 
     <!-- MODAL - BUNDLE DETAIL -->
     <!-- <div id="modalBundleDetail">
-      <div class="modal">
-        <p>Modal Here</p>
-      </div>
-    </div> -->
-
-    <audio id="soundPlayer"></audio>
-    <script src="cordova.js"></script>
-    <script src="views/views.js"></script>
-    <script src="gsap/css.js"></script>
-    <script src="gsap/easepack.js"></script>
-    <script src="gsap/TweenLite.min.js"></script>
-    <script src="gsap/CSSPlugin.min.js"></script>
-    <script src="gsap/ScrollToPlugin.min.js"></script>
-    <script src="assets/js/fastclick.js"></script>
-    <script src="assets/js/jquery-3.2.1.js"></script>
-
-    <!-- CUSTOM PLUGINS -->
-    <script src="assets/js/swiper.min.js"></script>
-    <script src="assets/js/alertify.min.js"></script>
-
-    <!--  -->
-
-
-    <script src="assets/js/app.js"></script>
+    <div class="modal">
+    <p>Modal Here</p>
   </div>
+</div> -->
+
+<audio id="soundPlayer"></audio>
+<script src="cordova.js"></script>
+<script src="views/views.js"></script>
+<script src="gsap/css.js"></script>
+<script src="gsap/easepack.js"></script>
+<script src="gsap/TweenLite.min.js"></script>
+<script src="gsap/CSSPlugin.min.js"></script>
+<script src="gsap/ScrollToPlugin.min.js"></script>
+<script src="assets/js/fastclick.js"></script>
+<script src="assets/js/jquery-3.2.1.js"></script>
+
+<!-- CUSTOM PLUGINS -->
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/alertify.min.js"></script>
+
+<!--  -->
+
+
+<script src="assets/js/app.js"></script>
+</div>
 </body>
 </html>

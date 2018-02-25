@@ -288,9 +288,10 @@ margin: 0px;
 }
 
 .card-title{
-  font-size: 28px;
+  font-size: 24px;
   font-family: Montserrat-ExtraBold;
   margin: 0px;
+  text-transform: uppercase;
 }
 
 

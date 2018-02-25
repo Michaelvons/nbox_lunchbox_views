@@ -196,12 +196,12 @@ var app = {
 
         text = "";
         for (i = 0; i < categories.message.length; i++) {
-          text += "<div id='card-category-1' class='card card-active' onclick='app.gotoBundlePage('1',6)'>"
+          text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6)'>"
           +"<div class='card-content'>"
-          +"<img class='card-image' src='assets/image/fastfood.png'>"
+          +"<img class='card-image' src='" + categories.message[i].image +"'>"
           +"<div class='card-caption'>"
-          +"<p class='card-title'>FAST FOOD</p>"
-          +"<p class='card-description'>A mix of snack and quick meals</p>"
+          +"<p class='card-title'>" + categories.message[i].category + "</p>"
+          +"<p class='card-description'>"+ categories.message[i].description +"</p>"
           +"</div>"
           +"</div>"
           +"<div class='card-background'></div>"
@@ -214,6 +214,10 @@ var app = {
   },
 
   gotoBundlePage: function ( cardID, cardLength) {
+    console.log("cardID");
+    console.log(cardID);
+    console.log("cardLength");
+    console.log(cardLength);
     //ADD OR REMOVE CSS Class
     app.element("card-category-" + cardID).classList.add("card-active");
     cards = [];
