@@ -175,10 +175,7 @@ var app = {
 
 
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-      // console.log("storedSetup");
-      // console.log(storedSetup);
-      // console.log(storedSetup[0].locationName);
-      //  $("locationName").html = storedSetup[0].locationName;
+
       app.element("locationName").innerHTML= storedSetup[0].locationName;
       app.element("locationCity").innerHTML= storedSetup[0].locationCity;
       var cityID = storedSetup[0].cityID;
@@ -211,6 +208,41 @@ var app = {
         }
       });
     })
+
+    var storedBasket = JSON.parse(localStorage.getItem("basket"));
+    console.log(storedBasket);
+
+    $("#basketTable").html = "";
+    var totalBundle = 0;
+
+    for (i = 0; i < storedBasket.length; i++) {
+      console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+
+      //DISPLAY BASKET
+      $("#basketTable").append("<tr>"
+      + "<td>" +storedBasket[i].name + "</td>"
+      + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+      + "<td>" +storedBasket[i].quantity + "</td>"
+      + "</tr>");
+
+      //ADD BUNDLE PRICE
+      totalBundle += parseInt(storedBasket[i].price);
+
+    }
+
+    console.log("totalBundle");
+    console.log(totalBundle);
+
+    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+    var deliveryCost = app.element("deliveryCost").innerHTML;
+  //  var quantity = app.element("bundleCount").innerHTML;
+    console.log("deliveryCost");
+    console.log(deliveryCost);
+    var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+    console.log("grandTotal");
+    console.log(grandTotal);
+    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
 
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
@@ -235,19 +267,7 @@ var app = {
 
       text = "";
       for (i = 0; i < bundles.message.length; i++) {
-        // text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6,\"" + categories.message[i]._id + "\")'>"
-        // +"<div class='card-content'>"
-        // +"<img class='card-image' src='" + categories.message[i].image +"'>"
-        // +"<div class='card-caption'>"
-        // +"<p class='card-title'>" + categories.message[i].category + "</p>"
-        // +"<p class='card-description'>"+ categories.message[i].description +"</p>"
-        // +"</div>"
-        // +"</div>"
-        // +"<div class='card-background'></div>"
-        // +"</div>";
-
         app.allMenu = bundles.message;
-
 
         text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",6,\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\")'>"
         +"<div class='card-content'>"
@@ -337,7 +357,7 @@ var app = {
     }
 
     var bundleCount = "bundleCount";
-
+    // var quantity = "";
 
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
@@ -379,7 +399,7 @@ var app = {
     +"<p><span class='currency'>NGN </span><span id='bundleTotal'>" + parseInt(price, 10).toLocaleString() + "</span><span class='currency'>.00</span></p>"
     +"</div>"
     +"</div>"
-    +"<button class='green-button'>"
+    +"<button class='green-button' onclick='app.addToBasket(\"" + name + "\", \"" + price + "\")'>"
     +"ADD TO BASKET"
     +"</button>"
     +"</div>"
@@ -391,53 +411,119 @@ var app = {
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
-app.element("bundleMenusTable").innerHTML = "";
+    app.element("bundleMenusTable").innerHTML = "";
+    //  quantity = app.element("bundleCount").innerHTML;
+    //  debugger;
+    //  app.element('btn_multi_amount').innerHTM
 
     for (var i = 0; i < menuArray.menu.length; i++) {
-        var one = menuArray.menu[i];
-        $("#bundleMenusTable").append("<tr>"
-            + "<td>" + one.name + "</td>"
-            + "</tr>");
+      var one = menuArray.menu[i];
+      $("#bundleMenusTable").append("<tr>"
+      + "<td>" + one.name + "</td>"
+      + "</tr>");
     }
 
     document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
-  //  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
+    //  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
+
+  },
+
+  addToBasket:function (name, price) {
+    var quantity = app.element("bundleCount").innerHTML;
+    console.log("addToBasket");
+    console.log(name);
+    console.log(price);
+    console.log(quantity);
+    var initialBasket = JSON.parse(localStorage.getItem("basket"));
+
+    if( initialBasket === null){
+      var basket =[];
+      basketArray = {name: name, price: price, quantity: quantity};
+
+      basket.unshift(basketArray);
+      localStorage.setItem("basket", JSON.stringify(basket));
+
+      var storedBasket = JSON.parse(localStorage.getItem("basket"));
+      console.log(storedBasket);
+
+      $("#basketTable").html = "";
+
+      for (i = 0; i < storedBasket.length; i++) {
+        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+
+        $("#basketTable").append("<tr>"
+        + "<td>" +storedBasket[i].name + "</td>"
+        + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+        + "<td>" +storedBasket[i].quantity + "</td>"
+        + "</tr>");
+
+      }
+    }else {
+      var basket = initialBasket;
+
+      if (initialBasket.length !== 0) {
+        //var id = initialContacts.length;
+
+        basketArray = {name: name, price: price, quantity: quantity};
+
+        basket.unshift(basketArray);
+        localStorage.setItem("basket", JSON.stringify(basket));
+
+        var storedBasket = JSON.parse(localStorage.getItem("basket"));
+        console.log(storedBasket);
+
+        $("#basketTable").html = "";
+
+        for (i = 0; i < storedBasket.length; i++) {
+          console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+
+          $("#basketTable").append("<tr>"
+          + "<td>" +storedBasket[i].name + "</td>"
+          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+          + "<td>" +storedBasket[i].quantity + "</td>"
+          + "</tr>");
+
+        }
+      }
+    }
+
+
 
   },
 
   increment: function (identifier, price) {
-      console.log("increment for - " + identifier);
+    console.log("increment for - " + identifier);
 
-      count = parseInt(app.element(identifier).innerHTML);
-      count += 1;
-      app.element(identifier).innerHTML = count;
-      console.log("value is - " + count);
-      //app.element(identifier).innerHTML = "0";
+    count = parseInt(app.element(identifier).innerHTML);
+    count += 1;
+    app.element(identifier).innerHTML = count;
+    console.log("value is - " + count);
+    //app.element(identifier).innerHTML = "0";
 
-      //PERFORM MATHS
+    //PERFORM MATHS
     //  console.log("passed price");
-      console.log(price);
-      bundleTotal = price * count;
-      app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
+    console.log(price);
+    bundleTotal = price * count;
+    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
 
   },
 
   decrement: function (identifier, price) {
 
-      console.log("decrement clicked");
-      console.log("decrement for" + identifier);
-      count = parseInt(app.element(identifier).innerHTML);
-      if (count == 1) {
-          app.element(identifier).innerHTML = "1";
-      } else {
-          count -= 1;
-          app.element(identifier).innerHTML = count;
-      }
+    console.log("decrement clicked");
+    console.log("decrement for" + identifier);
+    count = parseInt(app.element(identifier).innerHTML);
+    if (count == 1) {
+      app.element(identifier).innerHTML = "1";
+    } else {
+      count -= 1;
+      app.element(identifier).innerHTML = count;
+    }
 
-      //PERFORM MATHS
+    //PERFORM MATHS
     //  console.log(price);
-      bundleTotal = price * count;
-      app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
+    bundleTotal = price * count;
+    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
   },
 
   gotoSetupPage:function () {

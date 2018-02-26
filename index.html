@@ -85,53 +85,32 @@
         <div class="basket">
           <div class="basket-table">
             <table>
+              <thead>
               <tr>
                 <th>BUNDLE NAME</th>
                 <th>UNIT PRICE</th>
                 <th>QUANTITY</th>
               </tr>
-              <tr>
-                <td>Bundle title 7 </td>
-                <td><span class="currency">NGN</span>1,250.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 2 </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Bundle title 8 </td>
-                <td><span class="currency">NGN</span>3,920.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 10 </td>
-                <td><span class="currency">NGN</span>6,135.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 5 </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
+            </thead>
+            <tbody id="basketTable">
+            </tbody>
             </table>
           </div>
           <div class="basket-total">
             <div>
               <div class="basket-total-row">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>26,905.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span><span id="totalBasketBundle">00</span><span class="currency">.00</span></p>
               </div>
               <!-- <div class="basket-total-row"></div> -->
               <div class="basket-total-row">
                 <span>Delivery</span>
-                <p><span class="currency">NGN</span>600.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span><span id="deliveryCost">600</span><span class="currency">.00</span></p>
               </div>
               <hr>
               <div class="basket-total-row basket-total-row-total">
                 <span>Total Bundle</span>
-                <p><span class="currency">NGN</span>27,505.<span class="currency">00</span></p>
+                <p><span class="currency">NGN</span><span id="grandTotal">00</span><span class="currency">.00</span></p>
               </div>
             </div>
             <button class="green-button" onclick="app.showModalCheckout()">
@@ -177,36 +156,15 @@
         <div class="basket">
           <div class="basket-table">
             <table>
+              <thead>
               <tr>
                 <th>BUNDLE NAME</th>
                 <th>UNIT PRICE</th>
                 <th>QUANTITY</th>
               </tr>
-              <tr>
-                <td>Bundle title 7 </td>
-                <td><span class="currency">NGN</span>1,250.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 2 </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Bundle title 8 </td>
-                <td><span class="currency">NGN</span>3,920.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 10 </td>
-                <td><span class="currency">NGN</span>6,135.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Bundle title 5 </td>
-                <td><span class="currency">NGN</span>4,800.<span class="currency">00</span></td>
-                <td>1</td>
-              </tr>
+            </thead>
+            <tbody id="basketTable">
+            </tbody>
             </table>
           </div>
           <div class="basket-total">
