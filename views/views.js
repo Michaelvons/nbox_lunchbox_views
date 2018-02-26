@@ -179,7 +179,7 @@ var views = {
 	},
 
 	reverseTo: function (view, callback, pushToNavigator) {
-		debugger;
+		//debugger;
 		if (views.isInTransition) {
 			if (views.debug) console.log("views.reverseTo(): views.isInTransition. Aborted.");
 			return false;

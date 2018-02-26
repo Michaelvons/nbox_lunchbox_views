@@ -212,7 +212,8 @@ var app = {
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
     console.log(storedBasket);
 
-    $("#basketTable").html = "";
+    //$("#basketTable").html = "";
+    app.element("basketTable").innerHTML = "";
     var totalBundle = 0;
 
     for (i = 0; i < storedBasket.length; i++) {
@@ -221,9 +222,11 @@ var app = {
       //DISPLAY BASKET
       $("#basketTable").append("<tr>"
       + "<td>" +storedBasket[i].name + "</td>"
-      + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
-      + "<td>" +storedBasket[i].quantity + "</td>"
+       + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+       + "<td>" +storedBasket[i].quantity + "</td>"
       + "</tr>");
+
+
 
       //ADD BUNDLE PRICE
       totalBundle += parseInt(storedBasket[i].price);
@@ -291,6 +294,33 @@ var app = {
         app.element("cards-bundle").innerHTML = text;
         console.log("repeating cards-bundle");
       }
+
+
+      var storedBasket = JSON.parse(localStorage.getItem("basket"));
+      console.log(storedBasket);
+
+    //  $("#bundleBasketTable").html = "";
+      app.element("bundleBasketTable").innerHTML = "";
+    //  var totalBundle = 0;
+
+      for (i = 0; i < storedBasket.length; i++) {
+        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+
+        //DISPLAY BASKET
+        $("#bundleBasketTable").append("<tr>"
+        + "<td>" +storedBasket[i].name + "</td>"
+         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+         + "<td>" +storedBasket[i].quantity + "</td>"
+        + "</tr>");
+
+
+
+        //ADD BUNDLE PRICE
+      //  totalBundle += parseInt(storedBasket[i].price);
+
+      }
+
+
     });
 
 
