@@ -486,18 +486,23 @@ var app = {
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
       console.log(storedBasket);
 
-      $("#basketTable").html = "";
+    //  $("#basketTable").html = "";
+      app.element("bundleBasketTable").innerHTML = "";
+    //  app.element("basketTable").innerHTML = "";
+
 
       for (i = 0; i < storedBasket.length; i++) {
         console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
-        $("#basketTable").append("<tr>"
+        $("#bundleBasketTable").append("<tr>"
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
         + "</tr>");
 
       }
+
+
     }else {
       var basket = initialBasket;
 
@@ -512,12 +517,14 @@ var app = {
         var storedBasket = JSON.parse(localStorage.getItem("basket"));
         console.log(storedBasket);
 
-        $("#basketTable").html = "";
+      //  $("#basketTable").html = "";
+        app.element("bundleBasketTable").innerHTML = "";
+
 
         for (i = 0; i < storedBasket.length; i++) {
           console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
-          $("#basketTable").append("<tr>"
+          $("#bundleBasketTable").append("<tr>"
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
