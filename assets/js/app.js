@@ -254,6 +254,12 @@ var app = {
     console.log(categoryID);
 
 
+
+    // console.log("storedSetup[0].locationCity");
+    // console.log(storedSetup[0].locationCity);
+    // console.log(storedSetup[0].locationName);
+
+
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -316,6 +322,10 @@ var app = {
 
     views.goto("page-bundle", function () {
       console.log("nav to page-bundle");
+      var storedSetup = JSON.parse(localStorage.getItem("setup"));
+
+      app.element("bundleLocationName").innerHTML= storedSetup[0].locationName;
+      app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
     })
   },
 
