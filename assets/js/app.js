@@ -528,6 +528,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
+            + "<td><button>" +storedBasket[i].quantity + "</button></td>"
           + "</tr>");
 
         }
