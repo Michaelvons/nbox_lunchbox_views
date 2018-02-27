@@ -239,26 +239,27 @@ var app = {
         + "<td><button onclick='app.deleteCategoryBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
-
-
-        //ADD BUNDLE PRICE
-        totalBundle += parseInt(storedBasket[i].price);
+        //ADD BUNDLE PRICE TO CATEGORY PAGE
+        totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
       }
+
+      console.log("totalBundle");
+      console.log(totalBundle);
+
+      app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+      var deliveryCost = app.element("deliveryCost").innerHTML;
+      //  var quantity = app.element("bundleCount").innerHTML;
+      console.log("deliveryCost");
+      console.log(deliveryCost);
+      var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+      console.log("grandTotal");
+      console.log(grandTotal);
+      app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
     }
 
-    console.log("totalBundle");
-    console.log(totalBundle);
 
-    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-    var deliveryCost = app.element("deliveryCost").innerHTML;
-    //  var quantity = app.element("bundleCount").innerHTML;
-    console.log("deliveryCost");
-    console.log(deliveryCost);
-    var grandTotal = totalBundle +  parseInt(deliveryCost);
-
-    console.log("grandTotal");
-    console.log(grandTotal);
-    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
 
 
@@ -297,8 +298,6 @@ var app = {
         +"</div>"
         +"</div>";
 
-
-
         app.element("cards-bundle").innerHTML = text;
         console.log("repeating cards-bundle");
       }
@@ -323,16 +322,27 @@ var app = {
           + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
-
           //ADD BUNDLE PRICE
-          totalBundle += parseInt(storedBasket[i].price);
+          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
         }
+
+        console.log("totalBundle");
+        console.log(totalBundle);
+
+        app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+        var deliveryCost = app.element("deliveryCost").innerHTML;
+        //  var quantity = app.element("bundleCount").innerHTML;
+        console.log("deliveryCost");
+        console.log(deliveryCost);
+        var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+        console.log("grandTotal");
+        console.log(grandTotal);
+        app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
       }
 
     });
-
-
-
 
 
     //ADD OR REMOVE CSS Class
@@ -365,10 +375,6 @@ var app = {
       app.element("bundleLocationName").innerHTML= storedSetup[0].locationName;
       app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
 
-      //REMOVE ATTENTION FLASH
-      // app.removeAttentionFlash();
-      //     app.removeAttentionFlashBundle();
-      //Bundle
       app.element("bundle-basket-table").classList.remove("animate-basket-background");
 
     })
@@ -518,6 +524,20 @@ var app = {
 
       }
 
+      console.log("totalBundle");
+      console.log(totalBundle);
+
+      app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+      var deliveryCost = app.element("deliveryCost").innerHTML;
+      //  var quantity = app.element("bundleCount").innerHTML;
+      console.log("deliveryCost");
+      console.log(deliveryCost);
+      var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+      console.log("grandTotal");
+      console.log(grandTotal);
+      app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
       //CLOSE MODAL
       alertify.closeAll();
 
@@ -556,6 +576,21 @@ var app = {
           + "</tr>");
 
         }
+
+        console.log("totalBundle");
+        console.log(totalBundle);
+
+        app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+        var deliveryCost = app.element("deliveryCost").innerHTML;
+        //  var quantity = app.element("bundleCount").innerHTML;
+        console.log("deliveryCost");
+        console.log(deliveryCost);
+        var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+        console.log("grandTotal");
+        console.log(grandTotal);
+        app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
       }
 
       //CLOSE MODAL
@@ -627,6 +662,20 @@ var app = {
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopAttentionFlash();
 
+    console.log("totalBundle");
+    console.log(totalBundle);
+
+    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+    var deliveryCost = app.element("deliveryCost").innerHTML;
+    //  var quantity = app.element("bundleCount").innerHTML;
+    console.log("deliveryCost");
+    console.log(deliveryCost);
+    var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+    console.log("grandTotal");
+    console.log(grandTotal);
+    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
   },
 
 
@@ -674,6 +723,20 @@ var app = {
 
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopCategoryAttentionFlash();
+
+    console.log("totalBundle");
+    console.log(totalBundle);
+
+    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+    var deliveryCost = app.element("deliveryCost").innerHTML;
+    //  var quantity = app.element("bundleCount").innerHTML;
+    console.log("deliveryCost");
+    console.log(deliveryCost);
+    var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+    console.log("grandTotal");
+    console.log(grandTotal);
+    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
   },
 
