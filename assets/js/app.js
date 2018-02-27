@@ -236,7 +236,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteCategoryBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
 
@@ -576,8 +576,13 @@ var app = {
     }, 1000);
   },
 
+  stopCategoryAttentionFlash:function () {
+    setTimeout(function(){
+      app.element("basket-table").classList.remove("animate-basket-background");
+    }, 1000);
+  },
+
   deleteBundleBasket:function (basketIndex) {
-    console.log("deleteBundleBasket clicked");
     console.log("basketIndex");
     console.log(basketIndex);
 
@@ -588,12 +593,12 @@ var app = {
 
     //REMOVE ELEMENT FROM BASKET ARRAY
     deletedBundle = storedBasket.splice(basketIndex, 1);
-
     console.log("deletedBundle");
     console.log(deletedBundle);
 
     //CLEAR basket LOCAL STORAGE
-    localStorage.clear("basket");
+    //localStorage.clear("basket");
+    localStorage.removeItem("basket");
 
     //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
     localStorage.setItem("basket", JSON.stringify(storedBasket));
@@ -608,7 +613,6 @@ var app = {
 
     //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
     for (i = 0; i < newStoredBasket.length; i++) {
-      //console.log(newStoredBasket[i].name + " -- " + newStoredBasket[i].price + "--" + storedBasket[i].quantity);
       $("#bundleBasketTable").append("<tr>"
       + "<td>" +newStoredBasket[i].name + "</td>"
       + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
@@ -624,6 +628,56 @@ var app = {
     app.stopAttentionFlash();
 
   },
+
+
+  deleteCategoryBasket:function (basketIndex) {
+    console.log("basketIndex");
+    console.log(basketIndex);
+
+    //FETCH ALL STORED BASKET DATA
+    var storedBasket = JSON.parse(localStorage.getItem("basket"));
+    console.log("storedBasket");
+    console.log(storedBasket);
+
+    //REMOVE ELEMENT FROM BASKET ARRAY
+    deletedBundle = storedBasket.splice(basketIndex, 1);
+    console.log("deletedBundle");
+    console.log(deletedBundle);
+
+    //CLEAR basket LOCAL STORAGE
+    //localStorage.clear("basket");
+    localStorage.removeItem("basket");
+
+    //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
+    localStorage.setItem("basket", JSON.stringify(storedBasket));
+
+    //FETCH NEW basket LOCAL STORAGE ARRAY;
+    var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
+    console.log("newStoredBasket");
+    console.log(newStoredBasket);
+
+    //CLEAR BASKET TABLE
+    app.element("basketTable").innerHTML = "";
+
+    //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
+    for (i = 0; i < newStoredBasket.length; i++) {
+      $("#basketTable").append("<tr>"
+      + "<td>" +newStoredBasket[i].name + "</td>"
+      + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
+      + "<td>" +newStoredBasket[i].quantity + "</td>"
+      + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+      + "</tr>");
+    }
+
+    //FLASH BASKET BACKGROUND
+    app.element("basket-table").classList.add("animate-basket-background");
+
+    //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+    app.stopCategoryAttentionFlash();
+
+  },
+
+
 
   increment: function (identifier, price) {
     console.log("increment for - " + identifier);
