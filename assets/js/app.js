@@ -511,6 +511,8 @@ var app = {
       app.element("bundleBasketTable").innerHTML = "";
       //  app.element("basketTable").innerHTML = "";
 
+      var totalBundle = 0;
+
 
       for (i = 0; i < storedBasket.length; i++) {
         console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
@@ -521,6 +523,9 @@ var app = {
         + "<td>" +storedBasket[i].quantity + "</td>"
         + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
+
+        //ADD BUNDLE PRICE
+        totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
 
       }
 
@@ -564,6 +569,8 @@ var app = {
         //  $("#basketTable").html = "";
         app.element("bundleBasketTable").innerHTML = "";
 
+        var totalBundle = 0;
+
 
         for (i = 0; i < storedBasket.length; i++) {
           console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
@@ -574,6 +581,9 @@ var app = {
           + "<td>" +storedBasket[i].quantity + "</td>"
           + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
+
+          //ADD BUNDLE PRICE
+          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
 
         }
 
@@ -646,6 +656,8 @@ var app = {
     //CLEAR BASKET TABLE
     app.element("bundleBasketTable").innerHTML = "";
 
+    var totalBundle = 0;
+
     //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
     for (i = 0; i < newStoredBasket.length; i++) {
       $("#bundleBasketTable").append("<tr>"
@@ -654,6 +666,9 @@ var app = {
       + "<td>" +newStoredBasket[i].quantity + "</td>"
       + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
       + "</tr>");
+
+      //ADD BUNDLE PRICE
+      totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
     }
 
     //FLASH BASKET BACKGROUND
@@ -708,6 +723,8 @@ var app = {
     //CLEAR BASKET TABLE
     app.element("basketTable").innerHTML = "";
 
+    var totalBundle = 0;
+
     //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
     for (i = 0; i < newStoredBasket.length; i++) {
       $("#basketTable").append("<tr>"
@@ -716,6 +733,9 @@ var app = {
       + "<td>" +newStoredBasket[i].quantity + "</td>"
       + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
       + "</tr>");
+
+      //ADD BUNDLE PRICE
+      totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
     }
 
     //FLASH BASKET BACKGROUND
