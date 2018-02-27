@@ -522,7 +522,7 @@ var app = {
       alertify.closeAll();
 
       //FLASH BASKET BACKGROUND
-      app.element("basket-table").classList.add("animate-basket-background");
+      app.element("bundle-basket-table").classList.add("animate-basket-background");
 
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
@@ -562,7 +562,7 @@ var app = {
       alertify.closeAll();
 
       //FLASH BASKET BACKGROUND
-      app.element("basket-table").classList.add("animate-basket-background");
+      app.element("bundle-basket-table").classList.add("animate-basket-background");
 
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
@@ -572,7 +572,7 @@ var app = {
 
   stopAttentionFlash:function () {
     setTimeout(function(){
-      app.element("basket-table").classList.remove("animate-basket-background");
+      app.element("bundle-basket-table").classList.remove("animate-basket-background");
     }, 1000);
   },
 
