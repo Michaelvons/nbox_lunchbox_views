@@ -171,7 +171,7 @@ var app = {
   removeAttentionFlash:function () {
 
     app.element("basket-table").classList.remove("animate-basket-background");
-// debugger;
+    // debugger;
   },
 
   gotoCategoryPage: function () {
@@ -236,7 +236,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "<td><button><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
 
@@ -309,7 +309,7 @@ var app = {
 
       //  $("#bundleBasketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-        var totalBundle = 0;
+      var totalBundle = 0;
 
       if(storedBasket !== null){
         for (i = 0; i < storedBasket.length; i++) {
@@ -320,7 +320,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
 
@@ -366,10 +366,10 @@ var app = {
       app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
 
       //REMOVE ATTENTION FLASH
-    // app.removeAttentionFlash();
-    //     app.removeAttentionFlashBundle();
-//Bundle
-        app.element("bundle-basket-table").classList.remove("animate-basket-background");
+      // app.removeAttentionFlash();
+      //     app.removeAttentionFlashBundle();
+      //Bundle
+      app.element("bundle-basket-table").classList.remove("animate-basket-background");
 
     })
   },
@@ -513,7 +513,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "<td><button><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
       }
@@ -552,7 +552,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
         }
@@ -574,6 +574,55 @@ var app = {
     setTimeout(function(){
       app.element("bundle-basket-table").classList.remove("animate-basket-background");
     }, 1000);
+  },
+
+  deleteBundleBasket:function (basketIndex) {
+    console.log("deleteBundleBasket clicked");
+    console.log("basketIndex");
+    console.log(basketIndex);
+
+    //FETCH ALL STORED BASKET DATA
+    var storedBasket = JSON.parse(localStorage.getItem("basket"));
+    console.log("storedBasket");
+    console.log(storedBasket);
+
+    //REMOVE ELEMENT FROM BASKET ARRAY
+    deletedBundle = storedBasket.splice(basketIndex, 1);
+
+    console.log("deletedBundle");
+    console.log(deletedBundle);
+
+    //CLEAR basket LOCAL STORAGE
+    localStorage.clear("basket");
+
+    //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
+    localStorage.setItem("basket", JSON.stringify(storedBasket));
+
+    //FETCH NEW basket LOCAL STORAGE ARRAY;
+    var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
+    console.log("newStoredBasket");
+    console.log(newStoredBasket);
+
+    //CLEAR BASKET TABLE
+    app.element("bundleBasketTable").innerHTML = "";
+
+    //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
+    for (i = 0; i < newStoredBasket.length; i++) {
+      //console.log(newStoredBasket[i].name + " -- " + newStoredBasket[i].price + "--" + storedBasket[i].quantity);
+      $("#bundleBasketTable").append("<tr>"
+      + "<td>" +newStoredBasket[i].name + "</td>"
+      + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
+      + "<td>" +newStoredBasket[i].quantity + "</td>"
+      + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+      + "</tr>");
+    }
+
+    //FLASH BASKET BACKGROUND
+    app.element("bundle-basket-table").classList.add("animate-basket-background");
+
+    //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+    app.stopAttentionFlash();
+
   },
 
   increment: function (identifier, price) {
