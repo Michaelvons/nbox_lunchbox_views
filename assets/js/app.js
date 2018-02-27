@@ -178,8 +178,11 @@ var app = {
     views.goto("page-category", function () {
       console.log("nav to page-category");
 
-      //REMOVE ATTENTION FLASH
-      app.removeAttentionFlash();
+      // //REMOVE ATTENTION FLASH
+      // app.removeAttentionFlash();
+
+      app.element("basket-table").classList.remove("animate-basket-background");
+
 
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
@@ -257,6 +260,8 @@ var app = {
     app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
 
+
+
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
     console.log("cardID");
     console.log(cardID);
@@ -264,9 +269,6 @@ var app = {
     console.log(cardLength);
     console.log("categoryID");
     console.log(categoryID);
-
-    //REMOVE ATTENTION FLASH
-    app.removeAttentionFlash();
 
     //GET BUNDLES
     $.ajax({
@@ -306,7 +308,7 @@ var app = {
 
       //  $("#bundleBasketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-      //  var totalBundle = 0;
+        var totalBundle = 0;
 
       if(storedBasket !== null){
         for (i = 0; i < storedBasket.length; i++) {
@@ -360,6 +362,13 @@ var app = {
 
       app.element("bundleLocationName").innerHTML= storedSetup[0].locationName;
       app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
+
+      //REMOVE ATTENTION FLASH
+    // app.removeAttentionFlash();
+    //     app.removeAttentionFlashBundle();
+//Bundle
+        app.element("bundle-basket-table").classList.remove("animate-basket-background");
+
     })
   },
 
