@@ -215,24 +215,24 @@ var app = {
     //$("#basketTable").html = "";
 
     if( storedBasket !== null){
-    app.element("basketTable").innerHTML = "";
-    var totalBundle = 0;
+      app.element("basketTable").innerHTML = "";
+      var totalBundle = 0;
 
-    for (i = 0; i < storedBasket.length; i++) {
-      console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+      for (i = 0; i < storedBasket.length; i++) {
+        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
-      //DISPLAY BASKET
-      $("#basketTable").append("<tr>"
-      + "<td>" +storedBasket[i].name + "</td>"
-       + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
-       + "<td>" +storedBasket[i].quantity + "</td>"
-      + "</tr>");
+        //DISPLAY BASKET
+        $("#basketTable").append("<tr>"
+        + "<td>" +storedBasket[i].name + "</td>"
+        + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+        + "<td>" +storedBasket[i].quantity + "</td>"
+        + "</tr>");
 
 
 
-      //ADD BUNDLE PRICE
-      totalBundle += parseInt(storedBasket[i].price);
-}
+        //ADD BUNDLE PRICE
+        totalBundle += parseInt(storedBasket[i].price);
+      }
     }
 
     console.log("totalBundle");
@@ -240,7 +240,7 @@ var app = {
 
     app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
     var deliveryCost = app.element("deliveryCost").innerHTML;
-  //  var quantity = app.element("bundleCount").innerHTML;
+    //  var quantity = app.element("bundleCount").innerHTML;
     console.log("deliveryCost");
     console.log(deliveryCost);
     var grandTotal = totalBundle +  parseInt(deliveryCost);
@@ -301,27 +301,26 @@ var app = {
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
       console.log(storedBasket);
 
-    //  $("#bundleBasketTable").html = "";
+      //  $("#bundleBasketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-    //  var totalBundle = 0;
+      //  var totalBundle = 0;
 
-      for (i = 0; i < storedBasket.length; i++) {
-        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
+      if(storedBasket !== null){
+        for (i = 0; i < storedBasket.length; i++) {
+          console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
-        //DISPLAY BASKET
-        $("#bundleBasketTable").append("<tr>"
-        + "<td>" +storedBasket[i].name + "</td>"
-         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
-         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "</tr>");
+          //DISPLAY BASKET
+          $("#bundleBasketTable").append("<tr>"
+          + "<td>" +storedBasket[i].name + "</td>"
+          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+          + "<td>" +storedBasket[i].quantity + "</td>"
+          + "</tr>");
 
 
-
-        //ADD BUNDLE PRICE
-      //  totalBundle += parseInt(storedBasket[i].price);
-
+          //ADD BUNDLE PRICE
+          totalBundle += parseInt(storedBasket[i].price);
+        }
       }
-
 
     });
 
@@ -488,9 +487,9 @@ var app = {
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
       console.log(storedBasket);
 
-    //  $("#basketTable").html = "";
+      //  $("#basketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-    //  app.element("basketTable").innerHTML = "";
+      //  app.element("basketTable").innerHTML = "";
 
 
       for (i = 0; i < storedBasket.length; i++) {
@@ -504,6 +503,8 @@ var app = {
 
       }
 
+      //CLOSE MODAL
+      alertify.closeAll();
 
     }else {
       var basket = initialBasket;
@@ -519,7 +520,7 @@ var app = {
         var storedBasket = JSON.parse(localStorage.getItem("basket"));
         console.log(storedBasket);
 
-      //  $("#basketTable").html = "";
+        //  $("#basketTable").html = "";
         app.element("bundleBasketTable").innerHTML = "";
 
 
@@ -530,11 +531,15 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-            + "<td><button>" +storedBasket[i].quantity + "</button></td>"
+          + "<td><button>" +storedBasket[i].quantity + "</button></td>"
           + "</tr>");
 
         }
       }
+
+      //CLOSE MODAL
+      alertify.closeAll();
+
     }
 
 
