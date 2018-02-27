@@ -236,6 +236,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
+        + "<td><button><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
 
@@ -319,6 +320,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
+          + "<td><button><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
 
@@ -511,6 +513,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
+        + "<td><button><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
       }
@@ -549,7 +552,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button>" +storedBasket[i].quantity + "</button></td>"
+          + "<td><button><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
         }
