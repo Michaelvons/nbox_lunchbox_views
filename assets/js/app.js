@@ -213,6 +213,8 @@ var app = {
     console.log(storedBasket);
 
     //$("#basketTable").html = "";
+
+    if( storedBasket !== null){
     app.element("basketTable").innerHTML = "";
     var totalBundle = 0;
 
@@ -230,7 +232,7 @@ var app = {
 
       //ADD BUNDLE PRICE
       totalBundle += parseInt(storedBasket[i].price);
-
+}
     }
 
     console.log("totalBundle");
@@ -610,9 +612,9 @@ var app = {
     views.goto("page-screensaver", function () {
 
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-      console.log("storedSetup");
-      console.log(storedSetup);
-      console.log(storedSetup[0].cityID);
+      // console.log("storedSetup");
+      // console.log(storedSetup);
+      // console.log(storedSetup[0].cityID);
       var cityID = storedSetup[0].cityID;
 
       console.log("nav to page-screensaver");
