@@ -74,7 +74,6 @@ var app = {
 
     views.start("page-launch", function () {
 
-
     });
 
   },
@@ -169,10 +168,18 @@ var app = {
 
   },
 
+  removeAttentionFlash:function () {
+
+    app.element("basket-table").classList.remove("animate-basket-background");
+// debugger;
+  },
+
   gotoCategoryPage: function () {
     views.goto("page-category", function () {
       console.log("nav to page-category");
 
+      //REMOVE ATTENTION FLASH
+      app.removeAttentionFlash();
 
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
@@ -258,12 +265,8 @@ var app = {
     console.log("categoryID");
     console.log(categoryID);
 
-
-
-    // console.log("storedSetup[0].locationCity");
-    // console.log(storedSetup[0].locationCity);
-    // console.log(storedSetup[0].locationName);
-
+    //REMOVE ATTENTION FLASH
+    app.removeAttentionFlash();
 
     //GET BUNDLES
     $.ajax({
@@ -506,6 +509,12 @@ var app = {
       //CLOSE MODAL
       alertify.closeAll();
 
+      //FLASH BASKET BACKGROUND
+      app.element("basket-table").classList.add("animate-basket-background");
+
+      //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+      app.stopAttentionFlash();
+
     }else {
       var basket = initialBasket;
 
@@ -540,10 +549,19 @@ var app = {
       //CLOSE MODAL
       alertify.closeAll();
 
+      //FLASH BASKET BACKGROUND
+      app.element("basket-table").classList.add("animate-basket-background");
+
+      //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+      app.stopAttentionFlash();
     }
 
+  },
 
-
+  stopAttentionFlash:function () {
+    setTimeout(function(){
+      app.element("basket-table").classList.remove("animate-basket-background");
+    }, 1000);
   },
 
   increment: function (identifier, price) {

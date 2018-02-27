@@ -367,6 +367,7 @@ th, td {
 .basket-table{
   flex-grow: 2;
   margin-right: 48px;
+  padding: 8px;
 }
 
 hr{
@@ -811,4 +812,33 @@ margin: 0px;
   border-radius: 100px;
   margin-top: 24px;
   background-image:url("../image/close.png") !important;
+}
+
+/* .animate-basket-background{
+background-color: #FFFFB9;
+} */
+
+
+@keyframes basket-flash {
+  from {
+    /* opacity: 0; */
+    /* transform:scale(1.4); */
+    background-color: #FFFFFF;
+    /* transform: translate3d(-100%, 0, 0); */
+  }
+
+  to {
+    /* opacity: 1; */
+    /* transform:scale(1.4); */
+    /* transform: none; */
+    background-color: #FFFF8B;
+  }
+}
+
+.animate-basket-background {
+  -webkit-animation: basket-flash 0.5s infinite;
+  -moz-animation:     basket-flash 0.5s infinite;
+  -o-animation:       basket-flash 0.5s infinite;
+  animation:          basket-flash 0.5s infinite;
+  border-radius: 8px;
 }
