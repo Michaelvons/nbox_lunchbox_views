@@ -236,7 +236,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "<td><button onclick='app.deleteCategoryBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteCategoryBasket(" + i + ",\"" + storedBasket[i].name + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE TO CATEGORY PAGE
@@ -319,7 +319,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
@@ -521,7 +521,7 @@ var app = {
         + "<td>" +storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
-        + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE
@@ -579,7 +579,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
@@ -627,69 +627,91 @@ var app = {
     }, 1000);
   },
 
-  deleteBundleBasket:function (basketIndex) {
+  deleteBundleBasket:function (basketIndex, bundleName, bundlePrice, bundleQuantity) {
     console.log("basketIndex");
     console.log(basketIndex);
 
-    //FETCH ALL STORED BASKET DATA
-    var storedBasket = JSON.parse(localStorage.getItem("basket"));
-    console.log("storedBasket");
-    console.log(storedBasket);
 
-    //REMOVE ELEMENT FROM BASKET ARRAY
-    deletedBundle = storedBasket.splice(basketIndex, 1);
-    console.log("deletedBundle");
-    console.log(deletedBundle);
+    var deleteBundleTemplate = "<div class='delete-modal'><div class='modal-header'>Are you sure you want to remove this bundle from your cart ?</div>"
+    +"<div class='modal-body'>"
+    +"<p class='delete-basket-details-header'>BUNDLE NAME</p>"
+    +"<p class='delete-basket-details-text'>" + bundleName + "</p>"
+    +"<p class='delete-basket-details-header'>PRICE</p>"
+    +"<p class='delete-basket-details-text'>" + bundlePrice + "</p>"
+    +"<p class='delete-basket-details-header'>QUANTITY</p>"
+    +"<p class='delete-basket-details-text'>" + bundleQuantity + "</p></div></div>";
 
-    //CLEAR basket LOCAL STORAGE
-    //localStorage.clear("basket");
-    localStorage.removeItem("basket");
 
-    //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
-    localStorage.setItem("basket", JSON.stringify(storedBasket));
+    alertify.confirm("Confirm delete action", deleteBundleTemplate,
+    function () {
 
-    //FETCH NEW basket LOCAL STORAGE ARRAY;
-    var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
-    console.log("newStoredBasket");
-    console.log(newStoredBasket);
+          //FETCH ALL STORED BASKET DATA
+          var storedBasket = JSON.parse(localStorage.getItem("basket"));
+          console.log("storedBasket");
+          console.log(storedBasket);
 
-    //CLEAR BASKET TABLE
-    app.element("bundleBasketTable").innerHTML = "";
+          //REMOVE ELEMENT FROM BASKET ARRAY
+          deletedBundle = storedBasket.splice(basketIndex, 1);
+          console.log("deletedBundle");
+          console.log(deletedBundle);
 
-    var totalBundle = 0;
+          //CLEAR basket LOCAL STORAGE
+          //localStorage.clear("basket");
+          localStorage.removeItem("basket");
 
-    //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
-    for (i = 0; i < newStoredBasket.length; i++) {
-      $("#bundleBasketTable").append("<tr>"
-      + "<td>" +newStoredBasket[i].name + "</td>"
-      + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
-      + "<td>" +newStoredBasket[i].quantity + "</td>"
-      + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
-      + "</tr>");
+          //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
+          localStorage.setItem("basket", JSON.stringify(storedBasket));
 
-      //ADD BUNDLE PRICE
-      totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
-    }
+          //FETCH NEW basket LOCAL STORAGE ARRAY;
+          var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
+          console.log("newStoredBasket");
+          console.log(newStoredBasket);
 
-    //FLASH BASKET BACKGROUND
-    app.element("bundle-basket-table").classList.add("animate-basket-background");
+          //CLEAR BASKET TABLE
+          app.element("bundleBasketTable").innerHTML = "";
 
-    //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
-    app.stopAttentionFlash();
+          var totalBundle = 0;
 
-    console.log("totalBundle");
-    console.log(totalBundle);
+          //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
+          for (i = 0; i < newStoredBasket.length; i++) {
+            $("#bundleBasketTable").append("<tr>"
+            + "<td>" +newStoredBasket[i].name + "</td>"
+            + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
+            + "<td>" + newStoredBasket[i].quantity + "</td>"
+            + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+            + "</tr>");
 
-    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-    var deliveryCost = app.element("deliveryCost").innerHTML;
-    //  var quantity = app.element("bundleCount").innerHTML;
-    console.log("deliveryCost");
-    console.log(deliveryCost);
-    var grandTotal = totalBundle +  parseInt(deliveryCost);
+            //ADD BUNDLE PRICE
+            totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+          }
 
-    console.log("grandTotal");
-    console.log(grandTotal);
-    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+          //FLASH BASKET BACKGROUND
+          app.element("bundle-basket-table").classList.add("animate-basket-background");
+
+          //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+          app.stopAttentionFlash();
+
+          console.log("totalBundle");
+          console.log(totalBundle);
+
+          app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+          var deliveryCost = app.element("deliveryCost").innerHTML;
+          //  var quantity = app.element("bundleCount").innerHTML;
+          console.log("deliveryCost");
+          console.log(deliveryCost);
+          var grandTotal = totalBundle +  parseInt(deliveryCost);
+
+          console.log("grandTotal");
+          console.log(grandTotal);
+          app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+
+    },
+    function () {
+    }).set({movable:false, padding: false,frameless:false,transition: 'fade',labels: {ok: 'DELETE', cancel: 'CANCEL'}}).show();
+
+
+    //debugger;
+
 
   },
 
@@ -731,7 +753,7 @@ var app = {
       + "<td>" +newStoredBasket[i].name + "</td>"
       + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
       + "<td>" +newStoredBasket[i].quantity + "</td>"
-      + "<td><button onclick='app.deleteBundleBasket(" + i + ")'><img src='assets/image/trash.png'></button></td>"
+      + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
       + "</tr>");
 
       //ADD BUNDLE PRICE

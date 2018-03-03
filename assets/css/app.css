@@ -413,7 +413,7 @@ button:hover{
 }
 
 .setup-main-content{
-  background-color: #75ac65;
+  background-color: #405e38;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -730,6 +730,7 @@ input {
   color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  padding: 24px;
 }
 
 .checkout-body{
@@ -841,4 +842,90 @@ background-color: #FFFFB9;
   -o-animation:       basket-flash 0.5s infinite;
   animation:          basket-flash 0.5s infinite;
   border-radius: 8px;
+}
+
+
+.alertify .ajs-footer .ajs-buttons.ajs-primary{
+  display: flex;
+}
+
+.modal-header{
+  background-color: #ff4545;
+  padding: 88px 40px 114px 40px;
+  font-size: 32px;
+  font-family: Montserrat-Regular;
+  color: white;
+}
+
+.modal-body{
+  padding: 52px 40px;
+  margin-bottom: 100px;
+}
+
+.setup-message{
+  color:white;
+  font-family: Montserrat-Regular;
+}
+
+.ajs-header{
+  background-color: #ff4545 !important;
+  padding: 40px !important;
+  margin: -24px !important;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  text-indent: -9999px;
+}
+
+.ajs-button{
+    font-family: Montserrat-Medium;
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok{
+  background-color: #008042 !important;
+  color:white;
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-cancel {
+    background-color: #f5f5f5 !important;
+    color: #4a4a4a;
+}
+
+.ajs-button .ajs-cancel{
+  background-color: #A3A3A3;
+}
+
+.alertify .ajs-footer .ajs-buttons.ajs-primary {
+    padding: 40px;
+}
+
+/* .modal-body h4{
+  margin-bottom: 4px;
+} */
+
+
+.delete-basket-details-header{
+  font-size: 16px;
+color: #656363;
+font-family: Montserrat-Bold;
+margin-bottom: 4px;
+}
+
+.delete-basket-details-text{
+  color: black;
+  font-size: 24px;
+  margin-top: 8px;
+  margin-bottom: 40px;
+}
+
+.footer-logo{
+  max-width:40px;
+}
+
+.logo-grid{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 20px 40px;
+  margin: 0;
 }
