@@ -73,7 +73,21 @@ var app = {
     app.CalculateViewPort();
 
     views.start("page-launch", function () {
+    //  document.getElementById("navSetupButton").style.display = "none";
+      var storedSetup = JSON.parse(localStorage.getItem("setup"));
+      console.log("Load Screen");
 
+      if (storedSetup === null) {
+        console.log("No config found");
+        setTimeout(function(){
+          document.getElementById("navSetupButton").style.visibility = "visible";
+        }, 3000);
+      }else {
+        console.log("Config Found");
+        setTimeout(function(){
+          app.gotoScreensaverPage();
+        }, 3000);
+      }
     });
 
   },
@@ -115,6 +129,9 @@ var app = {
   setupDevice:function(){
     var locationID = $("#locationID").val();
     var terminalID = $("#terminalID").val();
+    document.getElementById("setupDeviceButton").disabled = true;
+    document.getElementById("setupDeviceButton").style.backgroundColor = "#5D5D5D";
+    document.getElementById("setupDevicePrelooader").style.visibility = "visible";
 
     console.log("locationID");
     console.log(locationID);
@@ -136,6 +153,7 @@ var app = {
 
         console.log("aliasID");
         console.log(aliasID);
+        console.log(locationID);
 
         if(locationID === aliasID){
           console.log("We found it");
@@ -153,8 +171,10 @@ var app = {
 
           setup.unshift(setupArray);
           localStorage.setItem("setup", JSON.stringify(setup));
+           app.gotoScreensaverPage();
           break;
         }
+
       }
 
       //  NAV TO SCREENSAVER PAGE BECAUSE THAT'S THE FLOW BEFORE CATEGORIES
@@ -162,7 +182,7 @@ var app = {
       //   console.log("nav to page-screensaver");
       // })
 
-      app.gotoScreensaverPage();
+      //  app.gotoScreensaverPage();
 
     });
 
@@ -180,6 +200,10 @@ var app = {
 
       // //REMOVE ATTENTION FLASH
       // app.removeAttentionFlash();
+      ////
+
+
+      ////
 
       app.element("basket-table").classList.remove("animate-basket-background");
 
@@ -205,7 +229,7 @@ var app = {
         for (i = 0; i < categories.message.length; i++) {
           text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6,\"" + categories.message[i]._id + "\")'>"
           +"<div class='card-content'>"
-          +"<img class='card-image' src='" + categories.message[i].image +"'>"
+          +"<img class='card-image lazy-image' src='" + categories.message[i].image +"'>"
           +"<div class='card-caption'>"
           +"<p class='card-title'>" + categories.message[i].category + "</p>"
           +"<p class='card-description'>"+ categories.message[i].description +"</p>"
@@ -272,6 +296,7 @@ var app = {
     console.log("categoryID");
     console.log(categoryID);
 
+
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -282,6 +307,7 @@ var app = {
       console.log("bundles");
       console.log(bundles);
       console.log(bundles.message.length);
+      document.getElementById("placeholder-cards-bundle").style.display = "none";
 
       text = "";
       for (i = 0; i < bundles.message.length; i++) {
@@ -308,6 +334,7 @@ var app = {
 
       //  $("#bundleBasketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
+
       var totalBundle = 0;
 
       if(storedBasket !== null){
@@ -376,6 +403,7 @@ var app = {
       app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
 
       app.element("bundle-basket-table").classList.remove("animate-basket-background");
+      document.getElementById("placeholder-cards-bundle").style.display = "flex";
 
     })
   },
@@ -645,65 +673,65 @@ var app = {
     alertify.confirm("Confirm delete action", deleteBundleTemplate,
     function () {
 
-          //FETCH ALL STORED BASKET DATA
-          var storedBasket = JSON.parse(localStorage.getItem("basket"));
-          console.log("storedBasket");
-          console.log(storedBasket);
+      //FETCH ALL STORED BASKET DATA
+      var storedBasket = JSON.parse(localStorage.getItem("basket"));
+      console.log("storedBasket");
+      console.log(storedBasket);
 
-          //REMOVE ELEMENT FROM BASKET ARRAY
-          deletedBundle = storedBasket.splice(basketIndex, 1);
-          console.log("deletedBundle");
-          console.log(deletedBundle);
+      //REMOVE ELEMENT FROM BASKET ARRAY
+      deletedBundle = storedBasket.splice(basketIndex, 1);
+      console.log("deletedBundle");
+      console.log(deletedBundle);
 
-          //CLEAR basket LOCAL STORAGE
-          //localStorage.clear("basket");
-          localStorage.removeItem("basket");
+      //CLEAR basket LOCAL STORAGE
+      //localStorage.clear("basket");
+      localStorage.removeItem("basket");
 
-          //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
-          localStorage.setItem("basket", JSON.stringify(storedBasket));
+      //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
+      localStorage.setItem("basket", JSON.stringify(storedBasket));
 
-          //FETCH NEW basket LOCAL STORAGE ARRAY;
-          var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
-          console.log("newStoredBasket");
-          console.log(newStoredBasket);
+      //FETCH NEW basket LOCAL STORAGE ARRAY;
+      var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
+      console.log("newStoredBasket");
+      console.log(newStoredBasket);
 
-          //CLEAR BASKET TABLE
-          app.element("bundleBasketTable").innerHTML = "";
+      //CLEAR BASKET TABLE
+      app.element("bundleBasketTable").innerHTML = "";
 
-          var totalBundle = 0;
+      var totalBundle = 0;
 
-          //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
-          for (i = 0; i < newStoredBasket.length; i++) {
-            $("#bundleBasketTable").append("<tr>"
-            + "<td>" +newStoredBasket[i].name + "</td>"
-            + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
-            + "<td>" + newStoredBasket[i].quantity + "</td>"
-            + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
-            + "</tr>");
+      //DISPLAY NEW BASKET DATA FOR BUNDLES PAGE
+      for (i = 0; i < newStoredBasket.length; i++) {
+        $("#bundleBasketTable").append("<tr>"
+        + "<td>" +newStoredBasket[i].name + "</td>"
+        + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
+        + "<td>" + newStoredBasket[i].quantity + "</td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+        + "</tr>");
 
-            //ADD BUNDLE PRICE
-            totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
-          }
+        //ADD BUNDLE PRICE
+        totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+      }
 
-          //FLASH BASKET BACKGROUND
-          app.element("bundle-basket-table").classList.add("animate-basket-background");
+      //FLASH BASKET BACKGROUND
+      app.element("bundle-basket-table").classList.add("animate-basket-background");
 
-          //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
-          app.stopAttentionFlash();
+      //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
+      app.stopAttentionFlash();
 
-          console.log("totalBundle");
-          console.log(totalBundle);
+      console.log("totalBundle");
+      console.log(totalBundle);
 
-          app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-          var deliveryCost = app.element("deliveryCost").innerHTML;
-          //  var quantity = app.element("bundleCount").innerHTML;
-          console.log("deliveryCost");
-          console.log(deliveryCost);
-          var grandTotal = totalBundle +  parseInt(deliveryCost);
+      app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+      var deliveryCost = app.element("deliveryCost").innerHTML;
+      //  var quantity = app.element("bundleCount").innerHTML;
+      console.log("deliveryCost");
+      console.log(deliveryCost);
+      var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-          console.log("grandTotal");
-          console.log(grandTotal);
-          app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+      console.log("grandTotal");
+      console.log(grandTotal);
+      app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
     },
     function () {
@@ -821,6 +849,7 @@ var app = {
 
   gotoSetupPage:function () {
     views.goto("page-setup", function () {
+      document.getElementById("setupDevicePrelooader").style.visibility = "hidden";
       console.log("nav to page-setup");
     })
   },
@@ -1101,3 +1130,24 @@ window.addEventListener('load', function () {
 
 
 app.start();
+
+//LZY LOAD IMAGES
+$(function() {
+  console.log("lazy loading");
+  //lazyload();
+
+  $('.lazy-image').lazy({
+    effect: "fadeIn",
+    effectTime: 750,
+    threshold: 0,
+    afterLoad:function(element) {
+
+      console.log('finished loading ' + element.data('src'));
+      //  document.getElementById("placeholder").style.display = "none";
+    },
+    beforeLoad:function(element) {
+      console.log('before loading ' + element.data('src'));
+      //  document.getElementById("placeholder").style.display = "none";
+    }
+  });
+});

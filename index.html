@@ -11,6 +11,7 @@
   <!-- CUSTOM STYLE -->
   <link rel="stylesheet" href="assets/css/swiper.min.css"/>
   <link rel="stylesheet" href="assets/css/alertify.min.css"/>
+  <link rel="stylesheet" href="assets/css/placeholder-loading.css" type="text/css"/>
 
   <!--  -->
 
@@ -35,7 +36,7 @@
           <img id="pizza" class="setup-preloader" src="assets/image/pizza.png">
         </div>
         <p class="setup-message"> checking for config file ...</p>
-        <button class="setup-button" onclick="app.gotoSetupPage()">SETUP THIS DEVICE</button>
+        <button id="navSetupButton" class="setup-button" onclick="app.gotoSetupPage()">SETUP THIS DEVICE</button>
       </div>
     </div>
 
@@ -46,9 +47,17 @@
         <div class="setup-form">
           <input id="terminalID" type="text" placeholder="Enter terminal ID">
           <input id="locationID" type="text" placeholder="Enter location ID">
-          <button class="setup-button" onclick="app.setupDevice()">CONFIGURE DEVICE</button>
+          <button id="setupDeviceButton" class="setup-button" onclick="app.setupDevice()">CONFIGURE DEVICE</button>
           <!-- <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button> -->
         </div>
+        <div id="setupDevicePrelooader">
+        <div class="setup-preloaders">
+          <img id="drink" class="setup-preloader" src="assets/image/drink.png">
+          <img id="chicken" class="setup-preloader" src="assets/image/chicken.png">
+          <img id="pizza" class="setup-preloader" src="assets/image/pizza.png">
+        </div>
+        <p class="setup-message">Loading...</p>
+      </div>
       </div>
     </div>
 
@@ -150,18 +159,147 @@
         </div>
 
         <div id="cards-bundle" class="card-group">
+
+        </div>
+
+        <div id="placeholder-cards-bundle" class="card-group">
           <!-- CARD 1 -->
-          <!-- <div id="card-bundle-1" class="card card-active" onclick="app.showModalBundleDetail('1',6)">
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
             <div class="card-content">
-              <img class="card-image" src="assets/image/fastfood.png">
-              <div class="card-caption">
-                <p class="card-bundle-title">Bundle title 7</p>
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card-background">
             </div>
-          </div> -->
+          </div>
 
+          <!-- CARD 1 -->
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
+            <div class="card-content">
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 1 -->
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
+            <div class="card-content">
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 1 -->
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
+            <div class="card-content">
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 1 -->
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
+            <div class="card-content">
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
+
+          <!-- CARD 1 -->
+          <div id="card-bundle-1" class="card" onclick="app.showModalBundleDetail('1',6)">
+            <div class="card-content">
+              <div class="ph-item">
+                <div class="ph-col-12">
+                  <div class="ph-picture"></div>
+                  <div class="ph-row">
+                    <div class="ph-col-12 empty"></div>
+                    <div class="ph-col-8 big"></div>
+                    <div class="ph-col-2 empty big"></div>
+                    <div class="ph-col-2 big"></div>
+                    <div class="ph-col-4"></div>
+                    <div class="ph-col-2 empty"></div>
+                    <div class="ph-col-6"></div>
+                    <div class="ph-col-12"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-background">
+            </div>
+          </div>
         </div>
 
         <!-- BASKET -->
@@ -229,11 +367,13 @@
 <script src="gsap/ScrollToPlugin.min.js"></script>
 <script src="assets/js/fastclick.js"></script>
 <script src="assets/js/jquery-3.2.1.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery.lazy.min.js"></script> -->
+<script src="assets/js/jquery.lazy.js"></script>
 
 <!-- CUSTOM PLUGINS -->
 <script src="assets/js/swiper.min.js"></script>
 <script src="assets/js/alertify.min.js"></script>
-
+<script src="assets/js/toastr.js"></script>
 <!--  -->
 
 

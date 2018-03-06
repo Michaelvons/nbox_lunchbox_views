@@ -248,6 +248,8 @@ margin: 0px;
   position: relative;
   border-radius: 8px;
   height: auto;
+      min-height: 400px;
+      justify-content: center;
 }
 
 .card-active{
@@ -928,4 +930,45 @@ margin-bottom: 4px;
   background-color: white;
   padding: 20px 40px;
   margin: 0;
+}
+
+#navSetupButton.setup-button{
+  visibility: hidden;
+}
+
+.ph-item{
+  width: 100%;
+  background-color: transparent !important;
+  padding:0px !important;
+  margin-bottom:0px !important;
+  border:none !important;
+}
+
+.ph-picture{
+  background-color: white !important;
+  opacity: .1 !important
+}
+
+.ph-row{
+  margin-bottom: 0px !important;
+}
+
+.ph-row div{
+  background-color: white !important;
+opacity: .1 !important;
+border-radius: 4px !important;
+}
+
+.ph-item::before{
+  opacity: .1 !important;
+  animation: phAnimation 1.5s ease-in-out infinite;
+}
+
+
+.ph-picture{
+  border-radius: 8px;
+}
+
+.ph-row .empty{
+  background-color: rgba(255, 255, 255, 0) !important;
 }
