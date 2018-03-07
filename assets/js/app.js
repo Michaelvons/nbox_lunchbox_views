@@ -251,6 +251,8 @@ var app = {
         console.log("categories");
         console.log(categories);
         console.log(categories.message.length);
+        document.getElementById("placeholder-cards-category").style.display = "none";
+
 
         text = "";
         for (i = 0; i < categories.message.length; i++) {

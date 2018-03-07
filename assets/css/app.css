@@ -185,7 +185,10 @@ body{
   background-color: black;
   margin: 0px;
   width: 100%;
-  height: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+  height: 100vh;
   background-image: url("../image/background.png");
   background-position: center;
   background-size: cover;
@@ -921,9 +924,9 @@ margin-bottom: 4px;
   margin-bottom: 40px;
 }
 
-.footer-logo{
+/* .footer-logo{
   max-width:40px;
-}
+} */
 
 .logo-grid{
   display: flex;
