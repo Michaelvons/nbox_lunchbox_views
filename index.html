@@ -30,12 +30,12 @@
           <span>Lunchbox</span>
         </div>
 
-        <div class="setup-preloaders">
+        <div id="launchPreloader" class="setup-preloaders">
           <img id="drink" class="setup-preloader" src="assets/image/drink.png">
           <img id="chicken" class="setup-preloader" src="assets/image/chicken.png">
           <img id="pizza" class="setup-preloader" src="assets/image/pizza.png">
         </div>
-        <p class="setup-message"> checking for config file ...</p>
+        <p id="launchPreloaderText" class="setup-message"> Loading your device settings...</p>
         <button id="navSetupButton" class="setup-button" onclick="app.gotoSetupPage()">SETUP THIS DEVICE</button>
       </div>
     </div>
@@ -47,16 +47,16 @@
         <div class="setup-form">
           <input id="terminalID" type="text" placeholder="Enter terminal ID">
           <input id="locationID" type="text" placeholder="Enter location ID">
-          <button id="setupDeviceButton" class="setup-button" onclick="app.setupDevice()">CONFIGURE DEVICE</button>
+          <button id="setupDeviceButton" class="setup-button" onclick="app.validateSetupParams()">CONFIGURE DEVICE</button>
           <!-- <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button> -->
         </div>
-        <div id="setupDevicePrelooader">
+        <div id="setupDevicePrelooader" class="setup-message">
         <div class="setup-preloaders">
           <img id="drink" class="setup-preloader" src="assets/image/drink.png">
           <img id="chicken" class="setup-preloader" src="assets/image/chicken.png">
           <img id="pizza" class="setup-preloader" src="assets/image/pizza.png">
         </div>
-        <p class="setup-message">Loading...</p>
+        <p class="setup-message">Configuring your device. Please wait..</p>
       </div>
       </div>
     </div>

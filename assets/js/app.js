@@ -73,7 +73,7 @@ var app = {
     app.CalculateViewPort();
 
     views.start("page-launch", function () {
-    //  document.getElementById("navSetupButton").style.display = "none";
+      //  document.getElementById("navSetupButton").style.display = "none";
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
       console.log("Load Screen");
 
@@ -81,12 +81,15 @@ var app = {
         console.log("No config found");
         setTimeout(function(){
           document.getElementById("navSetupButton").style.visibility = "visible";
-        }, 3000);
+          document.getElementById("launchPreloader").style.visibility = "hidden";
+          document.getElementById("launchPreloaderText").style.visibility = "hidden";
+
+        }, 5000);
       }else {
         console.log("Config Found");
         setTimeout(function(){
           app.gotoScreensaverPage();
-        }, 3000);
+        }, 5000);
       }
     });
 
@@ -126,6 +129,30 @@ var app = {
   //
   // APP LOGIC STARTS
   //
+
+  validateSetupParams:function functionName() {
+    var locationID = $("#locationID").val();
+    var terminalID = $("#terminalID").val();
+
+    if(locationID === ""){
+      //  document.getElementById("setupDevicePrelooader").style.visibility = "visible";
+      app.element("locationID").classList.add("input-error");
+    }else {
+      app.element("locationID").classList.remove("input-error");
+    }
+
+    if(terminalID === ""){
+      app.element("terminalID").classList.add("input-error");
+    }else {
+      app.element("terminalID").classList.remove("input-error");
+    }
+
+    if (locationID !== "" && terminalID !== "") {
+      app.setupDevice();
+    }
+
+  },
+
   setupDevice:function(){
     var locationID = $("#locationID").val();
     var terminalID = $("#terminalID").val();
@@ -171,7 +198,7 @@ var app = {
 
           setup.unshift(setupArray);
           localStorage.setItem("setup", JSON.stringify(setup));
-           app.gotoScreensaverPage();
+          app.gotoScreensaverPage();
           break;
         }
 

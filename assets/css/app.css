@@ -450,6 +450,8 @@ button:hover{
 
 .setup-preloaders{
   margin-top: 64px;
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -971,4 +973,14 @@ border-radius: 4px !important;
 
 .ph-row .empty{
   background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.setup-message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-error{
+  border: 3px solid #FF5C5C;
 }
