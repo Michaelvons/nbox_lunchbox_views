@@ -256,7 +256,7 @@ var app = {
 
         text = "";
         for (i = 0; i < categories.message.length; i++) {
-          text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",6,\"" + categories.message[i]._id + "\")'>"
+          text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",\"" + categories.message.length + "\",\"" + categories.message[i]._id + "\")'>"
           +"<div class='card-content'>"
           +"<img class='card-image lazy-image' src='" + categories.message[i].image +"'>"
           +"<div class='card-caption'>"
@@ -342,7 +342,7 @@ var app = {
       for (i = 0; i < bundles.message.length; i++) {
         app.allMenu = bundles.message;
 
-        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",6,\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\")'>"
+        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",\"" + bundles.message.length + "\",\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\")'>"
         +"<div class='card-content'>"
         +"<img class='card-image' src='" + bundles.message[i].image +"'>"
         +"<div class='card-caption'>"

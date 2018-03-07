@@ -302,13 +302,12 @@ margin: 0px;
 
 .basket{
   background-color: white;
-  margin-top: 64px;
+  margin-top: 34px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 32px 32px 40px 32px;
-
-
+  height: 250px;
 }
 
 table tr:nth-child(even) {
