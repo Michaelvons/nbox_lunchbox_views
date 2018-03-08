@@ -886,6 +886,8 @@ var app = {
   showModalCheckout:function(){
     console.log("showModalCheckout clicked");
 
+      var grandTotal =  app.element("grandTotal").innerHTML;
+
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
     //IMG Here
@@ -893,19 +895,124 @@ var app = {
     +"<p class='checkout-title'>Checkout</p>"
     +"<div class='checkout-total'>"
     +"<p class='checkout-total-title'>TOTAL</p>"
-    +"<p class='checkout-total-amount'><span class='currency checkout-currency'>NGN</span>27,505.<span class='currency checkout-currency'>00</span></p>"
+    +"<p class='checkout-total-amount'><span class='currency checkout-currency'>NGN</span>" + grandTotal+"<span class='currency checkout-currency'>.00</span></p>"
     +"</div>"
     +"</div>"
-    +"<div class='checkout-body'>"
-    +"<input class='checkout-input' type='text' placeholder='Phone Number'>"
-    +"<input class='checkout-input' type='text' placeholder='Name'>"
-    +"<button class='checkout-button'><span>PAY</span><p><span class='currency'>NGN</span>600.<span class='currency'>00</span></p></button>"
+    +"<div id='checkoutBody' class='checkout-body'>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Phone Number'>"
+    +"<input id='userPasscode' class='checkout-input' type='text' placeholder='Passcode'>"
+    +"<button class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
 
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
+  },
+
+  validateOrderDetails:function () {
+    console.log("placeOrder");
+    var phonenumber = $("#phoneNumber").val();
+    var phoneNumberLength = phonenumber.length;
+    var passcode = $("#userPasscode").val();
+
+    console.log(phonenumber);
+    console.log(passcode);
+    var isPhoneNumber = app.validateNumeric(phonenumber);
+    var isPasscode = app.validateNumeric(passcode);
+    var isPhoneNumberLength = app.validatePhoneNumberLength(phonenumber);
+    console.log(isPhoneNumber);
+    console.log(isPasscode);
+    console.log(isPhoneNumberLength);
+    console.log(phoneNumberLength);
+
+    if (!isPhoneNumber) {
+      console.log("phonenumber is invalid");
+      app.element("phoneNumber").classList.add("input-error");
+    }else {
+      console.log("valid phonenumber");
+      app.element("phoneNumber").classList.remove("input-error");
+    }
+
+    if (isPhoneNumberLength) {
+      console.log("valid phoneNumberLength");
+      app.element("phoneNumber").classList.remove("input-error");
+    }else {
+      console.log("phoneNumberLength is invalid");
+      app.element("phoneNumber").classList.add("input-error");
+    }
+
+    if (!isPasscode) {
+      console.log("passcode is invalid");
+      app.element("userPasscode").classList.add("input-error");
+    }else {
+      console.log("valid passcode");
+      app.element("userPasscode").classList.remove("input-error");
+    }
+
+    if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
+      console.log("All Credentials Correct");
+      app.placeOrder();
+    }else {
+      console.log("Invalid Credentials");
+    }
+  },
+
+  validatePhoneNumberLength:function (phonenumber) {
+    if (phonenumber.length === 11) {
+      return true;
+    }else {
+      return false;
+    }
+  },
+
+  validateNumeric: function (inputtext) {
+    var numericExpression = /^[0-9]+$/;
+    if (inputtext.match(numericExpression)) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+
+  validateAlphabet: function (inputtext) {
+    var alphaExp = /^[a-zA-Z]+$/;
+    if (inputtext.match(alphaExp)) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  placeOrder:function () {
+    //CHECK DB IF USER EXIST AND USE RECORDS TO PERFORM TRANSACTION
+    //IF USER DOESN'T EXIST SHOW CARD FORM
+    var cardForm = "<div class='form-card'>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Name'>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Email'>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Card Number'>"
+    +"<div class='multiple-input'>"
+    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
+    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='Expiry Day'>"
+    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='CVV'>"
+    +"</div>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Card Pin'>"
+    +"<button class='checkout-button' onclick='app.confirmOtp()'>CONTINUE</button>"
+    +"</div>";
+    console.log("placeOrder");
+
+    app.element("checkoutBody").innerHTML = cardForm;
+
+  },
+
+  confirmOtp:function () {
+    var otpForm = "<div class='form-card'>"
+    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
+    +"<button class='checkout-button' onclick='app.validateOrderDetails()'>COMPLETE TRANSACTION</button>"
+    +"</div>";
+
+    app.element("checkoutBody").innerHTML = otpForm;
   },
 
   gotoScreensaverPage:function () {
