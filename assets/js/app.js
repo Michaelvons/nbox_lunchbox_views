@@ -886,7 +886,7 @@ var app = {
   showModalCheckout:function(){
     console.log("showModalCheckout clicked");
 
-      var grandTotal =  app.element("grandTotal").innerHTML;
+    var grandTotal =  app.element("grandTotal").innerHTML;
 
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
@@ -900,7 +900,7 @@ var app = {
     +"</div>"
     +"<div id='checkoutBody' class='checkout-body'>"
     +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Phone Number'>"
-    +"<input id='userPasscode' class='checkout-input' type='text' placeholder='Passcode'>"
+    +"<input id='cardPinQuick' class='checkout-input' type='text' placeholder='Card Pin'>"
     +"<button class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
@@ -914,7 +914,7 @@ var app = {
     console.log("placeOrder");
     var phonenumber = $("#phoneNumber").val();
     var phoneNumberLength = phonenumber.length;
-    var passcode = $("#userPasscode").val();
+    var passcode = $("#cardPinQuick").val();
 
     console.log(phonenumber);
     console.log(passcode);
@@ -944,10 +944,10 @@ var app = {
 
     if (!isPasscode) {
       console.log("passcode is invalid");
-      app.element("userPasscode").classList.add("input-error");
+      app.element("cardPinQuick").classList.add("input-error");
     }else {
       console.log("valid passcode");
-      app.element("userPasscode").classList.remove("input-error");
+      app.element("cardPinQuick").classList.remove("input-error");
     }
 
     if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
@@ -988,25 +988,108 @@ var app = {
   placeOrder:function () {
     //CHECK DB IF USER EXIST AND USE RECORDS TO PERFORM TRANSACTION
     //IF USER DOESN'T EXIST SHOW CARD FORM
+
+    //  var phonenumber = $("phoneNumber").val();
+    var phoneNumber = $("#phoneNumber").val();
+
+    var userData = {phonenumber : phoneNumber}
+
+    $.ajax({
+      url: app.BASE_URL + "checkuserinfo",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(userData),
+      contentType: "application/json"
+    }).done(function (user) {
+      console.log(user);
+      if (user.status === 404) {
+        console.log("User not found. First Payment. Show Card Form");
+        app.showCardForm();
+      }
+
+      if (user.status === 200) {
+        console.log("User found. Recurring Payment. Show OTP Form");
+        app.showOtpForm();
+      }
+
+    })
+  },
+
+  showCardForm:function () {
+
     var cardForm = "<div class='form-card'>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Name'>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Email'>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Card Number'>"
+    +"<input id='name' class='checkout-input' type='text' placeholder='Name'>"
+    +"<input id='email' class='checkout-input' type='text' placeholder='Email'>"
+    +"<input id='cardNumber' class='checkout-input' type='text' placeholder='Card Number'>"
     +"<div class='multiple-input'>"
-    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
-    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='Expiry Day'>"
-    +"<input id='phoneNumber' class='checkout-input-short' type='text' placeholder='CVV'>"
+    +"<input id='expiryMonth' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
+    +"<input id='expiryYear' class='checkout-input-short' type='text' placeholder='Expiry Year'>"
+    +"<input id='cvv' class='checkout-input-short' type='text' placeholder='CVV'>"
     +"</div>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Card Pin'>"
-    +"<button class='checkout-button' onclick='app.confirmOtp()'>CONTINUE</button>"
+    +"<input id='cardPinLong' class='checkout-input' type='text' placeholder='Card Pin'>"
+    +"<button class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
     +"</div>";
-    console.log("placeOrder");
+    console.log("showCardForm");
 
     app.element("checkoutBody").innerHTML = cardForm;
 
   },
 
-  confirmOtp:function () {
+  payWithCard:function () {
+
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var cardNumber = $("#cardNumber").val();
+    var expiryMonth = $("#expiryMonth").val();
+    var expiryYear = $("#expiryYear").val();
+    var cvv = $("#cvv").val();
+    var cardPin = $("#cardPinLong").val();
+    var amount = 10;
+    var phonenumber = "08143483866";
+
+    console.log("payWithCard");
+    console.log(name);
+    console.log(email);
+    console.log(cardNumber);
+    console.log(expiryMonth);
+    console.log(expiryYear);
+    console.log(cvv);
+    console.log(cardPin);
+    console.log(amount);
+
+    var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin,amount : amount, email :  email, phonenumber : phonenumber, firstname : name}
+
+    $.ajax({
+      url: app.BASE_URL + "payviacard",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(cardData),
+      contentType: "application/json"
+    }).done(function (transaction) {
+      console.log(transaction);
+      if(transaction.error_code === 1){
+        console.log("An Error Occurred");
+        console.log(transaction.message);
+      }
+
+      if(transaction.error_code === 0){
+        app.showOtpForm();
+      }
+      // if (user.status === 404) {
+      //   console.log("User not found. First Payment. Show Card Form");
+      //   app.showCardForm();
+      // }
+      //
+      // if (user.status === 200) {
+      //   console.log("User found. Recurring Payment. Show OTP Form");
+      //   app.showOtpForm();
+      // }
+
+    })
+
+  },
+
+  showOtpForm:function () {
     var otpForm = "<div class='form-card'>"
     +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
     +"<button class='checkout-button' onclick='app.validateOrderDetails()'>COMPLETE TRANSACTION</button>"
