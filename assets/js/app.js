@@ -342,7 +342,7 @@ var app = {
       for (i = 0; i < bundles.message.length; i++) {
         app.allMenu = bundles.message;
 
-        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",\"" + bundles.message.length + "\",\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\")'>"
+        text += "<div id='card-bundle-" + i +"' class='card' onclick='app.showModalBundleDetail(" + i + ",\"" + bundles.message.length + "\",\"" + bundles.message[i].description + "\", \"" + bundles.message[i].price + "\", \"" + bundles.message[i].name + "\", \"" + bundles.message[i].image + "\",\"" + bundles.message[i]._id + "\",\"" + bundles.message[i].category_id + "\")'>"
         +"<div class='card-content'>"
         +"<img class='card-image' src='" + bundles.message[i].image +"'>"
         +"<div class='card-caption'>"
@@ -437,7 +437,7 @@ var app = {
     })
   },
 
-  showModalBundleDetail:function (cardID, cardLength, description, price, name, image) {
+  showModalBundleDetail:function (cardID, cardLength, description, price, name, image, bundleID, categoryID) {
     console.log("cardID");
     console.log(cardID);
 
@@ -517,7 +517,7 @@ var app = {
     +"<p><span class='currency'>NGN </span><span id='bundleTotal'>" + parseInt(price, 10).toLocaleString() + "</span><span class='currency'>.00</span></p>"
     +"</div>"
     +"</div>"
-    +"<button class='green-button' onclick='app.addToBasket(\"" + name + "\", \"" + price + "\")'>"
+    +"<button class='green-button' onclick='app.addToBasket(\"" + name + "\", \"" + price + "\",\"" + bundleID + "\", \"" + categoryID + "\")'>"
     +"ADD TO BASKET"
     +"</button>"
     +"</div>"
@@ -546,7 +546,7 @@ var app = {
 
   },
 
-  addToBasket:function (name, price) {
+  addToBasket:function (name, price, bundleID, categoryID) {
     var quantity = app.element("bundleCount").innerHTML;
     console.log("addToBasket");
     console.log(name);
@@ -556,7 +556,7 @@ var app = {
 
     if( initialBasket === null){
       var basket =[];
-      basketArray = {name: name, price: price, quantity: quantity};
+      basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID};
 
       basket.unshift(basketArray);
       localStorage.setItem("basket", JSON.stringify(basket));
@@ -615,7 +615,7 @@ var app = {
       if (initialBasket.length !== 0) {
         //var id = initialContacts.length;
 
-        basketArray = {name: name, price: price, quantity: quantity};
+        basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID};
 
         basket.unshift(basketArray);
         localStorage.setItem("basket", JSON.stringify(basket));
@@ -911,7 +911,7 @@ var app = {
   },
 
   validateOrderDetails:function () {
-    console.log("placeOrder");
+    console.log("validateOrderDetails");
     var phonenumber = $("#phoneNumber").val();
     var phoneNumberLength = phonenumber.length;
     var passcode = $("#cardPinQuick").val();
@@ -1009,7 +1009,7 @@ var app = {
 
       if (user.status === 200) {
         console.log("User found. Recurring Payment. Show OTP Form");
-        app.showOtpForm();
+        app.payWithToken();
       }
 
     })
@@ -1033,6 +1033,57 @@ var app = {
 
     app.element("checkoutBody").innerHTML = cardForm;
 
+  },
+
+  payWithToken:function () {
+    //var phonenumber = "08143483866";
+    var phoneNumber = $("#phoneNumber").val();
+    var cardPin = $("#cardPinQuick").val();
+    var amount = "10";
+
+    console.log("payWithToken");
+
+    var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
+
+    $.ajax({
+      url: BASE_URL + "tokentransaction",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(tokenData),
+      contentType: "application/json"
+    }).done(function (response) {
+      console.log(response);
+      if(response.status === 200){
+        app.submitOrder();
+      }
+    })
+  },
+
+  submitOrder:function () {
+    var storedSetup = JSON.parse(localStorage.getItem("setup"));
+    var storedBasket = JSON.parse(localStorage.getItem("basket"));
+    var locationID = storedSetup[0].locationID;
+    var terminalID = storedSetup[0].terminalID;
+    var phoneNumber = $("#phoneNumber").val();
+
+    var cartItems = [];
+
+    for (var i = 0; i < storedBasket.length; i++) {
+      var cartCategoryID = storedBasket[i].categoryID;
+      var cartBundleID = storedBasket[i].bundleID;
+      var cartQuantity = storedBasket[i].quantity;
+      var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity};
+      cartItems.unshift(cartItemsArray);
+    }
+
+    var orderData = {
+      cart_items : cartItems,
+      location_id : locationID,
+      terminal_id : terminalID,
+      phone : phoneNumber
+    };
+
+    console.log(orderData);
   },
 
   payWithCard:function () {
@@ -1074,6 +1125,7 @@ var app = {
 
       if(transaction.error_code === 0){
         app.showOtpForm();
+        app.transactionReference = transaction.transaction_reference;
       }
       // if (user.status === 404) {
       //   console.log("User not found. First Payment. Show Card Form");
@@ -1091,11 +1143,31 @@ var app = {
 
   showOtpForm:function () {
     var otpForm = "<div class='form-card'>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
-    +"<button class='checkout-button' onclick='app.validateOrderDetails()'>COMPLETE TRANSACTION</button>"
+    +"<input id='otp' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
+    +"<button class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
     +"</div>";
 
     app.element("checkoutBody").innerHTML = otpForm;
+  },
+
+  payWithOtp:function () {
+    var otp = $("#otp").val();
+    var transactionReference = app.transactionReference;
+    console.log("app.transactionReference");
+    console.log(app.transactionReference);
+    var otpData = {otp: otp, transaction_reference: transactionReference}
+
+    $.ajax({
+      url: app.BASE_URL + "verifypay",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(otpData),
+      contentType: "application/json"
+    }).done(function (response) {
+      console.log(response);
+      app.submitOrder()
+    })
+
   },
 
   gotoScreensaverPage:function () {
