@@ -135,7 +135,6 @@ var app = {
     var terminalID = $("#terminalID").val();
 
     if(locationID === ""){
-      //  document.getElementById("setupDevicePrelooader").style.visibility = "visible";
       app.element("locationID").classList.add("input-error");
     }else {
       app.element("locationID").classList.remove("input-error");
@@ -150,7 +149,6 @@ var app = {
     if (locationID !== "" && terminalID !== "") {
       app.setupDevice();
     }
-
   },
 
   setupDevice:function(){
@@ -160,11 +158,6 @@ var app = {
     document.getElementById("setupDeviceButton").style.backgroundColor = "#5D5D5D";
     document.getElementById("setupDevicePrelooader").style.visibility = "visible";
 
-    console.log("locationID");
-    console.log(locationID);
-    console.log("terminalID");
-    console.log(terminalID);
-
     $.ajax({
       url: app.BASE_URL + "locations/all",
       type: "GET",
@@ -172,23 +165,13 @@ var app = {
       contentType: "application/json"
     }).done(function (locations) {
 
-      console.log(locations);
 
       // LOOP THROUGH ARRAYS TO FIND OBJECT WHERE LOCATION ID EQUALS
       for (var i = 0; i < locations.message.length; i++) {
         var aliasID = locations.message[i].alias_id;
 
-        console.log("aliasID");
-        console.log(aliasID);
-        console.log(locationID);
-
         if(locationID === aliasID){
-          console.log("We found it");
-          console.log(locations.message[i].location);
-          console.log(locations.message[i].city);
-          console.log(locations.message[i].alias_id);
           $("#locationName").html = locations.message[i].location;
-
           locationName = locations.message[i].location;
           locationCity = locations.message[i].city;
           cityID = locations.message[i].city_id;
@@ -203,40 +186,18 @@ var app = {
         }
 
       }
-
-      //  NAV TO SCREENSAVER PAGE BECAUSE THAT'S THE FLOW BEFORE CATEGORIES
-      // views.goto("page-screensaver", function (locationName) {
-      //   console.log("nav to page-screensaver");
-      // })
-
-      //  app.gotoScreensaverPage();
-
     });
 
   },
 
   removeAttentionFlash:function () {
-
     app.element("basket-table").classList.remove("animate-basket-background");
-    // debugger;
   },
 
   gotoCategoryPage: function () {
     views.goto("page-category", function () {
-      console.log("nav to page-category");
-
-      // //REMOVE ATTENTION FLASH
-      // app.removeAttentionFlash();
-      ////
-
-
-      ////
-
       app.element("basket-table").classList.remove("animate-basket-background");
-
-
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-
       app.element("locationName").innerHTML= storedSetup[0].locationName;
       app.element("locationCity").innerHTML= storedSetup[0].locationCity;
       var cityID = storedSetup[0].cityID;
@@ -248,11 +209,7 @@ var app = {
         crossDomain: true,
         contentType: "application/json"
       }).done(function (categories) {
-        console.log("categories");
-        console.log(categories);
-        console.log(categories.message.length);
         document.getElementById("placeholder-cards-category").style.display = "none";
-
 
         text = "";
         for (i = 0; i < categories.message.length; i++) {
@@ -267,15 +224,11 @@ var app = {
           +"<div class='card-background'></div>"
           +"</div>";
           app.element("cards-category").innerHTML = text;
-          console.log("repeating cards-category");
         }
       });
     })
 
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
-    console.log(storedBasket);
-
-    //$("#basketTable").html = "";
 
     if( storedBasket !== null){
       app.element("basketTable").innerHTML = "";
@@ -296,35 +249,17 @@ var app = {
         totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
       }
 
-      console.log("totalBundle");
-      console.log(totalBundle);
-
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.element("deliveryCost").innerHTML;
-      //  var quantity = app.element("bundleCount").innerHTML;
-      console.log("deliveryCost");
-      console.log(deliveryCost);
       var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-      console.log("grandTotal");
-      console.log(grandTotal);
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
-
     }
-
-
   },
 
 
 
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
-    console.log("cardID");
-    console.log(cardID);
-    console.log("cardLength");
-    console.log(cardLength);
-    console.log("categoryID");
-    console.log(categoryID);
-
 
     //GET BUNDLES
     $.ajax({
@@ -333,9 +268,6 @@ var app = {
       crossDomain: true,
       contentType: "application/json"
     }).done(function (bundles) {
-      console.log("bundles");
-      console.log(bundles);
-      console.log(bundles.message.length);
       document.getElementById("placeholder-cards-bundle").style.display = "none";
 
       text = "";
@@ -354,21 +286,16 @@ var app = {
         +"</div>";
 
         app.element("cards-bundle").innerHTML = text;
-        console.log("repeating cards-bundle");
       }
 
 
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
-      console.log(storedBasket);
 
-      //  $("#bundleBasketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-
       var totalBundle = 0;
 
       if(storedBasket !== null){
         for (i = 0; i < storedBasket.length; i++) {
-          console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
           //DISPLAY BASKET
           $("#bundleBasketTable").append("<tr>"
@@ -382,22 +309,12 @@ var app = {
           totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
         }
 
-        console.log("totalBundle");
-        console.log(totalBundle);
-
         app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
         var deliveryCost = app.element("deliveryCost").innerHTML;
-        //  var quantity = app.element("bundleCount").innerHTML;
-        console.log("deliveryCost");
-        console.log(deliveryCost);
         var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-        console.log("grandTotal");
-        console.log(grandTotal);
         app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
-
       }
-
     });
 
 
@@ -420,12 +337,10 @@ var app = {
 
     //REMOVE CSS PROPERTY TO INACTVE TABS
     for (var i = 0; i < cards.length; i++) {
-      //  console.log(cards[i]);
-      //  app.element("card-category-" + cards[i]).classList.remove("card-active");
+
     }
 
     views.goto("page-bundle", function () {
-      console.log("nav to page-bundle");
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
       app.element("bundleLocationName").innerHTML= storedSetup[0].locationName;
@@ -438,27 +353,19 @@ var app = {
   },
 
   showModalBundleDetail:function (cardID, cardLength, description, price, name, image, bundleID, categoryID) {
-    console.log("cardID");
-    console.log(cardID);
 
     var menuArray = app.allMenu[cardID];
-    console.log("menuArray");
-    console.log(menuArray);
 
     //ADD OR REMOVE CSS Class
     app.element("card-bundle-" + cardID).classList.add("card-active");
     cards = [];
     cardsLength = cardLength + 1;
 
-    console.log("cardsLength");
-    console.log(cardsLength);
     var inactiveCards;
 
     for (var i = 0; i < cardsLength; i++) {
       cards.push(i);
 
-      //console.log("cards array");
-      //  console.log(cards);
       //GET TAB INDEX WHEN TABS ARE CREATED
       if (cardLength == cards.length) {
         cardIndex = cards.indexOf(cardID);
@@ -470,12 +377,10 @@ var app = {
 
     //REMOVE CSS PROPERTY TO INACTVE TABS
     for (var i = 0; i < cards.length; i++) {
-      //  console.log(cards[i]);
       app.element("card-bundle-" + cards[i]).classList.remove("card-active");
     }
 
     var bundleCount = "bundleCount";
-    // var quantity = "";
 
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
@@ -530,9 +435,6 @@ var app = {
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
     app.element("bundleMenusTable").innerHTML = "";
-    //  quantity = app.element("bundleCount").innerHTML;
-    //  debugger;
-    //  app.element('btn_multi_amount').innerHTM
 
     for (var i = 0; i < menuArray.menu.length; i++) {
       var one = menuArray.menu[i];
@@ -542,16 +444,10 @@ var app = {
     }
 
     document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
-    //  document.getElementById("bundle-overlay-image").style.backgroundImage = 'url(assets/image/healthyfood.png)'
-
   },
 
   addToBasket:function (name, price, bundleID, categoryID) {
     var quantity = app.element("bundleCount").innerHTML;
-    console.log("addToBasket");
-    console.log(name);
-    console.log(price);
-    console.log(quantity);
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
 
     if( initialBasket === null){
@@ -560,19 +456,11 @@ var app = {
 
       basket.unshift(basketArray);
       localStorage.setItem("basket", JSON.stringify(basket));
-
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
-      console.log(storedBasket);
-
-      //  $("#basketTable").html = "";
       app.element("bundleBasketTable").innerHTML = "";
-      //  app.element("basketTable").innerHTML = "";
-
       var totalBundle = 0;
 
-
       for (i = 0; i < storedBasket.length; i++) {
-        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
         $("#bundleBasketTable").append("<tr>"
         + "<td>" +storedBasket[i].name + "</td>"
@@ -586,18 +474,9 @@ var app = {
 
       }
 
-      console.log("totalBundle");
-      console.log(totalBundle);
-
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.element("deliveryCost").innerHTML;
-      //  var quantity = app.element("bundleCount").innerHTML;
-      console.log("deliveryCost");
-      console.log(deliveryCost);
       var grandTotal = totalBundle +  parseInt(deliveryCost);
-
-      console.log("grandTotal");
-      console.log(grandTotal);
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
       //CLOSE MODAL
@@ -619,18 +498,11 @@ var app = {
 
         basket.unshift(basketArray);
         localStorage.setItem("basket", JSON.stringify(basket));
-
         var storedBasket = JSON.parse(localStorage.getItem("basket"));
-        console.log(storedBasket);
-
-        //  $("#basketTable").html = "";
         app.element("bundleBasketTable").innerHTML = "";
-
         var totalBundle = 0;
 
-
         for (i = 0; i < storedBasket.length; i++) {
-          console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
           $("#bundleBasketTable").append("<tr>"
           + "<td>" +storedBasket[i].name + "</td>"
@@ -644,18 +516,9 @@ var app = {
 
         }
 
-        console.log("totalBundle");
-        console.log(totalBundle);
-
         app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
         var deliveryCost = app.element("deliveryCost").innerHTML;
-        //  var quantity = app.element("bundleCount").innerHTML;
-        console.log("deliveryCost");
-        console.log(deliveryCost);
         var grandTotal = totalBundle +  parseInt(deliveryCost);
-
-        console.log("grandTotal");
-        console.log(grandTotal);
         app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
       }
@@ -704,16 +567,11 @@ var app = {
 
       //FETCH ALL STORED BASKET DATA
       var storedBasket = JSON.parse(localStorage.getItem("basket"));
-      console.log("storedBasket");
-      console.log(storedBasket);
 
       //REMOVE ELEMENT FROM BASKET ARRAY
       deletedBundle = storedBasket.splice(basketIndex, 1);
-      console.log("deletedBundle");
-      console.log(deletedBundle);
 
       //CLEAR basket LOCAL STORAGE
-      //localStorage.clear("basket");
       localStorage.removeItem("basket");
 
       //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
@@ -748,47 +606,26 @@ var app = {
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
 
-      console.log("totalBundle");
-      console.log(totalBundle);
-
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.element("deliveryCost").innerHTML;
-      //  var quantity = app.element("bundleCount").innerHTML;
-      console.log("deliveryCost");
-      console.log(deliveryCost);
       var grandTotal = totalBundle +  parseInt(deliveryCost);
-
-      console.log("grandTotal");
-      console.log(grandTotal);
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
     },
     function () {
     }).set({movable:false, padding: false,frameless:false,transition: 'fade',labels: {ok: 'DELETE', cancel: 'CANCEL'}}).show();
 
-
-    //debugger;
-
-
   },
 
 
   deleteCategoryBasket:function (basketIndex) {
-    console.log("basketIndex");
-    console.log(basketIndex);
-
     //FETCH ALL STORED BASKET DATA
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
-    console.log("storedBasket");
-    console.log(storedBasket);
 
     //REMOVE ELEMENT FROM BASKET ARRAY
     deletedBundle = storedBasket.splice(basketIndex, 1);
-    console.log("deletedBundle");
-    console.log(deletedBundle);
 
     //CLEAR basket LOCAL STORAGE
-    //localStorage.clear("basket");
     localStorage.removeItem("basket");
 
     //RECREATE NEW basket LOCAL STORAGE WITH NEW ARRAY;
@@ -796,8 +633,6 @@ var app = {
 
     //FETCH NEW basket LOCAL STORAGE ARRAY;
     var newStoredBasket = JSON.parse(localStorage.getItem("basket"));
-    console.log("newStoredBasket");
-    console.log(newStoredBasket);
 
     //CLEAR BASKET TABLE
     app.element("basketTable").innerHTML = "";
@@ -823,45 +658,25 @@ var app = {
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopCategoryAttentionFlash();
 
-    console.log("totalBundle");
-    console.log(totalBundle);
-
     app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
     var deliveryCost = app.element("deliveryCost").innerHTML;
-    //  var quantity = app.element("bundleCount").innerHTML;
-    console.log("deliveryCost");
-    console.log(deliveryCost);
     var grandTotal = totalBundle +  parseInt(deliveryCost);
-
-    console.log("grandTotal");
-    console.log(grandTotal);
     app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
-
   },
 
 
 
   increment: function (identifier, price) {
-    console.log("increment for - " + identifier);
-
     count = parseInt(app.element(identifier).innerHTML);
     count += 1;
     app.element(identifier).innerHTML = count;
-    console.log("value is - " + count);
-    //app.element(identifier).innerHTML = "0";
 
     //PERFORM MATHS
-    //  console.log("passed price");
-    console.log(price);
     bundleTotal = price * count;
     app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
-
   },
 
   decrement: function (identifier, price) {
-
-    console.log("decrement clicked");
-    console.log("decrement for" + identifier);
     count = parseInt(app.element(identifier).innerHTML);
     if (count == 1) {
       app.element(identifier).innerHTML = "1";
@@ -871,7 +686,6 @@ var app = {
     }
 
     //PERFORM MATHS
-    //  console.log(price);
     bundleTotal = price * count;
     app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
   },
@@ -879,18 +693,14 @@ var app = {
   gotoSetupPage:function () {
     views.goto("page-setup", function () {
       document.getElementById("setupDevicePrelooader").style.visibility = "hidden";
-      console.log("nav to page-setup");
     })
   },
 
   showModalCheckout:function(){
-    console.log("showModalCheckout clicked");
-
     var grandTotal =  app.element("grandTotal").innerHTML;
 
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
-    //IMG Here
     +"<img class='checkout-image' src='assets/image/checkout.png'>"
     +"<p class='checkout-title'>Checkout</p>"
     +"<div class='checkout-total'>"
@@ -911,50 +721,33 @@ var app = {
   },
 
   validateOrderDetails:function () {
-    console.log("validateOrderDetails");
     var phonenumber = $("#phoneNumber").val();
     var phoneNumberLength = phonenumber.length;
     var passcode = $("#cardPin").val();
-
-    console.log(phonenumber);
-    console.log(passcode);
     var isPhoneNumber = app.validateNumeric(phonenumber);
     var isPasscode = app.validateNumeric(passcode);
     var isPhoneNumberLength = app.validatePhoneNumberLength(phonenumber);
-    console.log(isPhoneNumber);
-    console.log(isPasscode);
-    console.log(isPhoneNumberLength);
-    console.log(phoneNumberLength);
 
     if (!isPhoneNumber) {
-      console.log("phonenumber is invalid");
       app.element("phoneNumber").classList.add("input-error");
     }else {
-      console.log("valid phonenumber");
       app.element("phoneNumber").classList.remove("input-error");
     }
 
     if (isPhoneNumberLength) {
-      console.log("valid phoneNumberLength");
       app.element("phoneNumber").classList.remove("input-error");
     }else {
-      console.log("phoneNumberLength is invalid");
       app.element("phoneNumber").classList.add("input-error");
     }
 
     if (!isPasscode) {
-      console.log("passcode is invalid");
       app.element("cardPin").classList.add("input-error");
     }else {
-      console.log("valid passcode");
       app.element("cardPin").classList.remove("input-error");
     }
 
     if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
-      console.log("All Credentials Correct");
       app.placeOrder();
-    }else {
-      console.log("Invalid Credentials");
     }
   },
 
@@ -995,12 +788,9 @@ var app = {
     document.getElementById("phoneNumber").disabled = true;
     document.getElementById("cardPin").disabled = true;
 
-
-    //  var phonenumber = $("phoneNumber").val();
     app.phoneNumber = $("#phoneNumber").val();
     var phoneNumber = app.phoneNumber;
     app.cardPin = $("#cardPin").val();
-
 
     var userData = {phonenumber : phoneNumber}
 
@@ -1011,7 +801,6 @@ var app = {
       data: JSON.stringify(userData),
       contentType: "application/json"
     }).done(function (user) {
-      console.log(user);
 
       document.getElementById("validateOrderButton").disabled = false;
       document.getElementById("validateOrderButton").style.backgroundColor = "#6a9c5c";
@@ -1019,15 +808,11 @@ var app = {
       document.getElementById("phoneNumber").disabled = false;
       document.getElementById("cardPin").disabled = false;
 
-
-
       if (user.status === 404) {
-        console.log("User not found. First Payment. Show Card Form");
         app.showCardForm();
       }
 
       if (user.status === 200) {
-        console.log("User found. Recurring Payment. Show OTP Form");
         app.payWithToken();
       }
 
@@ -1054,12 +839,9 @@ var app = {
   },
 
   payWithToken:function () {
-    //var phonenumber = "08143483866";
     var phoneNumber = app.phoneNumber;
     var cardPin = app.cardPin;
     var amount = "10";
-
-    console.log("payWithToken");
 
     var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
 
@@ -1070,7 +852,6 @@ var app = {
       data: JSON.stringify(tokenData),
       contentType: "application/json"
     }).done(function (response) {
-      console.log(response);
       if(response.status === 200){
         var transactionID = response.transaction_id;
         app.submitOrder(transactionID);
@@ -1103,9 +884,6 @@ var app = {
       transaction_id : transactionID
     };
 
-    //debugger;
-    console.log(orderData);
-
     $.ajax({
       url: app.BASE_URL + "order/create",
       type: "POST",
@@ -1113,7 +891,6 @@ var app = {
       data: JSON.stringify(orderData),
       contentType: "application/json"
     }).done(function (transaction) {
-      console.log(transaction);
     })
   },
 
@@ -1141,17 +918,6 @@ var app = {
     document.getElementById("expiryYear").disabled = true;
     document.getElementById("cvv").disabled = true;
 
-    console.log("payWithCard");
-    console.log(name);
-    console.log(email);
-    console.log(cardNumber);
-    console.log(expiryMonth);
-    console.log(expiryYear);
-    console.log(cvv);
-    console.log(cardPin);
-    console.log(amount);
-    console.log(phonenumber);
-
     var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin,amount : amount, email :  email, phonenumber : phonenumber, firstname : name}
 
     $.ajax({
@@ -1161,7 +927,6 @@ var app = {
       data: JSON.stringify(cardData),
       contentType: "application/json"
     }).done(function (transaction) {
-      console.log(transaction);
 
       // ENABLE INPUT
       document.getElementById("payWithCardButton").disabled = false;
@@ -1173,11 +938,6 @@ var app = {
       document.getElementById("expiryMonth").disabled = false;
       document.getElementById("expiryYear").disabled = false;
       document.getElementById("cvv").disabled = false;
-
-      if(transaction.error_code === 1){
-        console.log("An Error Occurred");
-        console.log(transaction.message);
-      }
 
       if(transaction.error_code === 0){
         app.showOtpForm();
@@ -1199,8 +959,6 @@ var app = {
   payWithOtp:function () {
     var otp = $("#otp").val();
     var transactionReference = app.transactionReference;
-    console.log("app.transactionReference");
-    console.log(app.transactionReference);
     var otpData = {otp: otp, transaction_reference: transactionReference};
 
     // DISBALE INPUT
@@ -1209,7 +967,6 @@ var app = {
     document.getElementById("payWithOtpButton").innerHTML = "PROCESSING...";
     document.getElementById("otp").disabled = true;
 
-
     $.ajax({
       url: app.BASE_URL + "verifypay",
       type: "POST",
@@ -1217,7 +974,6 @@ var app = {
       data: JSON.stringify(otpData),
       contentType: "application/json"
     }).done(function (response) {
-      console.log(response);
       // DISBALE INPUT
       document.getElementById("payWithOtpButton").disabled = false;
       document.getElementById("payWithOtpButton").style.backgroundColor = "#6a9c5c";
@@ -1231,16 +987,9 @@ var app = {
   },
 
   gotoScreensaverPage:function () {
-
     views.goto("page-screensaver", function () {
-
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-      // console.log("storedSetup");
-      // console.log(storedSetup);
-      // console.log(storedSetup[0].cityID);
       var cityID = storedSetup[0].cityID;
-
-      console.log("nav to page-screensaver");
 
       //GET SCREENSAVERS
       $.ajax({
@@ -1249,9 +998,7 @@ var app = {
         crossDomain: true,
         contentType: "application/json"
       }).done(function (screensavers) {
-        console.log(screensavers);
         for (var i = 0; i < screensavers.message.length; i++) {
-          console.log(screensavers.message[i].image);
           $( "#screensaver-swiper-wrapper" ).append( "<div class='swiper-slide'><img class='screensaver' src='" + screensavers.message[i].image + "'></div>" );
           var mySwiper = new Swiper ('.swiper-container', {
             direction: 'horizontal',
