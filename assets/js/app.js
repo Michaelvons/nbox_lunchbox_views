@@ -900,8 +900,8 @@ var app = {
     +"</div>"
     +"<div id='checkoutBody' class='checkout-body'>"
     +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Phone Number'>"
-    +"<input id='cardPinQuick' class='checkout-input' type='text' placeholder='Card Pin'>"
-    +"<button class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
+    +"<input id='cardPin' class='checkout-input' type='text' placeholder='Card Pin'>"
+    +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
 
@@ -914,7 +914,7 @@ var app = {
     console.log("validateOrderDetails");
     var phonenumber = $("#phoneNumber").val();
     var phoneNumberLength = phonenumber.length;
-    var passcode = $("#cardPinQuick").val();
+    var passcode = $("#cardPin").val();
 
     console.log(phonenumber);
     console.log(passcode);
@@ -944,10 +944,10 @@ var app = {
 
     if (!isPasscode) {
       console.log("passcode is invalid");
-      app.element("cardPinQuick").classList.add("input-error");
+      app.element("cardPin").classList.add("input-error");
     }else {
       console.log("valid passcode");
-      app.element("cardPinQuick").classList.remove("input-error");
+      app.element("cardPin").classList.remove("input-error");
     }
 
     if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
@@ -989,8 +989,18 @@ var app = {
     //CHECK DB IF USER EXIST AND USE RECORDS TO PERFORM TRANSACTION
     //IF USER DOESN'T EXIST SHOW CARD FORM
 
+    document.getElementById("validateOrderButton").disabled = true;
+    document.getElementById("validateOrderButton").style.backgroundColor = "#5D5D5D";
+    document.getElementById("validateOrderButton").innerHTML = "PROCESSING...";
+    document.getElementById("phoneNumber").disabled = true;
+    document.getElementById("cardPin").disabled = true;
+
+
     //  var phonenumber = $("phoneNumber").val();
-    var phoneNumber = $("#phoneNumber").val();
+    app.phoneNumber = $("#phoneNumber").val();
+    var phoneNumber = app.phoneNumber;
+    app.cardPin = $("#cardPin").val();
+
 
     var userData = {phonenumber : phoneNumber}
 
@@ -1002,6 +1012,15 @@ var app = {
       contentType: "application/json"
     }).done(function (user) {
       console.log(user);
+
+      document.getElementById("validateOrderButton").disabled = false;
+      document.getElementById("validateOrderButton").style.backgroundColor = "#6a9c5c";
+      document.getElementById("validateOrderButton").innerHTML = "CONFIRM ORDER";
+      document.getElementById("phoneNumber").disabled = false;
+      document.getElementById("cardPin").disabled = false;
+
+
+
       if (user.status === 404) {
         console.log("User not found. First Payment. Show Card Form");
         app.showCardForm();
@@ -1020,14 +1039,13 @@ var app = {
     var cardForm = "<div class='form-card'>"
     +"<input id='name' class='checkout-input' type='text' placeholder='Name'>"
     +"<input id='email' class='checkout-input' type='text' placeholder='Email'>"
-    +"<input id='cardNumber' class='checkout-input' type='text' placeholder='Card Number'>"
     +"<div class='multiple-input'>"
     +"<input id='expiryMonth' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
     +"<input id='expiryYear' class='checkout-input-short' type='text' placeholder='Expiry Year'>"
     +"<input id='cvv' class='checkout-input-short' type='text' placeholder='CVV'>"
     +"</div>"
-    +"<input id='cardPinLong' class='checkout-input' type='text' placeholder='Card Pin'>"
-    +"<button class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
+    +"<input id='cardNumber' class='checkout-input' type='text' placeholder='Card Number'>"
+    +"<button id='payWithCardButton' class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
     +"</div>";
     console.log("showCardForm");
 
@@ -1037,8 +1055,8 @@ var app = {
 
   payWithToken:function () {
     //var phonenumber = "08143483866";
-    var phoneNumber = $("#phoneNumber").val();
-    var cardPin = $("#cardPinQuick").val();
+    var phoneNumber = app.phoneNumber;
+    var cardPin = app.cardPin;
     var amount = "10";
 
     console.log("payWithToken");
@@ -1054,17 +1072,18 @@ var app = {
     }).done(function (response) {
       console.log(response);
       if(response.status === 200){
-        app.submitOrder();
+        var transactionID = response.transaction_id;
+        app.submitOrder(transactionID);
       }
     })
   },
 
-  submitOrder:function () {
+  submitOrder:function (transactionID) {
     var storedSetup = JSON.parse(localStorage.getItem("setup"));
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
-    var locationID = storedSetup[0].locationID;
+    var locationID = storedSetup[0].cityID;
     var terminalID = storedSetup[0].terminalID;
-    var phoneNumber = $("#phoneNumber").val();
+    var phoneNumber = app.phoneNumber;
 
     var cartItems = [];
 
@@ -1080,10 +1099,22 @@ var app = {
       cart_items : cartItems,
       location_id : locationID,
       terminal_id : terminalID,
-      phone : phoneNumber
+      phone : phoneNumber,
+      transaction_id : transactionID
     };
 
+    //debugger;
     console.log(orderData);
+
+    $.ajax({
+      url: app.BASE_URL + "order/create",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(orderData),
+      contentType: "application/json"
+    }).done(function (transaction) {
+      console.log(transaction);
+    })
   },
 
   payWithCard:function () {
@@ -1094,9 +1125,21 @@ var app = {
     var expiryMonth = $("#expiryMonth").val();
     var expiryYear = $("#expiryYear").val();
     var cvv = $("#cvv").val();
-    var cardPin = $("#cardPinLong").val();
-    var amount = 10;
-    var phonenumber = "08143483866";
+    var cardPin = app.cardPin;
+    var formattedAmount = app.element("grandTotal").innerHTML;
+    var amount = parseInt(formattedAmount.replace(/,/g, ''));
+    var phonenumber = app.phoneNumber;
+
+    // DISABLE INPUT
+    document.getElementById("payWithCardButton").disabled = true;
+    document.getElementById("payWithCardButton").style.backgroundColor = "#5D5D5D";
+    document.getElementById("payWithCardButton").innerHTML = "PROCESSING...";
+    document.getElementById("name").disabled = true;
+    document.getElementById("email").disabled = true;
+    document.getElementById("cardNumber").disabled = true;
+    document.getElementById("expiryMonth").disabled = true;
+    document.getElementById("expiryYear").disabled = true;
+    document.getElementById("cvv").disabled = true;
 
     console.log("payWithCard");
     console.log(name);
@@ -1107,6 +1150,7 @@ var app = {
     console.log(cvv);
     console.log(cardPin);
     console.log(amount);
+    console.log(phonenumber);
 
     var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin,amount : amount, email :  email, phonenumber : phonenumber, firstname : name}
 
@@ -1118,6 +1162,18 @@ var app = {
       contentType: "application/json"
     }).done(function (transaction) {
       console.log(transaction);
+
+      // ENABLE INPUT
+      document.getElementById("payWithCardButton").disabled = false;
+      document.getElementById("payWithCardButton").style.backgroundColor = "#6a9c5c";
+      document.getElementById("payWithCardButton").innerHTML = "CONTINUE";
+      document.getElementById("name").disabled = false;
+      document.getElementById("email").disabled = false;
+      document.getElementById("cardNumber").disabled = false;
+      document.getElementById("expiryMonth").disabled = false;
+      document.getElementById("expiryYear").disabled = false;
+      document.getElementById("cvv").disabled = false;
+
       if(transaction.error_code === 1){
         console.log("An Error Occurred");
         console.log(transaction.message);
@@ -1127,16 +1183,6 @@ var app = {
         app.showOtpForm();
         app.transactionReference = transaction.transaction_reference;
       }
-      // if (user.status === 404) {
-      //   console.log("User not found. First Payment. Show Card Form");
-      //   app.showCardForm();
-      // }
-      //
-      // if (user.status === 200) {
-      //   console.log("User found. Recurring Payment. Show OTP Form");
-      //   app.showOtpForm();
-      // }
-
     })
 
   },
@@ -1144,7 +1190,7 @@ var app = {
   showOtpForm:function () {
     var otpForm = "<div class='form-card'>"
     +"<input id='otp' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
-    +"<button class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
+    +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
     +"</div>";
 
     app.element("checkoutBody").innerHTML = otpForm;
@@ -1155,7 +1201,14 @@ var app = {
     var transactionReference = app.transactionReference;
     console.log("app.transactionReference");
     console.log(app.transactionReference);
-    var otpData = {otp: otp, transaction_reference: transactionReference}
+    var otpData = {otp: otp, transaction_reference: transactionReference};
+
+    // DISBALE INPUT
+    document.getElementById("payWithOtpButton").disabled = true;
+    document.getElementById("payWithOtpButton").style.backgroundColor = "#5D5D5D";
+    document.getElementById("payWithOtpButton").innerHTML = "PROCESSING...";
+    document.getElementById("otp").disabled = true;
+
 
     $.ajax({
       url: app.BASE_URL + "verifypay",
@@ -1165,7 +1218,14 @@ var app = {
       contentType: "application/json"
     }).done(function (response) {
       console.log(response);
-      app.submitOrder()
+      // DISBALE INPUT
+      document.getElementById("payWithOtpButton").disabled = false;
+      document.getElementById("payWithOtpButton").style.backgroundColor = "#6a9c5c";
+      document.getElementById("payWithOtpButton").innerHTML = "COMPLETE TRANSACTION";
+      document.getElementById("otp").disabled = false;
+
+      var transactionID = response.transaction_id;
+      app.submitOrder(transactionID);
     })
 
   },
