@@ -73,6 +73,7 @@ var app = {
     app.CalculateViewPort();
 
     views.start("page-launch", function () {
+            app.showKeyboard();
       //  document.getElementById("navSetupButton").style.display = "none";
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
@@ -194,13 +195,15 @@ var app = {
   },
 
   gotoCategoryPage: function () {
+
+          app.showKeyboard();
     views.goto("page-category", function () {
 
 
-/////CUSTOM KEYBOARD
-app.showKeyboard();
+      /////CUSTOM KEYBOARD
 
-////CUSTOM KEYBOARD END
+
+      ////CUSTOM KEYBOARD END
 
 
       app.element("basket-table").classList.remove("animate-basket-background");
@@ -268,7 +271,7 @@ app.showKeyboard();
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
 
 
-app.showKeyboard();
+    app.showKeyboard();
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -704,77 +707,80 @@ app.showKeyboard();
     })
   },
 
-showKeyboard:function () {
+  showKeyboard:function () {
 
-//  if (Modernizr.touchevents) {
-      if (true) {
-    // supported
-    console.log('custom keyboard');
-    $(".keyboard-sentence").attr('readonly', 'readonly');
-    $(".keyboard-numerals").attr('readonly', 'readonly');
+    //  if (Modernizr.touchevents) {
+    if (true) {
+      // supported
+      console.log('custom keyboard');
+      $(".keyboard-sentence").attr('readonly', 'readonly');
+      $(".keyboard-numerals").attr('readonly', 'readonly');
 
-  //  $(".keyboard-sentence_keyboard").attr('readonly', 'readonly');
-    $(".keyboard-sentence").click(function() {
-      alert("sentence readonly pop");
-    });
+      //  $(".keyboard-sentence_keyboard").attr('readonly', 'readonly');
+      $(".keyboard-sentence").click(function() {
+        alert("sentence readonly pop");
+      });
 
-    $(".keyboard-numerals").click(function() {
-      alert("numerals readonly pop");
-    });
+      $(".keyboard-numerals").click(function() {
+        alert("numerals readonly pop");
+      });
 
-    //UNCOMMENT TO ALLOW CUSTOM KEYBOARD TO SHOW FOR TOUCH DEVICE
-    $('.keyboard-sentence').keyboard({
-      layout: 'custom',
-      useCombos: false,
-      autoAccept: true,
-      usePreview : false,
-      customLayout: {
-        'normal': [
-          ' q w e r t y u i o p ',
-          'a s d f g h j k l {b} ',
-          '{shift} z x c v b n m  {shift}',
-          ' @ {space} .'
-        ],
-        'shift': [
-          'Q W E R T Y U I O P ',
-          'A S D F G H J K L {b}',
-          '{shift} Z X C V B N M {shift}',
-          '@ {space} .'
-        ]
-      }
-    })
+      //UNCOMMENT TO ALLOW CUSTOM KEYBOARD TO SHOW FOR TOUCH DEVICE
+      $('.keyboard-sentence').keyboard({
+        layout: 'custom',
+        useCombos: false,
+        autoAccept: true,
+        usePreview : false,
+        customLayout: {
+          'normal': [
+            '1 2 3 4 5 6 7 8 9 0',
+            ' q w e r t y u i o p ',
+            'a s d f g h j k l {b} ',
+            '{shift} z x c v b n m  {shift}',
+            ' @ {space} .'
+          ],
+          'shift': [
+            '1 2 3 4 5 6 7 8 9 0',
+            'Q W E R T Y U I O P ',
+            'A S D F G H J K L {b}',
+            '{shift} Z X C V B N M {shift}',
+            '@ {space} .'
+          ]
+        }
+      })
 
-    //NUMPAD
-    $('.keyboard-numerals').keyboard({
-      layout : 'custom',
-      restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
-      preventPaste : true,  // prevent ctrl-v and right click
-      autoAccept : true,
-      usePreview : false,
-      customLayout: {
-        'normal': [
-          ' 7 8 9 {b} ',
-          '4 5 6 {clear}',
-          '0 1 2 3',
-        ]
-      }
-    })
+      //NUMPAD
+      $('.keyboard-numerals').keyboard({
+        layout : 'custom',
+        restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+        preventPaste : true,  // prevent ctrl-v and right click
+        autoAccept : true,
+        usePreview : false,
+        customLayout: {
+          'normal': [
+            ' 7 8 9 {b} ',
+            '4 5 6 {clear}',
+            '0 1 2 3',
+          ]
+        }
+      })
 
-  } else {
-    // not-supported
-    console.log('if The test failed!');
-    $(".keyboard-sentence").click(function() {
-      alert("failed initialize text keyboard");
-    });
-    $(".keyboard-numerals").click(function() {
-      alert("failed initialize number keyboard");
-    });
-  }
+    } else {
+      // not-supported
+      console.log('if The test failed!');
+      $(".keyboard-sentence").click(function() {
+        alert("failed initialize text keyboard");
+      });
+      $(".keyboard-numerals").click(function() {
+        alert("failed initialize number keyboard");
+      });
+    }
 
-},
+  },
 
   showModalCheckout:function(){
     var grandTotal =  app.element("grandTotal").innerHTML;
+    app.showKeyboard();
 
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
@@ -897,7 +903,7 @@ showKeyboard:function () {
   },
 
   showCardForm:function () {
-
+    app.showKeyboard();
     var cardForm = "<div class='form-card'>"
     +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name'>"
     +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email'>"
@@ -993,7 +999,7 @@ showKeyboard:function () {
       data: JSON.stringify(orderData),
       contentType: "application/json"
     }).done(function (transaction) {
-    //  debugger;
+      //  debugger;
       console.log("transaction");
       console.log(transaction);
 
@@ -1006,7 +1012,7 @@ showKeyboard:function () {
   },
 
   deactivateCheckoutButton:function () {
-//document.getElementById("")
+    //document.getElementById("")
   },
 
   activateCheckButton:function () {
@@ -1067,6 +1073,9 @@ showKeyboard:function () {
   },
 
   showOtpForm:function () {
+
+    app.showKeyboard();
+
     var otpForm = "<div class='form-card'>"
     +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='Please Enter OTP'>"
     +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
