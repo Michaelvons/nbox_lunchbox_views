@@ -75,7 +75,6 @@ var app = {
     views.start("page-launch", function () {
       //  document.getElementById("navSetupButton").style.display = "none";
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
-      console.log("Load Screen");
 
       if (storedSetup === null) {
         console.log("No config found");
@@ -86,7 +85,7 @@ var app = {
 
         }, 5000);
       }else {
-        console.log("Config Found");
+
         setTimeout(function(){
           app.gotoScreensaverPage();
         }, 5000);
@@ -196,6 +195,14 @@ var app = {
 
   gotoCategoryPage: function () {
     views.goto("page-category", function () {
+
+
+/////CUSTOM KEYBOARD
+app.showKeyboard();
+
+////CUSTOM KEYBOARD END
+
+
       app.element("basket-table").classList.remove("animate-basket-background");
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
       app.element("locationName").innerHTML= storedSetup[0].locationName;
@@ -235,7 +242,6 @@ var app = {
       var totalBundle = 0;
 
       for (i = 0; i < storedBasket.length; i++) {
-        console.log(storedBasket[i].name + " -- " + storedBasket[i].price + "--" + storedBasket[i].quantity);
 
         //DISPLAY BASKET
         $("#basketTable").append("<tr>"
@@ -261,6 +267,8 @@ var app = {
 
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
 
+
+app.showKeyboard();
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -696,6 +704,75 @@ var app = {
     })
   },
 
+showKeyboard:function () {
+
+//  if (Modernizr.touchevents) {
+      if (true) {
+    // supported
+    console.log('custom keyboard');
+    $(".keyboard-sentence").attr('readonly', 'readonly');
+    $(".keyboard-numerals").attr('readonly', 'readonly');
+
+  //  $(".keyboard-sentence_keyboard").attr('readonly', 'readonly');
+    $(".keyboard-sentence").click(function() {
+      alert("sentence readonly pop");
+    });
+
+    $(".keyboard-numerals").click(function() {
+      alert("numerals readonly pop");
+    });
+
+    //UNCOMMENT TO ALLOW CUSTOM KEYBOARD TO SHOW FOR TOUCH DEVICE
+    $('.keyboard-sentence').keyboard({
+      layout: 'custom',
+      useCombos: false,
+      autoAccept: true,
+      usePreview : false,
+      customLayout: {
+        'normal': [
+          ' q w e r t y u i o p ',
+          'a s d f g h j k l {b} ',
+          '{shift} z x c v b n m  {shift}',
+          ' @ {space} .'
+        ],
+        'shift': [
+          'Q W E R T Y U I O P ',
+          'A S D F G H J K L {b}',
+          '{shift} Z X C V B N M {shift}',
+          '@ {space} .'
+        ]
+      }
+    })
+
+    //NUMPAD
+    $('.keyboard-numerals').keyboard({
+      layout : 'custom',
+      restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+      preventPaste : true,  // prevent ctrl-v and right click
+      autoAccept : true,
+      usePreview : false,
+      customLayout: {
+        'normal': [
+          ' 7 8 9 {b} ',
+          '4 5 6 {clear}',
+          '0 1 2 3',
+        ]
+      }
+    })
+
+  } else {
+    // not-supported
+    console.log('if The test failed!');
+    $(".keyboard-sentence").click(function() {
+      alert("failed initialize text keyboard");
+    });
+    $(".keyboard-numerals").click(function() {
+      alert("failed initialize number keyboard");
+    });
+  }
+
+},
+
   showModalCheckout:function(){
     var grandTotal =  app.element("grandTotal").innerHTML;
 
@@ -709,8 +786,8 @@ var app = {
     +"</div>"
     +"</div>"
     +"<div id='checkoutBody' class='checkout-body'>"
-    +"<input id='phoneNumber' class='checkout-input' type='text' placeholder='Phone Number'>"
-    +"<input id='cardPin' class='checkout-input' type='text' placeholder='Card Pin'>"
+    +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number'>"
+    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='Card Pin'>"
     +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
@@ -822,19 +899,41 @@ var app = {
   showCardForm:function () {
 
     var cardForm = "<div class='form-card'>"
-    +"<input id='name' class='checkout-input' type='text' placeholder='Name'>"
-    +"<input id='email' class='checkout-input' type='text' placeholder='Email'>"
+    +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name'>"
+    +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email'>"
     +"<div class='multiple-input'>"
     +"<input id='expiryMonth' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
     +"<input id='expiryYear' class='checkout-input-short' type='text' placeholder='Expiry Year'>"
-    +"<input id='cvv' class='checkout-input-short' type='text' placeholder='CVV'>"
+    +"<input id='cvv' class='checkout-input-short keyboard-numerals' type='text' placeholder='CVV'>"
     +"</div>"
-    +"<input id='cardNumber' class='checkout-input' type='text' placeholder='Card Number'>"
+    +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number'>"
     +"<button id='payWithCardButton' class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
     +"</div>";
     console.log("showCardForm");
 
     app.element("checkoutBody").innerHTML = cardForm;
+
+  },
+
+  showTransactionSuccess:function () {
+    var TransactionSuccessForm = "<div class='form-card'>"
+    +"<img class='checkout-body-image' src='assets/image/success.png'>"
+    +"<p class='checkout-text-success'>Transaction Completed</p>"
+    +"</div>";
+    console.log("showCardForm");
+
+    app.element("checkoutBody").innerHTML = TransactionSuccessForm;
+  },
+
+  showTransactionFailed:function () {
+
+    var TransactionFailedForm = "<div class='form-card'>"
+    +"<img class='checkout-body-image' src='assets/image/error.png'>"
+    +"<p class='checkout-text-failed'>Oops!!. An Error Occurred</p>"
+    +"</div>";
+    console.log("showCardForm");
+
+    app.element("checkoutBody").innerHTML = TransactionSuccessForm;
 
   },
 
@@ -884,6 +983,9 @@ var app = {
       transaction_id : transactionID
     };
 
+    console.log("orderData");
+    console.log(orderData);
+
     $.ajax({
       url: app.BASE_URL + "order/create",
       type: "POST",
@@ -891,7 +993,24 @@ var app = {
       data: JSON.stringify(orderData),
       contentType: "application/json"
     }).done(function (transaction) {
+    //  debugger;
+      console.log("transaction");
+      console.log(transaction);
+
+      if (transaction.status === 200) {
+        app.showTransactionSuccess();
+      }else {
+        app.showTransactionFailed();
+      }
     })
+  },
+
+  deactivateCheckoutButton:function () {
+//document.getElementById("")
+  },
+
+  activateCheckButton:function () {
+
   },
 
   payWithCard:function () {
@@ -949,7 +1068,7 @@ var app = {
 
   showOtpForm:function () {
     var otpForm = "<div class='form-card'>"
-    +"<input id='otp' class='checkout-input' type='text' placeholder='Please Enter OTP'>"
+    +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='Please Enter OTP'>"
     +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
     +"</div>";
 
@@ -988,6 +1107,9 @@ var app = {
 
   gotoScreensaverPage:function () {
     views.goto("page-screensaver", function () {
+      //CLEAR basket LOCAL STORAGE
+      localStorage.removeItem("basket");
+
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
       var cityID = storedSetup[0].cityID;
 
@@ -1229,23 +1351,8 @@ window.addEventListener('load', function () {
 
 app.start();
 
-//LZY LOAD IMAGES
+//CUSTOM KEYBOARD
 $(function() {
-  console.log("lazy loading");
-  //lazyload();
 
-  $('.lazy-image').lazy({
-    effect: "fadeIn",
-    effectTime: 750,
-    threshold: 0,
-    afterLoad:function(element) {
 
-      console.log('finished loading ' + element.data('src'));
-      //  document.getElementById("placeholder").style.display = "none";
-    },
-    beforeLoad:function(element) {
-      console.log('before loading ' + element.data('src'));
-      //  document.getElementById("placeholder").style.display = "none";
-    }
-  });
 });
