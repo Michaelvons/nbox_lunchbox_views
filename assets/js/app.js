@@ -196,6 +196,19 @@ var app = {
     app.element("basket-table").classList.remove("animate-basket-background");
   },
 
+  /**NAV BACK FROM BUNDLES TO CATEGORY PAGE **/
+  goBackToCategory:function () {
+views.back("page-category", function(){
+  console.log("Whn back to page-category");
+
+  var categoryLength = app.categoriesLength;
+  for (var i = 0; i < categoryLength; i++) {
+    app.element("card-category-" + i).classList.remove("card-active");
+
+  }
+});
+  },
+
 
   /** NAV TO CATEGORY PAGE **/
   gotoCategoryPage: function () {
@@ -218,7 +231,7 @@ var app = {
         contentType: "application/json"
       }).done(function (categories) {
         document.getElementById("placeholder-cards-category").style.display = "none";
-
+app.categoriesLength = categories.message.length;
         text = "";
         for (i = 0; i < categories.message.length; i++) {
           text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",\"" + categories.message.length + "\",\"" + categories.message[i]._id + "\")'>"
