@@ -73,7 +73,7 @@ var app = {
     app.CalculateViewPort();
 
     views.start("page-launch", function () {
-            app.showKeyboard();
+      app.showKeyboard();
       //  document.getElementById("navSetupButton").style.display = "none";
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
@@ -126,10 +126,11 @@ var app = {
     });
   },
 
-  //
+  /****/
   // APP LOGIC STARTS
-  //
+  /****/
 
+  /** VALIDATE SETUP PARAMS**/
   validateSetupParams:function functionName() {
     var locationID = $("#locationID").val();
     var terminalID = $("#terminalID").val();
@@ -151,6 +152,8 @@ var app = {
     }
   },
 
+
+  /** SETUP DEVICE **/
   setupDevice:function(){
     var locationID = $("#locationID").val();
     var terminalID = $("#terminalID").val();
@@ -164,7 +167,6 @@ var app = {
       crossDomain: true,
       contentType: "application/json"
     }).done(function (locations) {
-
 
       // LOOP THROUGH ARRAYS TO FIND OBJECT WHERE LOCATION ID EQUALS
       for (var i = 0; i < locations.message.length; i++) {
@@ -194,16 +196,12 @@ var app = {
     app.element("basket-table").classList.remove("animate-basket-background");
   },
 
+
+  /** NAV TO CATEGORY PAGE **/
   gotoCategoryPage: function () {
 
-          app.showKeyboard();
+    app.showKeyboard();
     views.goto("page-category", function () {
-
-
-      /////CUSTOM KEYBOARD
-
-
-      ////CUSTOM KEYBOARD END
 
 
       app.element("basket-table").classList.remove("animate-basket-background");
@@ -267,10 +265,8 @@ var app = {
   },
 
 
-
+  /** NAV TO BUNDLE PAGE **/
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
-
-
     app.showKeyboard();
     //GET BUNDLES
     $.ajax({
@@ -363,6 +359,8 @@ var app = {
     })
   },
 
+
+  /** SHOW MODAL DETAILS **/
   showModalBundleDetail:function (cardID, cardLength, description, price, name, image, bundleID, categoryID) {
 
     var menuArray = app.allMenu[cardID];
@@ -457,6 +455,7 @@ var app = {
     document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
   },
 
+  /** ADD TO BASKET **/
   addToBasket:function (name, price, bundleID, categoryID) {
     var quantity = app.element("bundleCount").innerHTML;
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
@@ -546,18 +545,23 @@ var app = {
 
   },
 
+
+  /** SHOW ATTENTION FLASH **/
   stopAttentionFlash:function () {
     setTimeout(function(){
       app.element("bundle-basket-table").classList.remove("animate-basket-background");
     }, 1000);
   },
 
+  /** SHOW FLASH ON CATEGORY BASKET **/
   stopCategoryAttentionFlash:function () {
     setTimeout(function(){
       app.element("basket-table").classList.remove("animate-basket-background");
     }, 1000);
   },
 
+
+  /** DELETE A BUNDLE FROM BUNDLE BASKET **/
   deleteBundleBasket:function (basketIndex, bundleName, bundlePrice, bundleQuantity) {
     console.log("basketIndex");
     console.log(basketIndex);
@@ -616,7 +620,6 @@ var app = {
 
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
-
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.element("deliveryCost").innerHTML;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
@@ -628,7 +631,7 @@ var app = {
 
   },
 
-
+  /** DELETE FROM BASKET FROM category pgae **/
   deleteCategoryBasket:function (basketIndex) {
     //FETCH ALL STORED BASKET DATA
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
@@ -668,7 +671,6 @@ var app = {
 
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopCategoryAttentionFlash();
-
     app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
     var deliveryCost = app.element("deliveryCost").innerHTML;
     var grandTotal = totalBundle +  parseInt(deliveryCost);
@@ -676,17 +678,17 @@ var app = {
   },
 
 
-
+  /** INCREMENT **/
   increment: function (identifier, price) {
     count = parseInt(app.element(identifier).innerHTML);
     count += 1;
     app.element(identifier).innerHTML = count;
-
-    //PERFORM MATHS
     bundleTotal = price * count;
     app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
   },
 
+
+  /** DECREMENT **/
   decrement: function (identifier, price) {
     count = parseInt(app.element(identifier).innerHTML);
     if (count == 1) {
@@ -695,20 +697,22 @@ var app = {
       count -= 1;
       app.element(identifier).innerHTML = count;
     }
-
-    //PERFORM MATHS
     bundleTotal = price * count;
     app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
   },
 
+
+  /** GO TO SETUP PAGE **/
   gotoSetupPage:function () {
     views.goto("page-setup", function () {
       document.getElementById("setupDevicePrelooader").style.visibility = "hidden";
     })
   },
 
-  showKeyboard:function () {
 
+  /** SHOW CUSTOM KEYBOARD **/
+  showKeyboard:function () {
+    console.log("function called custom keyboard");
     //  if (Modernizr.touchevents) {
     if (true) {
       // supported
@@ -717,13 +721,13 @@ var app = {
       $(".keyboard-numerals").attr('readonly', 'readonly');
 
       //  $(".keyboard-sentence_keyboard").attr('readonly', 'readonly');
-      $(".keyboard-sentence").click(function() {
-        alert("sentence readonly pop");
-      });
+      // $(".keyboard-sentence").click(function() {
+      //   alert("sentence readonly pop");
+      // });
 
-      $(".keyboard-numerals").click(function() {
-        alert("numerals readonly pop");
-      });
+      // $(".keyboard-numerals").click(function() {
+      //   alert("numerals readonly pop");
+      // });
 
       //UNCOMMENT TO ALLOW CUSTOM KEYBOARD TO SHOW FOR TOUCH DEVICE
       $('.keyboard-sentence').keyboard({
@@ -778,6 +782,8 @@ var app = {
 
   },
 
+
+  /** SHOW CHECKOUT MODAL **/
   showModalCheckout:function(){
     var grandTotal =  app.element("grandTotal").innerHTML;
     app.showKeyboard();
@@ -803,6 +809,8 @@ var app = {
 
   },
 
+
+  /** VALIDATE ORDER INPUT DETAILS **/
   validateOrderDetails:function () {
     var phonenumber = $("#phoneNumber").val();
     var phoneNumberLength = phonenumber.length;
@@ -834,6 +842,7 @@ var app = {
     }
   },
 
+  /** VALIDATE LENGTH OF PHONE NUMBER **/
   validatePhoneNumberLength:function (phonenumber) {
     if (phonenumber.length === 11) {
       return true;
@@ -842,6 +851,7 @@ var app = {
     }
   },
 
+  /** VALIDATE NUMBERS **/
   validateNumeric: function (inputtext) {
     var numericExpression = /^[0-9]+$/;
     if (inputtext.match(numericExpression)) {
@@ -851,7 +861,7 @@ var app = {
     }
   },
 
-
+  /** VALIDATE ALPHABET TEXT **/
   validateAlphabet: function (inputtext) {
     var alphaExp = /^[a-zA-Z]+$/;
     if (inputtext.match(alphaExp)) {
@@ -861,10 +871,9 @@ var app = {
     }
   },
 
-  placeOrder:function () {
-    //CHECK DB IF USER EXIST AND USE RECORDS TO PERFORM TRANSACTION
-    //IF USER DOESN'T EXIST SHOW CARD FORM
 
+  /** FIRST - PLACE ORDER **/
+  placeOrder:function () {
     document.getElementById("validateOrderButton").disabled = true;
     document.getElementById("validateOrderButton").style.backgroundColor = "#5D5D5D";
     document.getElementById("validateOrderButton").innerHTML = "PROCESSING...";
@@ -902,6 +911,8 @@ var app = {
     })
   },
 
+
+  /** FORM - SHOW CARD FORM **/
   showCardForm:function () {
     app.showKeyboard();
     var cardForm = "<div class='form-card'>"
@@ -915,34 +926,31 @@ var app = {
     +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number'>"
     +"<button id='payWithCardButton' class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
     +"</div>";
-    console.log("showCardForm");
-
     app.element("checkoutBody").innerHTML = cardForm;
-
   },
 
+
+  /** MESSAGE - SHOW TRANSACTION SUCCESS MESSAGE **/
   showTransactionSuccess:function () {
     var TransactionSuccessForm = "<div class='form-card'>"
     +"<img class='checkout-body-image' src='assets/image/success.png'>"
     +"<p class='checkout-text-success'>Transaction Completed</p>"
     +"</div>";
-    console.log("showCardForm");
-
     app.element("checkoutBody").innerHTML = TransactionSuccessForm;
   },
 
-  showTransactionFailed:function () {
 
+  /** FORM - SHOW TRANSACTION FAILED **/
+  showTransactionFailed:function () {
     var TransactionFailedForm = "<div class='form-card'>"
     +"<img class='checkout-body-image' src='assets/image/error.png'>"
     +"<p class='checkout-text-failed'>Oops!!. An Error Occurred</p>"
     +"</div>";
-    console.log("showCardForm");
-
     app.element("checkoutBody").innerHTML = TransactionSuccessForm;
-
   },
 
+
+  /** PAY WITH TOKEN **/
   payWithToken:function () {
     var phoneNumber = app.phoneNumber;
     var cardPin = app.cardPin;
@@ -951,7 +959,7 @@ var app = {
     var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
 
     $.ajax({
-      url: BASE_URL + "tokentransaction",
+      url: app.BASE_URL + "tokentransaction",
       type: "POST",
       crossDomain: true,
       data: JSON.stringify(tokenData),
@@ -964,6 +972,7 @@ var app = {
     })
   },
 
+  /** FINAL - SUBMIT TRANSACTION TO DB **/
   submitOrder:function (transactionID) {
     var storedSetup = JSON.parse(localStorage.getItem("setup"));
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
@@ -999,7 +1008,6 @@ var app = {
       data: JSON.stringify(orderData),
       contentType: "application/json"
     }).done(function (transaction) {
-      //  debugger;
       console.log("transaction");
       console.log(transaction);
 
@@ -1011,14 +1019,18 @@ var app = {
     })
   },
 
+  /** DEACTIVATE CHECKOUT BUTTON **/
   deactivateCheckoutButton:function () {
-    //document.getElementById("")
+    $(".show-modal-checkout").attr('disabled', 'disabled');
   },
 
+  /** ACTIVATE CHECOUT BUTTON **/
   activateCheckButton:function () {
 
   },
 
+
+  /** PERFORM CARD TRANSACTION**/
   payWithCard:function () {
 
     var name = $("#name").val();
@@ -1072,18 +1084,18 @@ var app = {
 
   },
 
+  /** SHOW OTP FORM **/
   showOtpForm:function () {
-
     app.showKeyboard();
-
     var otpForm = "<div class='form-card'>"
     +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='Please Enter OTP'>"
     +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
     +"</div>";
-
     app.element("checkoutBody").innerHTML = otpForm;
   },
 
+
+  /** PERFORM OTP TRANSACTION **/
   payWithOtp:function () {
     var otp = $("#otp").val();
     var transactionReference = app.transactionReference;
@@ -1114,6 +1126,7 @@ var app = {
 
   },
 
+  /** GO TO SCREENSAVER PAGE **/
   gotoScreensaverPage:function () {
     views.goto("page-screensaver", function () {
       //CLEAR basket LOCAL STORAGE
@@ -1146,9 +1159,9 @@ var app = {
     })
   },
 
-  //
+  /****/
   //END APP LOGIC
-  //
+  /****/
 
 
   //•••••• BASIC APP LOGIC ••••••/
