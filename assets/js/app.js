@@ -198,15 +198,15 @@ var app = {
 
   /**NAV BACK FROM BUNDLES TO CATEGORY PAGE **/
   goBackToCategory:function () {
-views.back("page-category", function(){
-  console.log("Whn back to page-category");
+    views.back("page-category", function(){
+      console.log("Whn back to page-category");
 
-  var categoryLength = app.categoriesLength;
-  for (var i = 0; i < categoryLength; i++) {
-    app.element("card-category-" + i).classList.remove("card-active");
+      var categoryLength = app.categoriesLength;
+      for (var i = 0; i < categoryLength; i++) {
+        app.element("card-category-" + i).classList.remove("card-active");
 
-  }
-});
+      }
+    });
   },
 
 
@@ -231,7 +231,7 @@ views.back("page-category", function(){
         contentType: "application/json"
       }).done(function (categories) {
         document.getElementById("placeholder-cards-category").style.display = "none";
-app.categoriesLength = categories.message.length;
+        app.categoriesLength = categories.message.length;
         text = "";
         for (i = 0; i < categories.message.length; i++) {
           text += "<div id='card-category-" + i +"' class='card' onclick='app.gotoBundlePage(\"" + i + "\",\"" + categories.message.length + "\",\"" + categories.message[i]._id + "\")'>"
@@ -795,11 +795,59 @@ app.categoriesLength = categories.message.length;
 
   },
 
+  showSentenceKeyboard:function () {
+    $(".keyboard-sentence").attr('readonly', 'readonly');
+
+    $('.keyboard-sentence').keyboard({
+      layout: 'custom',
+      useCombos: false,
+      autoAccept: true,
+      usePreview : false,
+      customLayout: {
+        'normal': [
+          '1 2 3 4 5 6 7 8 9 0',
+          ' q w e r t y u i o p ',
+          'a s d f g h j k l {b} ',
+          '{shift} z x c v b n m  {shift}',
+          ' @ {space} .'
+        ],
+        'shift': [
+          '1 2 3 4 5 6 7 8 9 0',
+          'Q W E R T Y U I O P ',
+          'A S D F G H J K L {b}',
+          '{shift} Z X C V B N M {shift}',
+          '@ {space} .'
+        ]
+      }
+    })
+  },
+
+  showNumberKeyboard:function () {
+    console.log("showNumberKeyboard");
+
+    $(".keyboard-numerals").attr('readonly', 'readonly');
+    //NUMPAD
+    $('.keyboard-numerals').keyboard({
+      layout : 'custom',
+      restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+      preventPaste : true,  // prevent ctrl-v and right click
+      autoAccept : true,
+      usePreview : false,
+      customLayout: {
+        'normal': [
+          ' 7 8 9 {b} ',
+          '4 5 6 {clear}',
+          '0 1 2 3',
+        ]
+      }
+    })
+  },
+
 
   /** SHOW CHECKOUT MODAL **/
   showModalCheckout:function(){
     var grandTotal =  app.element("grandTotal").innerHTML;
-    app.showKeyboard();
+  //  app.showKeyboard();
 
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
@@ -811,8 +859,8 @@ app.categoriesLength = categories.message.length;
     +"</div>"
     +"</div>"
     +"<div id='checkoutBody' class='checkout-body'>"
-    +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number'>"
-    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='Card Pin'>"
+    +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number' onclick='app.showNumberKeyboard()'>"
+    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
@@ -929,8 +977,8 @@ app.categoriesLength = categories.message.length;
   showCardForm:function () {
     app.showKeyboard();
     var cardForm = "<div class='form-card'>"
-    +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name'>"
-    +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email'>"
+    +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name' onclick='app.showSentenceKeyboard()'>"
+    +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email' onclick='app.showSentenceKeyboard()'>"
     +"<div class='multiple-input'>"
     +"<input id='expiryMonth' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
     +"<input id='expiryYear' class='checkout-input-short' type='text' placeholder='Expiry Year'>"
@@ -1032,15 +1080,7 @@ app.categoriesLength = categories.message.length;
     })
   },
 
-  /** DEACTIVATE CHECKOUT BUTTON **/
-  deactivateCheckoutButton:function () {
-    $(".show-modal-checkout").attr('disabled', 'disabled');
-  },
 
-  /** ACTIVATE CHECOUT BUTTON **/
-  activateCheckButton:function () {
-
-  },
 
 
   /** PERFORM CARD TRANSACTION**/
