@@ -73,7 +73,7 @@ var app = {
     app.CalculateViewPort();
 
     views.start("page-launch", function () {
-      app.showKeyboard();
+      //  app.showKeyboard();
       //  document.getElementById("navSetupButton").style.display = "none";
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
@@ -204,8 +204,36 @@ var app = {
       var categoryLength = app.categoriesLength;
       for (var i = 0; i < categoryLength; i++) {
         app.element("card-category-" + i).classList.remove("card-active");
-
       }
+
+      var storedBasket = JSON.parse(localStorage.getItem("basket"));
+      console.log("storedBasket");
+      console.log(storedBasket);
+      if( storedBasket !== null){
+        app.element("basketTable").innerHTML = "";
+        var totalBundle = 0;
+
+        for (i = 0; i < storedBasket.length; i++) {
+
+          //DISPLAY BASKET
+          $("#basketTable").append("<tr>"
+          + "<td>" +storedBasket[i].name + "</td>"
+          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+          + "<td>" +storedBasket[i].quantity + "</td>"
+          + "<td><button onclick='app.deleteCategoryBasket(" + i + ",\"" + storedBasket[i].name + "\")'><img src='assets/image/trash.png'></button></td>"
+          + "</tr>");
+
+          //ADD BUNDLE PRICE TO CATEGORY PAGE
+          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+        }
+
+        app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+        var deliveryCost = app.element("deliveryCost").innerHTML;
+        var grandTotal = totalBundle +  parseInt(deliveryCost);
+      //  debugger;
+        app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+      }
+
     });
   },
 
@@ -213,9 +241,7 @@ var app = {
   /** NAV TO CATEGORY PAGE **/
   gotoCategoryPage: function () {
 
-    app.showKeyboard();
     views.goto("page-category", function () {
-
 
       app.element("basket-table").classList.remove("animate-basket-background");
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
@@ -250,7 +276,8 @@ var app = {
     })
 
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
-
+    console.log("storedBasket");
+    console.log(storedBasket);
     if( storedBasket !== null){
       app.element("basketTable").innerHTML = "";
       var totalBundle = 0;
@@ -269,18 +296,18 @@ var app = {
         totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
       }
 
-      app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+      app.element("totalBasketBundle").innerHTML = app.totalBundle;
       var deliveryCost = app.element("deliveryCost").innerHTML;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-      app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+      app.element("grandTotal").innerHTML = app.grandTotal;
     }
   },
 
 
   /** NAV TO BUNDLE PAGE **/
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
-    app.showKeyboard();
+    //  app.showKeyboard();
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -329,11 +356,11 @@ var app = {
           totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
         }
 
-        app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+        app.element("totalBasketBundle").innerHTML = app.totalBundle;
         var deliveryCost = app.element("deliveryCost").innerHTML;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-        app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+        app.element("grandTotal").innerHTML = app.grandTotal;
       }
     });
 
@@ -497,9 +524,12 @@ var app = {
 
       }
 
+      app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.element("deliveryCost").innerHTML;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
+      app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
       //CLOSE MODAL
@@ -558,6 +588,72 @@ var app = {
 
   },
 
+
+  validateCardDetails:function () {
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var number = "77";
+    var stringNumber = number.toString();
+    var expiryMonth = $("#expiryMonth").find(":selected").data("id");
+    var expiryYear = $("#expiryYear").find(":selected").data("id");
+    var stringExpiryMonth = expiryMonth.toString();
+    var stringExpiryYear = expiryYear.toString();
+    var cvv = $("#cvv").val();
+    var stringCvv = cvv.toString();
+    var cardNumber = $("#cardNumber").val();
+    var isValidName = app.validateAlphabet(name);
+    var isValidEmail = app.isValidEmail(email);
+    var isValidExpiryMonth = app.validateNumeric(stringExpiryMonth);
+    var isValidExpiryYear = app.validateNumeric(stringExpiryYear);
+    var isValidCvv = app.validateNumeric(cvv);
+    var isValidCardNumber = app.validateNumeric(cardNumber);
+    console.log("expiryMonth");
+    console.log(stringExpiryMonth);
+    console.log("expiryYear");
+    console.log(stringExpiryYear);
+
+    if( name === "" || !isValidName ){
+      app.element("name").classList.add("input-error");
+    }else {
+      app.element("name").classList.remove("input-error");
+    }
+
+    if( email === "" | !isValidEmail){
+      app.element("email").classList.add("input-error");
+    }else {
+      app.element("email").classList.remove("input-error");
+    }
+
+    if( stringExpiryMonth === "00" | !isValidExpiryMonth){
+      app.element("expiryMonthContainer").classList.add("input-error");
+    }else {
+      app.element("expiryMonthContainer").classList.remove("input-error");
+    }
+
+    if( stringExpiryYear === "18" | !isValidExpiryYear){
+      app.element("expiryYearContainer").classList.add("input-error");
+    }else {
+      app.element("expiryYearContainer").classList.remove("input-error");
+    }
+
+    if( cvv === "" | !isValidCvv){
+      app.element("cvv").classList.add("input-error");
+    }else {
+      app.element("cvv").classList.remove("input-error");
+    }
+
+    if( cardNumber === "" | !isValidCardNumber){
+      app.element("cardNumber").classList.add("input-error");
+    }else {
+      app.element("cardNumber").classList.remove("input-error");
+    }
+
+    if(name !== "" && isValidName && email !== "" && isValidEmail && stringExpiryYear !== "" && isValidExpiryYear && stringCvv !== "" && cardNumber !== "" ){
+      //  debugger;
+      app.payWithCard(name, email, stringExpiryMonth, stringExpiryYear, cvv, cardNumber)
+    }
+
+  },
 
   /** SHOW ATTENTION FLASH **/
   stopAttentionFlash:function () {
@@ -733,15 +829,6 @@ var app = {
       $(".keyboard-sentence").attr('readonly', 'readonly');
       $(".keyboard-numerals").attr('readonly', 'readonly');
 
-      //  $(".keyboard-sentence_keyboard").attr('readonly', 'readonly');
-      // $(".keyboard-sentence").click(function() {
-      //   alert("sentence readonly pop");
-      // });
-
-      // $(".keyboard-numerals").click(function() {
-      //   alert("numerals readonly pop");
-      // });
-
       //UNCOMMENT TO ALLOW CUSTOM KEYBOARD TO SHOW FOR TOUCH DEVICE
       $('.keyboard-sentence').keyboard({
         layout: 'custom',
@@ -846,8 +933,17 @@ var app = {
 
   /** SHOW CHECKOUT MODAL **/
   showModalCheckout:function(){
-    var grandTotal =  app.element("grandTotal").innerHTML;
-  //  app.showKeyboard();
+    var grandTotal;
+    if( app.grandTotal === undefined){
+      grandTotal = "00";
+    }else {
+      grandTotal = app.grandTotal;
+    }
+    //  app.showKeyboard();
+    // app.element("checkoutMessage").innerHTML = "An Error Occurred. Please Try Again";
+    //  document.getElementById("checkoutMessage").style.visibility = "hidden";
+    //  app.element("checkoutMessage").style.visibility = "hidden";
+
 
     var bundleDetailstemplate = "<div class='checkout'>"
     +"<div class='checkout-header'>"
@@ -859,15 +955,25 @@ var app = {
     +"</div>"
     +"</div>"
     +"<div id='checkoutBody' class='checkout-body'>"
-    +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number' onclick='app.showNumberKeyboard()'>"
-    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
-    +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
+    //  +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number' onclick='app.showNumberKeyboard()'>"
+    //  +"<input id='cardPin' class='checkout-input keyboard-numerals' type='password' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
+    //  +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>"
     +"</div>";
 
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
 
+    app.showCheckoutForm();
+  },
+
+  showCheckoutForm:function () {
+    var checkoutForm = "<div class='form-card'>"
+    +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number' onclick='app.showNumberKeyboard()'>"
+    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='password' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
+    +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
+    +"</div>";
+    app.element("checkoutBody").innerHTML = checkoutForm;
   },
 
 
@@ -975,17 +1081,45 @@ var app = {
 
   /** FORM - SHOW CARD FORM **/
   showCardForm:function () {
-    app.showKeyboard();
+    //  app.showKeyboard();
     var cardForm = "<div class='form-card'>"
     +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name' onclick='app.showSentenceKeyboard()'>"
     +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email' onclick='app.showSentenceKeyboard()'>"
     +"<div class='multiple-input'>"
-    +"<input id='expiryMonth' class='checkout-input-short' type='text' placeholder='Expiry Month'>"
-    +"<input id='expiryYear' class='checkout-input-short' type='text' placeholder='Expiry Year'>"
-    +"<input id='cvv' class='checkout-input-short keyboard-numerals' type='text' placeholder='CVV'>"
+    +"<div id='expiryMonthContainer' class='styled-select slate'>"
+    +"<select id='expiryMonth'>"
+    +"<option data-id='00' value='00'>00</option>"
+    +"<option data-id='01' value='01'>01</option>"
+    +"<option data-id='02' value='02'>02</option>"
+    +"<option data-id='03' value='03'>03</option>"
+    +"<option data-id='04' value='04'>04</option>"
+    +"<option data-id='05' value='05'>05</option>"
+    +"<option data-id='06' value='06'>06</option>"
+    +"<option data-id='07' value='07'>07</option>"
+    +"<option data-id='08' value='08'>08</option>"
+    +"<option data-id='09' value='09'>09</option>"
+    +"<option data-id='10' value='10'>10</option>"
+    +"<option data-id='11' value='11'>11</option>"
+    +"<option data-id='12' value='12'>12</option>"
+    +"</select>"
     +"</div>"
-    +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number'>"
-    +"<button id='payWithCardButton' class='checkout-button' onclick='app.payWithCard()'>CONTINUE</button>"
+    +"<div id='expiryYearContainer' class='styled-select slate'>"
+    +"<select id='expiryYear'>"
+    +"<option data-id='18' value='18'>18</option>"
+    +"<option data-id='19' value='19'>19</option>"
+    +"<option data-id='20' value='20'>20</option>"
+    +"<option data-id='21' value='21'>21</option>"
+    +"<option data-id='22' value='22'>22</option>"
+    +"<option data-id='23' value='23'>23</option>"
+    +"<option data-id='24' value='24'>24</option>"
+    +"</select>"
+    +"</div>"
+    +"<input id='cvv' class='checkout-input-short keyboard-numerals' type='text' placeholder='CVV'onclick='app.showNumberKeyboard()'>"
+    +"</div>"
+    +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
+    //button function is payWithCard
+    +"<button id='payWithCardButton' class='checkout-button' onclick='app.validateCardDetails()'>CONTINUE</button>"
+    +"<p id='checkoutMessage'></p>"
     +"</div>";
     app.element("checkoutBody").innerHTML = cardForm;
   },
@@ -1005,9 +1139,9 @@ var app = {
   showTransactionFailed:function () {
     var TransactionFailedForm = "<div class='form-card'>"
     +"<img class='checkout-body-image' src='assets/image/error.png'>"
-    +"<p class='checkout-text-failed'>Oops!!. An Error Occurred</p>"
+    +"<p class='checkout-text-failed'>Oops!!. An Error Occurred. Try Again</p>"
     +"</div>";
-    app.element("checkoutBody").innerHTML = TransactionSuccessForm;
+    app.element("checkoutBody").innerHTML = TransactionFailedForm;
   },
 
 
@@ -1015,7 +1149,7 @@ var app = {
   payWithToken:function () {
     var phoneNumber = app.phoneNumber;
     var cardPin = app.cardPin;
-    var amount = "10";
+    var amount = app.grandTotal;
 
     var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
 
@@ -1084,16 +1218,16 @@ var app = {
 
 
   /** PERFORM CARD TRANSACTION**/
-  payWithCard:function () {
+  payWithCard:function (name, email, expiryMonth, expiryYear, cvv, cardNumber) {
 
-    var name = $("#name").val();
-    var email = $("#email").val();
-    var cardNumber = $("#cardNumber").val();
-    var expiryMonth = $("#expiryMonth").val();
-    var expiryYear = $("#expiryYear").val();
-    var cvv = $("#cvv").val();
+    var name = name;
+    var email = email;
+    var cardNumber = cardNumber;
+    var expiryMonth = expiryMonth;
+    var expiryYear = expiryYear;
+    var cvv = cvv;
     var cardPin = app.cardPin;
-    var formattedAmount = app.element("grandTotal").innerHTML;
+    var formattedAmount = app.grandTotal;
     var amount = parseInt(formattedAmount.replace(/,/g, ''));
     var phonenumber = app.phoneNumber;
 
@@ -1109,7 +1243,7 @@ var app = {
     document.getElementById("cvv").disabled = true;
 
     var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin,amount : amount, email :  email, phonenumber : phonenumber, firstname : name}
-
+    //debugger;
     $.ajax({
       url: app.BASE_URL + "payviacard",
       type: "POST",
@@ -1128,20 +1262,26 @@ var app = {
       document.getElementById("expiryMonth").disabled = false;
       document.getElementById("expiryYear").disabled = false;
       document.getElementById("cvv").disabled = false;
-
+    //  debugger;
       if(transaction.error_code === 0){
         app.showOtpForm();
         app.transactionReference = transaction.transaction_reference;
+      }else {
+        //  app.element("checkoutMessage").innerHTML = "An Error Occurred. Please Try Again";
+        //  document.getElementById("checkoutMessage").style.visibility = "visible";
+        app.showTransactionFailed()
       }
+
+    //  debugger;
     })
 
   },
 
   /** SHOW OTP FORM **/
   showOtpForm:function () {
-    app.showKeyboard();
+    //  app.showKeyboard();
     var otpForm = "<div class='form-card'>"
-    +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='Please Enter OTP'>"
+    +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='Please Enter OTP' onclick='app.showNumberKeyboard()'>"
     +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
     +"</div>";
     app.element("checkoutBody").innerHTML = otpForm;
@@ -1181,6 +1321,8 @@ var app = {
 
   /** GO TO SCREENSAVER PAGE **/
   gotoScreensaverPage:function () {
+
+    //debugger;
     views.goto("page-screensaver", function () {
       //CLEAR basket LOCAL STORAGE
       localStorage.removeItem("basket");
