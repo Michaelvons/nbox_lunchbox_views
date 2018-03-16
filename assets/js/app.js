@@ -177,9 +177,10 @@ var app = {
           locationName = locations.message[i].location;
           locationCity = locations.message[i].city;
           cityID = locations.message[i].city_id;
+          aliasID = locations.message[i].alias_id;
 
           var setup =[];
-          setupArray = {terminalID: terminalID, locationName: locationName, locationCity: locationCity, cityID : cityID};
+          setupArray = {terminalID: terminalID, locationName: locationName, locationCity: locationCity, cityID : cityID, aliasID : aliasID};
 
           setup.unshift(setupArray);
           localStorage.setItem("setup", JSON.stringify(setup));
@@ -199,6 +200,10 @@ var app = {
   /**NAV BACK FROM BUNDLES TO CATEGORY PAGE **/
   goBackToCategory:function () {
     views.back("page-category", function(){
+
+      //GET DELIVERY COST
+      app.getDeliveryCost();
+
       console.log("Whn back to page-category");
 
       var categoryLength = app.categoriesLength;
@@ -228,18 +233,37 @@ var app = {
         }
 
         app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-        var deliveryCost = app.element("deliveryCost").innerHTML;
+        var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
-      //  debugger;
+        //  debugger;
         app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
       }
 
+      app.element("deliveryCost").innerHTML = app.deliveryCost;
+      console.log(app.deliveryCost);
+
+    });
+  },
+
+  getDeliveryCost:function () {
+    //GET SCREENSAVERS
+    $.ajax({
+      url: app.BASE_URL + "orders/deliverycost",
+      type: "GET",
+      crossDomain: true,
+      contentType: "application/json"
+    }).done(function (delivery) {
+      app.deliveryCost = delivery.message;
+
+      console.log(app.deliveryCost);
     });
   },
 
 
   /** NAV TO CATEGORY PAGE **/
   gotoCategoryPage: function () {
+    //GET DELIVERY COST
+    app.getDeliveryCost();
 
     views.goto("page-category", function () {
 
@@ -297,17 +321,25 @@ var app = {
       }
 
       app.element("totalBasketBundle").innerHTML = app.totalBundle;
-      var deliveryCost = app.element("deliveryCost").innerHTML;
+    //  app.element("deliveryCost").innerHTML = app.deliveryCost;
+      var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
 
       app.element("grandTotal").innerHTML = app.grandTotal;
     }
+
+    app.element("deliveryCost").innerHTML = app.deliveryCost;
+    console.log(app.deliveryCost);
   },
 
 
   /** NAV TO BUNDLE PAGE **/
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
     //  app.showKeyboard();
+
+    //GET DELIVERY COST
+    app.getDeliveryCost();
+
     //GET BUNDLES
     $.ajax({
       url: app.BASE_URL + "bundles?category_id=" + categoryID,
@@ -357,11 +389,16 @@ var app = {
         }
 
         app.element("totalBasketBundle").innerHTML = app.totalBundle;
-        var deliveryCost = app.element("deliveryCost").innerHTML;
+      //  app.element("deliveryCost").innerHTML = app.deliveryCost;
+
+        var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
 
         app.element("grandTotal").innerHTML = app.grandTotal;
       }
+
+      app.element("deliveryCost").innerHTML = app.deliveryCost;
+      console.log(app.deliveryCost);
     });
 
 
@@ -527,7 +564,7 @@ var app = {
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
 
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-      var deliveryCost = app.element("deliveryCost").innerHTML;
+      var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
       app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
@@ -570,7 +607,7 @@ var app = {
         }
 
         app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-        var deliveryCost = app.element("deliveryCost").innerHTML;
+        var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
         app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
@@ -730,7 +767,7 @@ var app = {
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-      var deliveryCost = app.element("deliveryCost").innerHTML;
+      var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
@@ -781,7 +818,7 @@ var app = {
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopCategoryAttentionFlash();
     app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
-    var deliveryCost = app.element("deliveryCost").innerHTML;
+    var deliveryCost = app.deliveryCost;
     var grandTotal = totalBundle +  parseInt(deliveryCost);
     app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
@@ -1171,7 +1208,7 @@ var app = {
   submitOrder:function (transactionID) {
     var storedSetup = JSON.parse(localStorage.getItem("setup"));
     var storedBasket = JSON.parse(localStorage.getItem("basket"));
-    var locationID = storedSetup[0].cityID;
+    var locationID = storedSetup[0].aliasID;
     var terminalID = storedSetup[0].terminalID;
     var phoneNumber = app.phoneNumber;
 
@@ -1262,7 +1299,7 @@ var app = {
       document.getElementById("expiryMonth").disabled = false;
       document.getElementById("expiryYear").disabled = false;
       document.getElementById("cvv").disabled = false;
-    //  debugger;
+      //  debugger;
       if(transaction.error_code === 0){
         app.showOtpForm();
         app.transactionReference = transaction.transaction_reference;
@@ -1272,7 +1309,7 @@ var app = {
         app.showTransactionFailed()
       }
 
-    //  debugger;
+      //  debugger;
     })
 
   },
@@ -1321,6 +1358,9 @@ var app = {
 
   /** GO TO SCREENSAVER PAGE **/
   gotoScreensaverPage:function () {
+
+    //GET DELIVERY COST
+    app.getDeliveryCost();
 
     //debugger;
     views.goto("page-screensaver", function () {
