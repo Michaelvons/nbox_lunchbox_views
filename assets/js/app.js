@@ -805,6 +805,7 @@ var app = {
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
+            app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
     },
