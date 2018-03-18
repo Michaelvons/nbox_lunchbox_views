@@ -234,19 +234,19 @@ var app = {
 
         app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
         if (app.totalBundle === undefined) {
-          app.element("totalBasketBundle").innerHTML = 00;
+          app.element("totalBundleCategory").innerHTML = "00";
         }else {
-          app.element("totalBasketBundle").innerHTML = app.totalBundle;
+          app.element("totalBundleCategory").innerHTML = parseInt(totalBundle, 10).toLocaleString();
 
         }
 
         var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
         //  debugger;
-        app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+        app.element("grandTotalCategory").innerHTML = parseInt(grandTotal, 10).toLocaleString();
       }
 
-      app.element("deliveryCost").innerHTML = app.deliveryCost;
+      app.element("deliveryCostCategory").innerHTML = app.deliveryCost;
       console.log(app.deliveryCost);
 
     });
@@ -329,9 +329,9 @@ var app = {
 
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
       if (app.totalBundle === undefined) {
-        app.element("totalBasketBundle").innerHTML = 00;
+        app.element("totalBundleCategory").innerHTML = 00;
       }else {
-        app.element("totalBasketBundle").innerHTML = app.totalBundle;
+        app.element("totalBundleCategory").innerHTML =parseInt(totalBundle, 10).toLocaleString();
       }
 
       //  app.element("totalBasketBundle").innerHTML = app.totalBundle;
@@ -339,10 +339,10 @@ var app = {
       var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
 
-      app.element("grandTotal").innerHTML = app.grandTotal;
+      app.element("grandTotalCategory").innerHTML = app.grandTotal;
     }
 
-    app.element("deliveryCost").innerHTML = app.deliveryCost;
+    app.element("deliveryCostCategory").innerHTML = app.deliveryCost;
     console.log(app.deliveryCost);
   },
 
@@ -857,14 +857,15 @@ var app = {
     //  app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
     app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
     if (app.totalBundle === undefined) {
-      app.element("totalBasketBundle").innerHTML = 00;
+      app.element("totalBundleCategory").innerHTML = 00;
     }else {
-      app.element("totalBasketBundle").innerHTML = app.totalBundle;
+      app.element("totalBundleCategory").innerHTML = parseInt(totalBundle, 10).toLocaleString();
     }
 
     var deliveryCost = app.deliveryCost;
     var grandTotal = totalBundle +  parseInt(deliveryCost);
-    app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+      app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
+    app.element("grandTotalCategory").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
 
 
