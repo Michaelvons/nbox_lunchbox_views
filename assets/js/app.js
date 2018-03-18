@@ -232,7 +232,14 @@ var app = {
           totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
         }
 
-        app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+        app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+        if (app.totalBundle === undefined) {
+          app.element("totalBasketBundle").innerHTML = 00;
+        }else {
+          app.element("totalBasketBundle").innerHTML = app.totalBundle;
+
+        }
+
         var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
         //  debugger;
@@ -320,8 +327,15 @@ var app = {
         totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
       }
 
-      app.element("totalBasketBundle").innerHTML = app.totalBundle;
-    //  app.element("deliveryCost").innerHTML = app.deliveryCost;
+      app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+      if (app.totalBundle === undefined) {
+        app.element("totalBasketBundle").innerHTML = 00;
+      }else {
+        app.element("totalBasketBundle").innerHTML = app.totalBundle;
+      }
+
+      //  app.element("totalBasketBundle").innerHTML = app.totalBundle;
+      //  app.element("deliveryCost").innerHTML = app.deliveryCost;
       var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
 
@@ -388,8 +402,16 @@ var app = {
           totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
         }
 
-        app.element("totalBasketBundle").innerHTML = app.totalBundle;
-      //  app.element("deliveryCost").innerHTML = app.deliveryCost;
+        //  app.element("totalBasketBundle").innerHTML = app.totalBundle;
+        //  app.element("deliveryCost").innerHTML = app.deliveryCost;
+
+        app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+        if (app.totalBundle === undefined) {
+          app.element("totalBasketBundle").innerHTML = 00;
+        }else {
+          app.element("totalBasketBundle").innerHTML = app.totalBundle;
+
+        }
 
         var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
@@ -537,7 +559,7 @@ var app = {
     var quantity = app.element("bundleCount").innerHTML;
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
 
-    if( initialBasket === null){
+    if( initialBasket === null || initialBasket.length === 0){
       var basket =[];
       basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID};
 
@@ -561,6 +583,12 @@ var app = {
 
       }
 
+      console.log("addToBasket : otalBundle");
+      console.log(totalBundle);
+      console.log("addToBasket : storedBasket");
+      console.log(storedBasket);
+      console.log("app.grandTotal");
+      console.log(app.grandTotal);
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
 
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
@@ -605,10 +633,17 @@ var app = {
           totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
 
         }
-
+        console.log("addToBasket : totalBundle");
+        console.log(totalBundle);
+        console.log("addToBasket : storedBasket");
+        console.log(storedBasket);
+        app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+        console.log("app.grandTota");
+        console.log(app.grandTotal);
         app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
         var deliveryCost = app.deliveryCost;
         var grandTotal = totalBundle +  parseInt(deliveryCost);
+        app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
         app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
       }
@@ -766,6 +801,7 @@ var app = {
 
       //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
       app.stopAttentionFlash();
+      app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
@@ -817,7 +853,14 @@ var app = {
 
     //CALL FUNCTION TO STOP FLASH AFTER 2 SECONDS
     app.stopCategoryAttentionFlash();
-    app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+    //  app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
+    app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
+    if (app.totalBundle === undefined) {
+      app.element("totalBasketBundle").innerHTML = 00;
+    }else {
+      app.element("totalBasketBundle").innerHTML = app.totalBundle;
+    }
+
     var deliveryCost = app.deliveryCost;
     var grandTotal = totalBundle +  parseInt(deliveryCost);
     app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();

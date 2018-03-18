@@ -46,8 +46,8 @@
       <div class="setup-main-content">
         <p class="setup-title">Device Setup</p>
         <div class="setup-form">
-          <input id="terminalID" type="text" placeholder="Enter terminal ID">
-          <input id="locationID" type="text" placeholder="Enter location ID">
+          <input id="terminalID" type="text" class="keyboard-numerals" onclick="app.showNumberKeyboard()"placeholder="Enter terminal ID">
+          <input id="locationID" type="text" class="keyboard-numerals" onclick="app.showNumberKeyboard()"placeholder="Enter location ID">
           <button id="setupDeviceButton" class="setup-button" onclick="app.validateSetupParams()">CONFIGURE DEVICE</button>
           <!-- <button class="setup-button" onclick="app.gotoScreensaverPage()">CONFIGURE DEVICE</button> -->
         </div>
