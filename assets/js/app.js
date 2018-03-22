@@ -944,9 +944,10 @@ var app = {
         usePreview : false,
         customLayout: {
           'normal': [
-            ' 7 8 9 {b} ',
-            '4 5 6 {clear}',
-            '0 1 2 3',
+            '1 2 3',
+            '4 5 6',
+            '7 8 9',
+            '{clear} 0 {b}'
           ]
         }
       })
@@ -1004,9 +1005,10 @@ var app = {
       usePreview : false,
       customLayout: {
         'normal': [
-          ' 7 8 9 {b} ',
-          '4 5 6 {clear}',
-          '0 1 2 3',
+          '1 2 3',
+          '4 5 6',
+          '7 8 9',
+          '{clear} 0 {b}'
         ]
       }
     })
@@ -1390,10 +1392,10 @@ var app = {
       contentType: "application/json"
     }).done(function (response) {
       // DISBALE INPUT
-      document.getElementById("payWithOtpButton").disabled = false;
-      document.getElementById("payWithOtpButton").style.backgroundColor = "#6a9c5c";
-      document.getElementById("payWithOtpButton").innerHTML = "COMPLETE TRANSACTION";
-      document.getElementById("otp").disabled = false;
+      // document.getElementById("payWithOtpButton").disabled = false;
+      // document.getElementById("payWithOtpButton").style.backgroundColor = "#6a9c5c";
+      // document.getElementById("payWithOtpButton").innerHTML = "COMPLETE TRANSACTION";
+      // document.getElementById("otp").disabled = false;
 
       var transactionID = response.transaction_id;
       app.submitOrder(transactionID);
