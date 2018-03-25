@@ -583,12 +583,12 @@ var app = {
 
       }
 
-      console.log("addToBasket : otalBundle");
-      console.log(totalBundle);
-      console.log("addToBasket : storedBasket");
-      console.log(storedBasket);
-      console.log("app.grandTotal");
-      console.log(app.grandTotal);
+      // console.log("addToBasket : otalBundle");
+      // console.log(totalBundle);
+      // console.log("addToBasket : storedBasket");
+      // console.log(storedBasket);
+      // console.log("app.grandTotal");
+      // console.log(app.grandTotal);
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
 
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
@@ -1654,9 +1654,3 @@ window.addEventListener('load', function () {
 
 
 app.start();
-
-//CUSTOM KEYBOARD
-$(function() {
-
-
-});
