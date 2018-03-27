@@ -751,6 +751,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* height: 400px; */
   flex-direction: column;
 }
 
@@ -1173,4 +1174,24 @@ font-size: 28px;
   background-color: #f2f2f2;
   padding-left: 16px;
   width: 100px;
+}
+
+.multiple-checkout-input{
+  width: 50%;
+}
+
+
+.multiple-checkout-inputs :nth-child(1){
+  margin-top: 0px;
+  margin-right: 8px;
+}
+
+.multiple-checkout-inputs :nth-child(2){
+  margin-top: 0px;
+  margin-left: 8px;
+}
+
+.checkout-message{
+  color: #4a4a4a;
+font-size: 24px;
 }

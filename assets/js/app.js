@@ -662,7 +662,10 @@ var app = {
 
 
   validateCardDetails:function () {
-    var name = $("#name").val();
+  //  var name = $("#name").val();
+    var firstname = $("#firstname").val();
+    var lastname = $("#lastname").val();
+    var cardPin = $("#cardPin").val();
     var email = $("#email").val();
     var number = "77";
     var stringNumber = number.toString();
@@ -679,16 +682,26 @@ var app = {
     var isValidExpiryYear = app.validateNumeric(stringExpiryYear);
     var isValidCvv = app.validateNumeric(cvv);
     var isValidCardNumber = app.validateNumeric(cardNumber);
-    console.log("expiryMonth");
-    console.log(stringExpiryMonth);
-    console.log("expiryYear");
-    console.log(stringExpiryYear);
+    var isValidFirstName = app.validateAlphabet(firstname);
+    var isValidLastName = app.validateAlphabet(lastname);
+    var isValidCardPin = app.validateNumeric(cardPin);
 
-    if( name === "" || !isValidName ){
-      app.element("name").classList.add("input-error");
-    }else {
-      app.element("name").classList.remove("input-error");
-    }
+    console.log("firstname");
+    console.log(firstname);
+    console.log("lastname");
+    console.log(lastname);
+    console.log("cardPin");
+    console.log(cardPin);
+    console.log("isValidCardNumber");
+    console.log(isValidCardNumber);
+    console.log("isValidCardPin");
+    console.log(isValidCardPin);
+
+    // if( name === "" || !isValidName ){
+    //   app.element("name").classList.add("input-error");
+    // }else {
+    //   app.element("name").classList.remove("input-error");
+    // }
 
     if( email === "" | !isValidEmail){
       app.element("email").classList.add("input-error");
@@ -720,9 +733,29 @@ var app = {
       app.element("cardNumber").classList.remove("input-error");
     }
 
-    if(name !== "" && isValidName && email !== "" && isValidEmail && stringExpiryYear !== "" && isValidExpiryYear && stringCvv !== "" && cardNumber !== "" ){
+    if ( firstname === "" | !isValidFirstName) {
+      app.element("firstname").classList.add("input-error");
+    }else {
+      app.element("firstname").classList.remove("input-error");
+    }
+
+    if ( lastname === "" | !isValidLastName) {
+      app.element("lastname").classList.add("input-error");
+    }else {
+      app.element("lastname").classList.remove("input-error");
+    }
+
+    if(cardPin === "" | !isValidCardPin){
+      app.element("cardPin").classList.add("input-error");
+    }else {
+      app.element("cardPin").classList.remove("input-error");
+    }
+
+    if(firstname !== "" && lastname !== "" && cardPin !== "" && email !== "" && isValidEmail && stringExpiryYear !== "" && isValidExpiryYear && stringCvv !== "" && cardNumber !== "" ){
       //  debugger;
-      app.payWithCard(name, email, stringExpiryMonth, stringExpiryYear, cvv, cardNumber)
+      app.payWithCard(lastname, firstname, cardPin, email, stringExpiryMonth, stringExpiryYear, cvv, cardNumber)
+    }else {
+      console.log("Invalid Param");
     }
 
   },
@@ -805,7 +838,7 @@ var app = {
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
       var deliveryCost = app.deliveryCost;
       var grandTotal = totalBundle +  parseInt(deliveryCost);
-            app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
+      app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
 
     },
@@ -864,7 +897,7 @@ var app = {
 
     var deliveryCost = app.deliveryCost;
     var grandTotal = totalBundle +  parseInt(deliveryCost);
-      app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
+    app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
     app.element("grandTotalCategory").innerHTML = parseInt(grandTotal, 10).toLocaleString();
   },
 
@@ -1053,8 +1086,10 @@ var app = {
 
   showCheckoutForm:function () {
     var checkoutForm = "<div class='form-card'>"
+    +"<p class='checkout-message'>Enter your details to checkout</p>"
     +"<input id='phoneNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Phone Number' onclick='app.showNumberKeyboard()'>"
-    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='password' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
+    +"<input id='floorNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Floor Number' onclick='app.showNumberKeyboard()'>"
+    // +"<input id='cardPin' class='checkout-input keyboard-numerals' type='password' placeholder='Card Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='validateOrderButton' class='checkout-button' onclick='app.validateOrderDetails()'>CONFIRM ORDER</button>"
     +"</div>";
     app.element("checkoutBody").innerHTML = checkoutForm;
@@ -1064,10 +1099,13 @@ var app = {
   /** VALIDATE ORDER INPUT DETAILS **/
   validateOrderDetails:function () {
     var phonenumber = $("#phoneNumber").val();
+    var floornumber = $("#floorNumber").val();
+    app.storedFloorNumber = floornumber;
+  //  var storedFloorNumber = app.floornumber;
     var phoneNumberLength = phonenumber.length;
-    var passcode = $("#cardPin").val();
+    // var passcode = $("#cardPin").val();
     var isPhoneNumber = app.validateNumeric(phonenumber);
-    var isPasscode = app.validateNumeric(passcode);
+    //  var isPasscode = app.validateNumeric(passcode);
     var isPhoneNumberLength = app.validatePhoneNumberLength(phonenumber);
 
     if (!isPhoneNumber) {
@@ -1082,15 +1120,25 @@ var app = {
       app.element("phoneNumber").classList.add("input-error");
     }
 
-    if (!isPasscode) {
-      app.element("cardPin").classList.add("input-error");
+    if(floornumber === ""){
+      app.element("floorNumber").classList.remove("input-error");
     }else {
-      app.element("cardPin").classList.remove("input-error");
+      app.element("floorNumber").classList.remove("input-error");
     }
 
-    if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
+    // if (!isPasscode) {
+    //   app.element("cardPin").classList.add("input-error");
+    // }else {
+    //   app.element("cardPin").classList.remove("input-error");
+    // }
+
+    if(isPhoneNumber && isPhoneNumberLength && phonenumber !== "" && floornumber !== ""){
       app.placeOrder();
     }
+
+    // if(isPhoneNumber && isPasscode && isPhoneNumberLength && phonenumber !== "" && passcode !== ""){
+    //   app.placeOrder();
+    // }
   },
 
   /** VALIDATE LENGTH OF PHONE NUMBER **/
@@ -1129,11 +1177,11 @@ var app = {
     document.getElementById("validateOrderButton").style.backgroundColor = "#5D5D5D";
     document.getElementById("validateOrderButton").innerHTML = "PROCESSING...";
     document.getElementById("phoneNumber").disabled = true;
-    document.getElementById("cardPin").disabled = true;
+    //  document.getElementById("cardPin").disabled = true;
 
     app.phoneNumber = $("#phoneNumber").val();
     var phoneNumber = app.phoneNumber;
-    app.cardPin = $("#cardPin").val();
+    //app.cardPin = $("#cardPin").val();
 
     var userData = {phonenumber : phoneNumber}
 
@@ -1149,7 +1197,7 @@ var app = {
       document.getElementById("validateOrderButton").style.backgroundColor = "#6a9c5c";
       document.getElementById("validateOrderButton").innerHTML = "CONFIRM ORDER";
       document.getElementById("phoneNumber").disabled = false;
-      document.getElementById("cardPin").disabled = false;
+      //  document.getElementById("cardPin").disabled = false;
 
       if (user.status === 404) {
         app.showCardForm();
@@ -1167,8 +1215,14 @@ var app = {
   showCardForm:function () {
     //  app.showKeyboard();
     var cardForm = "<div class='form-card'>"
-    +"<input id='name' class='checkout-input keyboard-sentence' type='text' placeholder='Name' onclick='app.showSentenceKeyboard()'>"
+    +"<div class='multiple-input'>"
+    // +"<h1>7777</h1>"
+    +"<input id='firstname' class='multiple-checkout-input keyboard-sentence' type='text' placeholder='First Name' onclick='app.showSentenceKeyboard()'>"
+    +"<input id='lastname' class='multiple-checkout-input keyboard-sentence' type='text' placeholder='Last Name' onclick='app.showSentenceKeyboard()'>"
+    +"</div>"
+    // +"<p>Happy</p>"
     +"<input id='email' class='checkout-input keyboard-sentence' type='text' placeholder='Email' onclick='app.showSentenceKeyboard()'>"
+    +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
     +"<div class='multiple-input'>"
     +"<div id='expiryMonthContainer' class='styled-select slate'>"
     +"<select id='expiryMonth'>"
@@ -1200,13 +1254,16 @@ var app = {
     +"</div>"
     +"<input id='cvv' class='checkout-input-short keyboard-numerals' type='text' placeholder='CVV'onclick='app.showNumberKeyboard()'>"
     +"</div>"
-    +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
+  //  +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
     //button function is payWithCard
+    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='payWithCardButton' class='checkout-button' onclick='app.validateCardDetails()'>CONTINUE</button>"
     +"<p id='checkoutMessage'></p>"
     +"</div>";
     app.element("checkoutBody").innerHTML = cardForm;
   },
+
+
 
 
   /** MESSAGE - SHOW TRANSACTION SUCCESS MESSAGE **/
@@ -1234,8 +1291,9 @@ var app = {
     var phoneNumber = app.phoneNumber;
     var cardPin = app.cardPin;
     var amount = app.grandTotal;
+    var floorNumber = app.storedFloorNumber;
 
-    var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
+    var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin, floornumber : floorNumber}
 
     $.ajax({
       url: app.BASE_URL + "tokentransaction",
@@ -1302,15 +1360,19 @@ var app = {
 
 
   /** PERFORM CARD TRANSACTION**/
-  payWithCard:function (name, email, expiryMonth, expiryYear, cvv, cardNumber) {
+  payWithCard:function (lastname, firstname, cardPin, email, expiryMonth, expiryYear, cvv, cardNumber) {
 
-    var name = name;
+  //  var name = name;
+    var lastname = lastname;
+    var firstname = firstname;
+    var floornumber = app.storedFloorNumber;
+    var cardPin = cardPin;
     var email = email;
     var cardNumber = cardNumber;
     var expiryMonth = expiryMonth;
     var expiryYear = expiryYear;
     var cvv = cvv;
-    var cardPin = app.cardPin;
+  //  var cardPin = app.cardPin;
     var formattedAmount = app.grandTotal;
     var amount = parseInt(formattedAmount.replace(/,/g, ''));
     var phonenumber = app.phoneNumber;
@@ -1319,14 +1381,16 @@ var app = {
     document.getElementById("payWithCardButton").disabled = true;
     document.getElementById("payWithCardButton").style.backgroundColor = "#5D5D5D";
     document.getElementById("payWithCardButton").innerHTML = "PROCESSING...";
-    document.getElementById("name").disabled = true;
+    document.getElementById("firstname").disabled = true;
+    document.getElementById("lastname").disabled = true;
+    document.getElementById("cardPin").disabled = true;
     document.getElementById("email").disabled = true;
     document.getElementById("cardNumber").disabled = true;
     document.getElementById("expiryMonth").disabled = true;
     document.getElementById("expiryYear").disabled = true;
     document.getElementById("cvv").disabled = true;
 
-    var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin,amount : amount, email :  email, phonenumber : phonenumber, firstname : name}
+    var cardData = {cardno : cardNumber, cvv : cvv, expirymonth : expiryMonth, expiryyear : expiryYear, pin : cardPin, amount : amount, email :  email, phonenumber : phonenumber, firstname : firstname, lastname : lastname, floor: floornumber}
     //debugger;
     $.ajax({
       url: app.BASE_URL + "payviacard",
@@ -1340,13 +1404,16 @@ var app = {
       document.getElementById("payWithCardButton").disabled = false;
       document.getElementById("payWithCardButton").style.backgroundColor = "#6a9c5c";
       document.getElementById("payWithCardButton").innerHTML = "CONTINUE";
-      document.getElementById("name").disabled = false;
+      // document.getElementById("name").disabled = false;
       document.getElementById("email").disabled = false;
       document.getElementById("cardNumber").disabled = false;
       document.getElementById("expiryMonth").disabled = false;
       document.getElementById("expiryYear").disabled = false;
       document.getElementById("cvv").disabled = false;
       //  debugger;
+
+console.log(transaction);
+
       if(transaction.error_code === 0){
         app.showOtpForm();
         app.transactionReference = transaction.transaction_reference;
@@ -1371,6 +1438,13 @@ var app = {
     app.element("checkoutBody").innerHTML = otpForm;
   },
 
+  showCardPinForm:function () {
+    var cardPinForm = "<div class='form-card'>"
+    +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
+    +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
+    +"</div>";
+    app.element("checkoutBody").innerHTML = cardPinForm;
+  },
 
   /** PERFORM OTP TRANSACTION **/
   payWithOtp:function () {
