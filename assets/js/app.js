@@ -483,6 +483,8 @@ var app = {
       }
     }
 
+
+
     //REMOVE CSS PROPERTY TO INACTVE TABS
     for (var i = 0; i < cards.length; i++) {
       app.element("card-bundle-" + cards[i]).classList.remove("card-active");
@@ -503,6 +505,25 @@ var app = {
     +"</div>"
     +"<div class='bundle-details-secondary'>"
     +"<div class='bundle-details-menu'>"
+    +"<p class='bundle-details-header'> ADD MORE TO YOUR BUNDLE</p>"
+    +"<div id='bundle-option-container' class='bundle-details-options'>"
+    //+"<label class='bundle-options-container'>"
+    // +"<div class='options-details'><span>Moi Moi</span><span class='options-price'> NGN 350</span> </div>"
+    // +"<input type='checkbox'>"
+    // +"<span class='checkmark'></span>"
+    // +"</label>"
+    // +"<label class='bundle-options-container'>"
+    // +"<div class='options-details'><span>Fanta</span><span class='options-price'> NGN 200</span> </div>"
+    // +"<input type='checkbox'>"
+    // +"<span class='checkmark'></span>"
+    // +"</label>"
+    // +"<input type='checkbox'>A checkbox"
+    // +"<label class='bundle-options-container'>"
+    // +"<div class='options-details'><span>Coke</span><span class='options-price'> NGN 200</span> </div>"
+    // +"<input type='checkbox'>"
+    // +"<span class='checkmark'></span>"
+    // +"</label>"
+    +"</div>"
     +"<table>"
     +"<thead>"
     +"<tr>"
@@ -518,7 +539,7 @@ var app = {
     +"<div>"
     +"<div class='basket-total-row'>"
     +"<span>Price</span>"
-    +"<p><span class='currency'>NGN </span>" + parseInt(price, 10).toLocaleString() + "<span class='currency'>.00</span></p>"
+    +"<p><span class='currency'>NGN </span><span id='bundlePrice'>" + parseInt(price, 10).toLocaleString() + "</span><span class='currency'>.00</span></p>"
     +"</div>"
     +"<div class='basket-total-row basket-total-row-quantity'>"
     +"<span>Quantity</span>"
@@ -552,6 +573,86 @@ var app = {
     }
 
     document.getElementById("bundle-overlay-image").style.backgroundImage = 'url('+ image +')';
+
+    //GET EXTRAS
+
+    var extraData = {bundle_id : bundleID};
+
+    $.ajax({
+      url: app.BASE_URL + "bundle/option/all",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(extraData),
+      contentType: "application/json"
+    }).done(function (extras) {
+      console.log("extras");
+      console.log(extras);
+      // console.log(extras.message[0].name);
+      // var extra = extras.message[0];
+
+      for (var i = 0; i < extras.message.length; i++) {
+
+        $("#bundle-option-container").append(
+          "<p></p>"
+          +"<div class='checkboxFive options-new-container'>"
+          +"<input type='checkbox' id='checkboxFiveInput"+ i +"' name='' onclick='app.addExtras(\"" + extras.message[i].price + "\", \"" + extras.message[i].name + "\")'/>"
+          +"<label for='checkboxFiveInput"+ i +"'></label>"
+          +"<div class='options-new-details'>"
+          +"<span class='options-name'>" + extras.message[i].name  + "</span>"
+          +"<span class='options-price'> NGN " + extras.message[i].price + "</span>"
+          +"</div>"
+          +"</div>"
+        );
+
+      }
+
+    });
+
+  },
+
+  //GET EXTRAS
+  // getExtras:function (bundleID) {
+  //
+  //   var extraData = {bundle_id : bundleID};
+  //
+  //   $.ajax({
+  //     url: app.BASE_URL + "bundle/option/all",
+  //     type: "POST",
+  //     crossDomain: true,
+  //     data: JSON.stringify(extraData),
+  //     contentType: "application/json"
+  //   }).done(function (extras) {
+  //     console.log("extras");
+  //     console.log(extras);
+  //
+  //     app.extras = "extras.message";
+  //     console.log(app.extras);
+  //   });
+  //
+  // },
+
+  //ADD OPTIONS
+  addExtras:function (extraPrice, extraName) {
+
+    app.extraName = extraName;
+
+    //  var extraPrice = app.element("bundlePrice").innerHTML;
+    var bundleTotal = app.element("bundleTotal").innerHTML;
+    var formattedBundleTotal =  parseInt(bundleTotal.replace(/,/g, ''));
+    console.log("extraPrice");
+    console.log(extraPrice);
+    console.log("bundlePrice");
+    console.log(bundlePrice);
+    console.log("bundleTotal");
+    console.log(bundleTotal);
+    console.log("formattedBundleTotal");
+    console.log(formattedBundleTotal);
+
+    var NewBundleTotal  = parseInt(extraPrice) + formattedBundleTotal;
+    console.log("NewBundleTotal");
+    console.log(NewBundleTotal);
+    app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
+
   },
 
   /** ADD TO BASKET **/
@@ -662,7 +763,7 @@ var app = {
 
 
   validateCardDetails:function () {
-  //  var name = $("#name").val();
+    //  var name = $("#name").val();
     var firstname = $("#firstname").val();
     var lastname = $("#lastname").val();
     var cardPin = $("#cardPin").val();
@@ -1101,7 +1202,7 @@ var app = {
     var phonenumber = $("#phoneNumber").val();
     var floornumber = $("#floorNumber").val();
     app.storedFloorNumber = floornumber;
-  //  var storedFloorNumber = app.floornumber;
+    //  var storedFloorNumber = app.floornumber;
     var phoneNumberLength = phonenumber.length;
     // var passcode = $("#cardPin").val();
     var isPhoneNumber = app.validateNumeric(phonenumber);
@@ -1204,9 +1305,10 @@ var app = {
       }
 
       if (user.status === 200) {
-        app.payWithToken();
+        app.showCardPinForm();
       }
 
+      //  debugger;
     })
   },
 
@@ -1254,7 +1356,7 @@ var app = {
     +"</div>"
     +"<input id='cvv' class='checkout-input-short keyboard-numerals' type='text' placeholder='CVV'onclick='app.showNumberKeyboard()'>"
     +"</div>"
-  //  +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
+    //  +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
     //button function is payWithCard
     +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='payWithCardButton' class='checkout-button' onclick='app.validateCardDetails()'>CONTINUE</button>"
@@ -1262,8 +1364,6 @@ var app = {
     +"</div>";
     app.element("checkoutBody").innerHTML = cardForm;
   },
-
-
 
 
   /** MESSAGE - SHOW TRANSACTION SUCCESS MESSAGE **/
@@ -1362,7 +1462,7 @@ var app = {
   /** PERFORM CARD TRANSACTION**/
   payWithCard:function (lastname, firstname, cardPin, email, expiryMonth, expiryYear, cvv, cardNumber) {
 
-  //  var name = name;
+    //  var name = name;
     var lastname = lastname;
     var firstname = firstname;
     var floornumber = app.storedFloorNumber;
@@ -1372,7 +1472,7 @@ var app = {
     var expiryMonth = expiryMonth;
     var expiryYear = expiryYear;
     var cvv = cvv;
-  //  var cardPin = app.cardPin;
+    //  var cardPin = app.cardPin;
     var formattedAmount = app.grandTotal;
     var amount = parseInt(formattedAmount.replace(/,/g, ''));
     var phonenumber = app.phoneNumber;
@@ -1412,7 +1512,7 @@ var app = {
       document.getElementById("cvv").disabled = false;
       //  debugger;
 
-console.log(transaction);
+      console.log(transaction);
 
       if(transaction.error_code === 0){
         app.showOtpForm();
@@ -1441,9 +1541,24 @@ console.log(transaction);
   showCardPinForm:function () {
     var cardPinForm = "<div class='form-card'>"
     +"<input id='otp' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
-    +"<button id='payWithOtpButton' class='checkout-button' onclick='app.payWithOtp()'>COMPLETE TRANSACTION</button>"
+    +"<button id='payWithCardPinButton' class='checkout-button' onclick='app.payWithCardPin()'>COMPLETE TRANSACTION</button>"
     +"</div>";
     app.element("checkoutBody").innerHTML = cardPinForm;
+  },
+
+  payWithCardPin:function () {
+
+    $.ajax({
+      url: app.BASE_URL + "tokentransaction",
+      type: "POST",
+      crossDomain: true,
+      data: JSON.stringify(tokenizedChargeData),
+      contentType: "application/json"
+    }).done(function (tokenizedChargeData) {
+      // var transactionID = response.transaction_id;
+      // app.submitOrder(transactionID);
+    })
+
   },
 
   /** PERFORM OTP TRANSACTION **/
@@ -1465,11 +1580,6 @@ console.log(transaction);
       data: JSON.stringify(otpData),
       contentType: "application/json"
     }).done(function (response) {
-      // DISBALE INPUT
-      // document.getElementById("payWithOtpButton").disabled = false;
-      // document.getElementById("payWithOtpButton").style.backgroundColor = "#6a9c5c";
-      // document.getElementById("payWithOtpButton").innerHTML = "COMPLETE TRANSACTION";
-      // document.getElementById("otp").disabled = false;
 
       var transactionID = response.transaction_id;
       app.submitOrder(transactionID);
