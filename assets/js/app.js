@@ -350,7 +350,7 @@ var app = {
   /** NAV TO BUNDLE PAGE **/
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
     //  app.showKeyboard();
-
+    app.allExtras = []
     //GET DELIVERY COST
     app.getDeliveryCost();
 
@@ -595,7 +595,7 @@ var app = {
         $("#bundle-option-container").append(
           "<p></p>"
           +"<div class='checkboxFive options-new-container'>"
-          +"<input type='checkbox' id='extra-"+ i +"' name='' onclick='app.addExtras(\"" + extras.message[i].price + "\", \"" + extras.message[i].name + "\", \"" + i + "\")'/>"
+          +"<input type='checkbox' id='extra-"+ i +"' name='' onclick='app.addExtras(\"" + extras.message[i].price + "\", \"" + extras.message[i].name + "\", \"" + i + "\", \"" + extras.message[i]._id + "\")'/>"
           +"<label for='extra-"+ i +"'></label>"
           +"<div class='options-new-details'>"
           +"<span class='options-name'>" + extras.message[i].name  + "</span>"
@@ -632,46 +632,51 @@ var app = {
   // },
 
   //ADD OPTIONS
-  addExtras:function (extraPrice, extraName, extraID) {
+  addExtras:function (extraPrice, extraName, extraIndex, extraID) {
 
     app.extraName = extraName;
-
-    //  var extraPrice = app.element("bundlePrice").innerHTML;
-    var extraElementID = "extra-" + extraID;
+    var extraElementID = "extra-" + extraIndex;
     var bundleTotal = app.element("bundleTotal").innerHTML;
     var formattedBundleTotal =  parseInt(bundleTotal.replace(/,/g, ''));
-    console.log("extraPrice");
-    console.log(extraPrice);
-    console.log("bundlePrice");
-    console.log(bundlePrice);
-    console.log("bundleTotal");
-    console.log(bundleTotal);
-    console.log("formattedBundleTotal");
-    console.log(formattedBundleTotal);
-
-
-
-console.log("extraElementID");
-    console.log(extraElementID);
-
-    // if (document.getElementById('extra-1').checked) {
-    //   console.log("checked");
-    // }else{
-    //   console.log("not checked");
-    // }
+  //  var extrasArray = {option_id: extraID };
+    var extrasArray = extraID ;
 
     if(app.element(extraElementID).checked){
-    //  console.log("checked");
+      //  console.log("checked");
 
       var NewBundleTotal  = parseInt(extraPrice) + formattedBundleTotal;
-      console.log("NewBundleTotal");
-      console.log(NewBundleTotal);
+      //  console.log("NewBundleTotal");
+      //  console.log(NewBundleTotal);
       app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
+      //app.allExtras = "allextras";
+
+      //var extrasArray = {option_id: extraID };
+      app.allExtras.push(extrasArray);
+      var extrasArrayIndex = app.allExtras.indexOf(extrasArray);
+      console.log("extrasArrayIndex");
+      console.log(extrasArrayIndex);
+      console.log("app.allExtras");
+      console.log(app.allExtras);
+
     }else {
-    //  console.log("not checked");
+      //  var extrasArray = {option_id: extraID };
+      //  app.allExtras.push(extrasArray);
+      console.log("extrasArray");
+      console.log(extrasArray);
+      console.log("app.allExtras");
+      console.log(app.allExtras);
+      var extrasArrayIndex = app.allExtras.indexOf(extrasArray);
+      console.log("remove extrasArrayIndex");
+      console.log(extrasArrayIndex);
+      app.allExtras.splice(extrasArrayIndex, 1);
+      console.log("app.allExtras");
+      console.log(app.allExtras);
+
+
+      //  console.log("not checked");
       var NewBundleTotal  = formattedBundleTotal - parseInt(extraPrice) ;
-      console.log("NewBundleTotal");
-      console.log(NewBundleTotal);
+      //  console.log("NewBundleTotal");
+      //  console.log(NewBundleTotal);
       app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
     }
 
@@ -679,6 +684,8 @@ console.log("extraElementID");
 
   /** ADD TO BASKET **/
   addToBasket:function (name, price, bundleID, categoryID) {
+    var allextra = app.allExtras;
+    console.log(allextra);
     var quantity = app.element("bundleCount").innerHTML;
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
 
