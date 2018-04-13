@@ -595,8 +595,8 @@ var app = {
         $("#bundle-option-container").append(
           "<p></p>"
           +"<div class='checkboxFive options-new-container'>"
-          +"<input type='checkbox' id='checkboxFiveInput"+ i +"' name='' onclick='app.addExtras(\"" + extras.message[i].price + "\", \"" + extras.message[i].name + "\")'/>"
-          +"<label for='checkboxFiveInput"+ i +"'></label>"
+          +"<input type='checkbox' id='extra-"+ i +"' name='' onclick='app.addExtras(\"" + extras.message[i].price + "\", \"" + extras.message[i].name + "\", \"" + i + "\")'/>"
+          +"<label for='extra-"+ i +"'></label>"
           +"<div class='options-new-details'>"
           +"<span class='options-name'>" + extras.message[i].name  + "</span>"
           +"<span class='options-price'> NGN " + extras.message[i].price + "</span>"
@@ -632,11 +632,12 @@ var app = {
   // },
 
   //ADD OPTIONS
-  addExtras:function (extraPrice, extraName) {
+  addExtras:function (extraPrice, extraName, extraID) {
 
     app.extraName = extraName;
 
     //  var extraPrice = app.element("bundlePrice").innerHTML;
+    var extraElementID = "extra-" + extraID;
     var bundleTotal = app.element("bundleTotal").innerHTML;
     var formattedBundleTotal =  parseInt(bundleTotal.replace(/,/g, ''));
     console.log("extraPrice");
@@ -648,10 +649,31 @@ var app = {
     console.log("formattedBundleTotal");
     console.log(formattedBundleTotal);
 
-    var NewBundleTotal  = parseInt(extraPrice) + formattedBundleTotal;
-    console.log("NewBundleTotal");
-    console.log(NewBundleTotal);
-    app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
+
+
+console.log("extraElementID");
+    console.log(extraElementID);
+
+    // if (document.getElementById('extra-1').checked) {
+    //   console.log("checked");
+    // }else{
+    //   console.log("not checked");
+    // }
+
+    if(app.element(extraElementID).checked){
+    //  console.log("checked");
+
+      var NewBundleTotal  = parseInt(extraPrice) + formattedBundleTotal;
+      console.log("NewBundleTotal");
+      console.log(NewBundleTotal);
+      app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
+    }else {
+    //  console.log("not checked");
+      var NewBundleTotal  = formattedBundleTotal - parseInt(extraPrice) ;
+      console.log("NewBundleTotal");
+      console.log(NewBundleTotal);
+      app.element("bundleTotal").innerHTML =  parseInt(NewBundleTotal, 10).toLocaleString();
+    }
 
   },
 
