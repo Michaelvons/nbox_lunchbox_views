@@ -350,7 +350,7 @@ var app = {
   /** NAV TO BUNDLE PAGE **/
   gotoBundlePage: function ( cardID, cardLength, categoryID) {
     //  app.showKeyboard();
-    app.allExtras = []
+
     //GET DELIVERY COST
     app.getDeliveryCost();
 
@@ -464,6 +464,9 @@ var app = {
 
     var menuArray = app.allMenu[cardID];
 
+    //INIT EXTRAS ARRAY
+    app.allExtras = [];
+
     //ADD OR REMOVE CSS Class
     app.element("card-bundle-" + cardID).classList.add("card-active");
     cards = [];
@@ -507,22 +510,7 @@ var app = {
     +"<div class='bundle-details-menu'>"
     +"<p class='bundle-details-header'> ADD MORE TO YOUR BUNDLE</p>"
     +"<div id='bundle-option-container' class='bundle-details-options'>"
-    //+"<label class='bundle-options-container'>"
-    // +"<div class='options-details'><span>Moi Moi</span><span class='options-price'> NGN 350</span> </div>"
-    // +"<input type='checkbox'>"
-    // +"<span class='checkmark'></span>"
-    // +"</label>"
-    // +"<label class='bundle-options-container'>"
-    // +"<div class='options-details'><span>Fanta</span><span class='options-price'> NGN 200</span> </div>"
-    // +"<input type='checkbox'>"
-    // +"<span class='checkmark'></span>"
-    // +"</label>"
-    // +"<input type='checkbox'>A checkbox"
-    // +"<label class='bundle-options-container'>"
-    // +"<div class='options-details'><span>Coke</span><span class='options-price'> NGN 200</span> </div>"
-    // +"<input type='checkbox'>"
-    // +"<span class='checkmark'></span>"
-    // +"</label>"
+    +"<p id='options-message'>Loading options...</p>"
     +"</div>"
     +"<table>"
     +"<thead>"
@@ -587,8 +575,17 @@ var app = {
     }).done(function (extras) {
       console.log("extras");
       console.log(extras);
-      // console.log(extras.message[0].name);
+      console.log("extras.message.length");
+      console.log(extras.message.length);
       // var extra = extras.message[0];
+
+      $("#bundle-option-container").html("");
+
+      // var extrasLength = extras.message.length;
+      // if (extrasLength === 0) {
+      //   $("#options-message").append("<p>No options available</p>");
+      //   console.log("No options here");
+      // }
 
       for (var i = 0; i < extras.message.length; i++) {
 
@@ -603,7 +600,12 @@ var app = {
           +"</div>"
           +"</div>"
         );
+      }
 
+      var extrasLength = extras.message.length;
+      if (extrasLength === 0) {
+        $("#bundle-option-container").append("No options available");
+        console.log("No options here");
       }
 
     });
@@ -638,7 +640,7 @@ var app = {
     var extraElementID = "extra-" + extraIndex;
     var bundleTotal = app.element("bundleTotal").innerHTML;
     var formattedBundleTotal =  parseInt(bundleTotal.replace(/,/g, ''));
-  //  var extrasArray = {option_id: extraID };
+    //  var extrasArray = {option_id: extraID };
     var extrasArray = extraID ;
 
     if(app.element(extraElementID).checked){
@@ -685,13 +687,15 @@ var app = {
   /** ADD TO BASKET **/
   addToBasket:function (name, price, bundleID, categoryID) {
     var allextra = app.allExtras;
+    console.log("addBasket: allExtras");
     console.log(allextra);
+    //  console.log(allextra);
     var quantity = app.element("bundleCount").innerHTML;
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
 
     if( initialBasket === null || initialBasket.length === 0){
       var basket =[];
-      basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID};
+      basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra };
 
       basket.unshift(basketArray);
       localStorage.setItem("basket", JSON.stringify(basket));
@@ -742,7 +746,7 @@ var app = {
       if (initialBasket.length !== 0) {
         //var id = initialContacts.length;
 
-        basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID};
+        basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra };
 
         basket.unshift(basketArray);
         localStorage.setItem("basket", JSON.stringify(basket));
@@ -1447,14 +1451,40 @@ var app = {
     var phoneNumber = app.phoneNumber;
 
     var cartItems = [];
+    var cartOptions = [];
+
+    // for (var i = 0; i < array.length; i++) {
+    //   array[i]
+    // }
 
     for (var i = 0; i < storedBasket.length; i++) {
       var cartCategoryID = storedBasket[i].categoryID;
       var cartBundleID = storedBasket[i].bundleID;
       var cartQuantity = storedBasket[i].quantity;
-      var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity};
+      var cartExtras = storedBasket[i].extras;
+
+      for (var i = 0; i < cartExtras.length; i++) {
+        cartOptionsArray = {option_id : cartExtras[i]};
+        cartOptions.unshift(cartOptionsArray);
+      }
+
+      var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity, options:cartOptions};
+      debugger;
       cartItems.unshift(cartItemsArray);
     }
+
+
+
+
+
+
+    // for (var i = 0; i < storedBasket.length; i++) {
+    //   var cartCategoryID = storedBasket[i].categoryID;
+    //   var cartBundleID = storedBasket[i].bundleID;
+    //   var cartQuantity = storedBasket[i].quantity;
+    //   var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity};
+    //   cartItems.unshift(cartItemsArray);
+    // }
 
     var orderData = {
       cart_items : cartItems,
