@@ -396,7 +396,7 @@ var app = {
           + "<td>" +storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
@@ -768,15 +768,16 @@ var app = {
 
         $("#bundleBasketTable").append("<tr>"
         + "<td onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>" + storedBasket[i].name + "</td>"
-        + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
+        + "<td>NGN " + storedBasket[i].bundleTotal + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
         //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
         // +"<td>" + storedBasket[i].extrasPrice+ "</td>"
-        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE
-        totalBundle += parseInt(storedBasket[i].bundleTotal) * parseInt(storedBasket[i].quantity);
+        var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
+        totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
         console.log("storedBasket[i].extrasInfo.length");
         console.log(storedBasket[i].extrasInfo.length);
       }
@@ -852,15 +853,16 @@ var app = {
           console.log(storedBasket[i].bundleTotal);
           $("#bundleBasketTable").append("<tr>"
           + "<td onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>" + storedBasket[i].name + "</td>"
-          + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
+          + "<td>NGN " + storedBasket[i].bundleTotal + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
           //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
           // +"<td>" + storedBasket[i].extrasPrice+ "</td>"
-          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
-          totalBundle += parseInt(storedBasket[i].bundleTotal) * parseInt(storedBasket[i].quantity);
+          var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
+          totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
           console.log("storedBasket[i].extrasInfo.length");
           console.log(storedBasket[i].extrasInfo.length);
         }
@@ -900,8 +902,6 @@ var app = {
 
   showBasketDetails:function (name, price, quantity, total, basketIndex) {
 
-    //debugger;
-
     var basketDetailsTemplate = "<div class='delete-modal'><div class='checkout-header'><p class='checkout-title'>Cart details</p></div>"
     +"<div class='modal-body dual-content'>"
     +"<div class='first-content'>"
@@ -926,10 +926,9 @@ var app = {
     console.log(app.allOptions[basketIndex]);
     var optionsArray = app.allOptions[basketIndex].extrasInfo;
 
-      app.element("basket-detail-options").innerHTML = "";
+    app.element("basket-detail-options").innerHTML = "";
 
     for (var i = 0; i < optionsArray.length; i++) {
-      //optionsArray[i].extrasInfo;
       $("#basket-detail-options").append("<p> " + optionsArray[i].extra_name  +"( " + "NGN " + optionsArray[i].extra_price + " )" + "</p>")
     }
   },
@@ -1050,19 +1049,37 @@ var app = {
 
 
   /** DELETE A BUNDLE FROM BUNDLE BASKET **/
-  deleteBundleBasket:function (basketIndex, bundleName, bundlePrice, bundleQuantity) {
+  deleteBundleBasket:function (basketIndex, bundleName, bundlePrice, bundleQuantity, total) {
     console.log("basketIndex");
     console.log(basketIndex);
 
 
+    // var deleteBundleTemplate = "<div class='delete-modal'><div class='modal-header'>Are you sure you want to remove this bundle from your cart ?</div>"
+    // +"<div class='modal-body'>"
+    // +"<p class='delete-basket-details-header'>BUNDLE NAME</p>"
+    // +"<p class='delete-basket-details-text'>" + bundleName + "</p>"
+    // +"<p class='delete-basket-details-header'>PRICE</p>"
+    // +"<p class='delete-basket-details-text'>" + bundlePrice + "</p>"
+    // +"<p class='delete-basket-details-header'>QUANTITY</p>"
+    // +"<p class='delete-basket-details-text'>" + bundleQuantity + "</p></div></div>";
+
     var deleteBundleTemplate = "<div class='delete-modal'><div class='modal-header'>Are you sure you want to remove this bundle from your cart ?</div>"
-    +"<div class='modal-body'>"
+    +"<div class='modal-body dual-content'>"
+    +"<div class='first-content'>"
     +"<p class='delete-basket-details-header'>BUNDLE NAME</p>"
     +"<p class='delete-basket-details-text'>" + bundleName + "</p>"
-    +"<p class='delete-basket-details-header'>PRICE</p>"
-    +"<p class='delete-basket-details-text'>" + bundlePrice + "</p>"
+    +"<p class='delete-basket-details-header'>BUNDLE PRICE</p>"
+    +"<p class='delete-basket-details-text'><span class='currency'>NGN </span>" + bundlePrice + "<span class='currency'>.00</span></p>"
     +"<p class='delete-basket-details-header'>QUANTITY</p>"
-    +"<p class='delete-basket-details-text'>" + bundleQuantity + "</p></div></div>";
+    +"<p class='delete-basket-details-text'>" + bundleQuantity + "</p>"
+    +"</div>"
+    +"<div class='second-content'>"
+    +"<p class='delete-basket-details-header'>OPTIONS SELECTED</p>"
+    +"<div class='delete-basket-details-text' id='basket-detail-options'></div>"
+    +"<p class='delete-basket-details-header'>TOTAL</p>"
+    +"<p class='delete-basket-details-text'><span class='currency'>NGN </span>" + total + "<span class='currency'>.00</span></p>"
+    +"</div>"
+    +"</div></div>";
 
 
     alertify.confirm("Confirm delete action", deleteBundleTemplate,
@@ -1096,7 +1113,7 @@ var app = {
         + "<td>" +newStoredBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
         + "<td>" + newStoredBasket[i].quantity + "</td>"
-        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+        + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\", \"" + newStoredBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE
@@ -1118,6 +1135,19 @@ var app = {
     },
     function () {
     }).set({movable:false, padding: false,frameless:false,transition: 'fade',labels: {ok: 'DELETE', cancel: 'CANCEL'}}).show();
+
+
+
+    console.log("deleteBundleBasket : app.allOptions");
+    console.log(app.allOptions[basketIndex]);
+    var optionsArray = app.allOptions[basketIndex].extrasInfo;
+
+    app.element("basket-detail-options").innerHTML = "";
+
+    for (var i = 0; i < optionsArray.length; i++) {
+      $("#basket-detail-options").append("<p> " + optionsArray[i].extra_name  +"( " + "NGN " + optionsArray[i].extra_price + " )" + "</p>")
+    }
+
 
   },
 
@@ -1149,7 +1179,7 @@ var app = {
       + "<td>" +newStoredBasket[i].name + "</td>"
       + "<td>NGN " + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "</td>"
       + "<td>" +newStoredBasket[i].quantity + "</td>"
-      + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+      + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + newStoredBasket[i].name + "\",\"" + parseInt(newStoredBasket[i].price, 10).toLocaleString() + "\",\"" + newStoredBasket[i].quantity + "\", \"" + newStoredBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
       + "</tr>");
 
       //ADD BUNDLE PRICE
@@ -1180,11 +1210,12 @@ var app = {
   increment: function (identifier, price) {
 
     console.log("app.allExtrasPrice");
-    console.log(app.allExtrasPrice);
+    console.log(app.allExtrasPrice[0]);
+
 
     var totalExtrasPrice = 0;
     for (var i = 0; i < app.allExtrasPrice.length; i++) {
-      totalExtrasPrice += app.allExtrasPrice[i];
+      totalExtrasPrice += parseInt( app.allExtrasPrice[i]);
     }
 
     count = parseInt(app.element(identifier).innerHTML);
@@ -1206,7 +1237,7 @@ var app = {
 
     var totalExtrasPrice = 0;
     for (var i = 0; i < app.allExtrasPrice.length; i++) {
-      totalExtrasPrice += app.allExtrasPrice[i];
+      totalExtrasPrice += parseInt(app.allExtrasPrice[i]);
     }
 
 
@@ -1637,18 +1668,6 @@ var app = {
       cartItems.unshift(cartItemsArray);
     }
 
-
-
-
-
-
-    // for (var i = 0; i < storedBasket.length; i++) {
-    //   var cartCategoryID = storedBasket[i].categoryID;
-    //   var cartBundleID = storedBasket[i].bundleID;
-    //   var cartQuantity = storedBasket[i].quantity;
-    //   var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity};
-    //   cartItems.unshift(cartItemsArray);
-    // }
 
     var orderData = {
       cart_items : cartItems,
