@@ -753,9 +753,18 @@ var app = {
         console.log("storedBasket[i].bundleTotal");
         console.log(storedBasket[i].bundleTotal);
 
-        $("#bundleBasketTable").append("<tr onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>"
+        // $("#bundleBasketTable").append("<tr onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>"
+        //
+        // + "<td>" +storedBasket[i].name + "<br><p id='basket-options' class='basket-options'> " + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</p></td>"
+        // + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
+        // + "<td>" +storedBasket[i].quantity + "</td>"
+        // //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
+        // // +"<td>" + storedBasket[i].extrasPrice+ "</td>"
+        // + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+        // + "</tr>");
 
-        + "<td>" +storedBasket[i].name + "<br><p id='basket-options' class='basket-options'> " + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</p></td>"
+        $("#bundleBasketTable").append("<tr>"
+        + "<td onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>" + storedBasket[i].name + "</td>"
         + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
         //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
@@ -838,8 +847,8 @@ var app = {
 
           console.log("storedBasket[i].bundleTotal");
           console.log(storedBasket[i].bundleTotal);
-          $("#bundleBasketTable").append("<tr onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>"
-          + "<td>" + storedBasket[i].name + "<br><p id='basket-options' class='basket-options'> " + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</p></td>"
+          $("#bundleBasketTable").append("<tr>"
+          + "<td onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>" + storedBasket[i].name + "</td>"
           + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
           //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
@@ -853,9 +862,9 @@ var app = {
           console.log(storedBasket[i].extrasInfo.length);
         }
 
-        for (var i = 0; i <  app.allOptionsLength; i++) {
-          $("#basket-options").append("<p>looped</p>")
-        }
+        // for (var i = 0; i <  app.allOptionsLength; i++) {
+        //   $("#basket-options").append("<p>looped</p>")
+        // }
         //debugger;
 
 
