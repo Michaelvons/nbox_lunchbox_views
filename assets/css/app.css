@@ -1377,3 +1377,26 @@ font-size: 28px;
 .options-name{
   text-transform: capitalize;
 }
+
+.basket-options{
+  font-size: 14px;
+color: #505050;
+margin-top: 4px;
+}
+
+.dual-content{
+  display: flex;
+  justify-content: space-between;
+}
+
+.first-content{
+  display: flex;
+flex-direction: column;
+flex-basis: 50%;
+}
+
+.second-content{
+  display: flex;
+flex-direction: column;
+flex-basis: 50%;
+}

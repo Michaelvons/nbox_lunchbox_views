@@ -7,6 +7,7 @@ var app = {
   isBackground: false,
   BASE_URL: "http://staging.nairabox.com/foodhub/",
 
+
   start: function () {
 
     if (app.isLiveApp) document.addEventListener("deviceready", app.launch, false);
@@ -466,6 +467,11 @@ var app = {
 
     //INIT EXTRAS ARRAY
     app.allExtras = [];
+    app.allExtrasPrice = [];
+    app.allExtrasInfo = [];
+    app.allExtrasName = [];
+    //  app.allOptions = [];
+    app.allOptionsLength = 0;
 
     //ADD OR REMOVE CSS Class
     app.element("card-bundle-" + cardID).classList.add("card-active");
@@ -494,6 +500,7 @@ var app = {
     }
 
     var bundleCount = "bundleCount";
+
 
     var bundleDetailstemplate = "<div class='bundle-details'>"
     +"<div class='bundle-header'>"
@@ -548,8 +555,13 @@ var app = {
     +"</div>"
     +"</div>";
 
+    //
+
     alertify.confirm(bundleDetailstemplate,
     ).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
+
+    //REST BUNDLE TOTAL
+    app.element("bundleTotal").innerHTML = parseInt(price, 10).toLocaleString();
 
     app.element("bundleMenusTable").innerHTML = "";
 
@@ -642,6 +654,9 @@ var app = {
     var formattedBundleTotal =  parseInt(bundleTotal.replace(/,/g, ''));
     //  var extrasArray = {option_id: extraID };
     var extrasArray = extraID ;
+    var extrasPriceArray = extraPrice;
+    var extrasNameArray = extraName;
+    var extrasInfoData = {extra_name : extraName, extra_price : extraPrice};
 
     if(app.element(extraElementID).checked){
       //  console.log("checked");
@@ -653,26 +668,46 @@ var app = {
       //app.allExtras = "allextras";
 
       //var extrasArray = {option_id: extraID };
+
+
       app.allExtras.push(extrasArray);
+      app.allExtrasPrice.push(extrasPriceArray);
+      app.allExtrasName.push(extrasNameArray);
+      app.allExtrasInfo.push(extrasInfoData);
       var extrasArrayIndex = app.allExtras.indexOf(extrasArray);
-      console.log("extrasArrayIndex");
-      console.log(extrasArrayIndex);
-      console.log("app.allExtras");
-      console.log(app.allExtras);
+      // console.log("extrasArrayIndex");
+      // console.log(extrasArrayIndex);
+      // console.log("app.allExtras");
+      // console.log(app.allExtras);
+      // console.log("app.allExtrasPrice");
+      // console.log(app.allExtrasPrice);
+      console.log("app.allExtrasInfo");
+      console.log(app.allExtrasInfo);
 
     }else {
       //  var extrasArray = {option_id: extraID };
       //  app.allExtras.push(extrasArray);
-      console.log("extrasArray");
-      console.log(extrasArray);
-      console.log("app.allExtras");
-      console.log(app.allExtras);
+      // console.log("extrasArray");
+      // console.log(extrasArray);
+      // console.log("app.allExtras");
+      // console.log(app.allExtras);
       var extrasArrayIndex = app.allExtras.indexOf(extrasArray);
+      var extrasPriceArrayIndex = app.allExtrasPrice.indexOf(extrasPriceArray);
+      var extrasNameArrayIndex = app.allExtrasName.indexOf(extrasNameArray);
+      var extrasInfoIndex = app.allExtrasInfo.indexOf(extrasInfoData);
       console.log("remove extrasArrayIndex");
       console.log(extrasArrayIndex);
       app.allExtras.splice(extrasArrayIndex, 1);
+      app.allExtrasPrice.splice(extrasPriceArrayIndex, 1);
+      app.allExtrasName.splice(extrasNameArrayIndex, 1);
+      app.allExtrasInfo.splice(extrasInfoIndex, 1);
+
       console.log("app.allExtras");
       console.log(app.allExtras);
+      console.log("app.allExtrasPrice");
+      console.log(app.allExtrasPrice);
+      console.log("app.allExtrasInfo");
+      console.log(app.allExtrasInfo);
 
 
       //  console.log("not checked");
@@ -687,6 +722,10 @@ var app = {
   /** ADD TO BASKET **/
   addToBasket:function (name, price, bundleID, categoryID) {
     var allextra = app.allExtras;
+    var allExtraName = app.allExtrasName;
+    var allExtraPrice = app.allExtrasPrice;
+    var allExtrasInfo = app.allExtrasInfo;
+
     console.log("addBasket: allExtras");
     console.log(allextra);
     //  console.log(allextra);
@@ -694,8 +733,12 @@ var app = {
     var initialBasket = JSON.parse(localStorage.getItem("basket"));
 
     if( initialBasket === null || initialBasket.length === 0){
+
+      var bundleTotal = app.element("bundleTotal").innerHTML;
+
+
       var basket =[];
-      basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra };
+      basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra, extrasPrice : allExtraPrice, extrasName : allExtraName, extrasInfo : allExtrasInfo, bundleTotal : bundleTotal };
 
       basket.unshift(basketArray);
       localStorage.setItem("basket", JSON.stringify(basket));
@@ -703,26 +746,35 @@ var app = {
       app.element("bundleBasketTable").innerHTML = "";
       var totalBundle = 0;
 
-      for (i = 0; i < storedBasket.length; i++) {
 
-        $("#bundleBasketTable").append("<tr>"
-        + "<td>" +storedBasket[i].name + "</td>"
-        + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+      for (i = 0; i < storedBasket.length; i++) {
+        app.allOptionsLength = storedBasket[i].extrasInfo.length;
+        app.allOptions = storedBasket;
+        console.log("storedBasket[i].bundleTotal");
+        console.log(storedBasket[i].bundleTotal);
+
+        $("#bundleBasketTable").append("<tr onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>"
+
+        + "<td>" +storedBasket[i].name + "<br><p id='basket-options' class='basket-options'> " + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</p></td>"
+        + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
+        //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
+        // +"<td>" + storedBasket[i].extrasPrice+ "</td>"
         + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE
-        totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
-
+        totalBundle += parseInt(storedBasket[i].bundleTotal) * parseInt(storedBasket[i].quantity);
+        console.log("storedBasket[i].extrasInfo.length");
+        console.log(storedBasket[i].extrasInfo.length);
       }
 
-      // console.log("addToBasket : otalBundle");
-      // console.log(totalBundle);
-      // console.log("addToBasket : storedBasket");
-      // console.log(storedBasket);
-      // console.log("app.grandTotal");
-      // console.log(app.grandTotal);
+
+
+      // for (var i = 0; i <  app.allOptionsLength; i++) {
+      //   $("#basket-options").append("<p>" + app.allOptions[i].extra_name +"</p>")
+      // }
+
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
 
       app.element("totalBasketBundle").innerHTML = parseInt(totalBundle, 10).toLocaleString();
@@ -730,6 +782,7 @@ var app = {
       var grandTotal = totalBundle +  parseInt(deliveryCost);
       app.grandTotal = parseInt(grandTotal, 10).toLocaleString();
       app.element("grandTotal").innerHTML = parseInt(grandTotal, 10).toLocaleString();
+      //  var formattedGrandTotal = parseInt(grandTotal, 10).toLocaleString();
 
       //CLOSE MODAL
       alertify.closeAll();
@@ -746,7 +799,13 @@ var app = {
       if (initialBasket.length !== 0) {
         //var id = initialContacts.length;
 
-        basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra };
+
+        var bundleTotal = app.element("bundleTotal").innerHTML;
+
+        //  basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra };
+        //  basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra, extrasPrice : allExtraPrice, extrasName : allExtraName, extrasInfo : allExtrasInfo };
+        basketArray = {name: name, price: price, quantity: quantity, bundleID : bundleID, categoryID : categoryID, extras : allextra, extrasPrice : allExtraPrice, extrasName : allExtraName, extrasInfo : allExtrasInfo, bundleTotal : bundleTotal };
+
 
         basket.unshift(basketArray);
         localStorage.setItem("basket", JSON.stringify(basket));
@@ -754,19 +813,52 @@ var app = {
         app.element("bundleBasketTable").innerHTML = "";
         var totalBundle = 0;
 
-        for (i = 0; i < storedBasket.length; i++) {
+        // for (i = 0; i < storedBasket.length; i++) {
+        //
+        //   $("#bundleBasketTable").append("<tr>"
+        //   + "<td>" +storedBasket[i].name + "</td>"
+        //   + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+        //   + "<td>" +storedBasket[i].quantity + "</td>"
+        //   +"<td>" + storedBasket[i].extrasInfo.extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo.extra_price + " )" + "</td>"
+        //   //  +"<td>" + storedBasket[i].extrasName+ "</td>"
+        //   //+"<td>" + storedBasket[i].extrasPrice+ "</td>"
+        //   + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
+        //   + "</tr>");
+        //
+        //   //ADD BUNDLE PRICE
+        //   totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+        //
+        // }
 
-          $("#bundleBasketTable").append("<tr>"
-          + "<td>" +storedBasket[i].name + "</td>"
-          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+
+        for (i = 0; i < storedBasket.length; i++) {
+          app.allOptionsLength = storedBasket[i].extrasInfo.length;
+          //  debugger;
+          app.allOptions = storedBasket;
+
+          console.log("storedBasket[i].bundleTotal");
+          console.log(storedBasket[i].bundleTotal);
+          $("#bundleBasketTable").append("<tr onclick='app.showBasketDetails(\"" + storedBasket[i].name + "\", \"" + storedBasket[i].price + "\", \"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\", \"" + i + "\")'>"
+          + "<td>" + storedBasket[i].name + "<br><p id='basket-options' class='basket-options'> " + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</p></td>"
+          + "<td>NGN " + parseInt(storedBasket[i].bundleTotal, 10).toLocaleString() + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
+          //  +"<td>" + storedBasket[i].extrasInfo[0].extra_name  +"( " + "NGN " + storedBasket[i].extrasInfo[0].extra_price + " )" + "</td>"
+          // +"<td>" + storedBasket[i].extrasPrice+ "</td>"
           + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
-          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
-
+          totalBundle += parseInt(storedBasket[i].bundleTotal) * parseInt(storedBasket[i].quantity);
+          console.log("storedBasket[i].extrasInfo.length");
+          console.log(storedBasket[i].extrasInfo.length);
         }
+
+        for (var i = 0; i <  app.allOptionsLength; i++) {
+          $("#basket-options").append("<p>looped</p>")
+        }
+        //debugger;
+
+
         console.log("addToBasket : totalBundle");
         console.log(totalBundle);
         console.log("addToBasket : storedBasket");
@@ -792,6 +884,40 @@ var app = {
       app.stopAttentionFlash();
     }
 
+  },
+
+  showBasketDetails:function (name, price, quantity, total, basketIndex) {
+
+    //debugger;
+
+    var basketDetailsTemplate = "<div class='delete-modal'><div class='checkout-header'><p class='checkout-title'>Cart details</p></div>"
+    +"<div class='modal-body dual-content'>"
+    +"<div class='first-content'>"
+    +"<p class='delete-basket-details-header'>BUNDLE NAME</p>"
+    +"<p class='delete-basket-details-text'>" + name + "</p>"
+    +"<p class='delete-basket-details-header'>BUNDLE PRICE</p>"
+    +"<p class='delete-basket-details-text'>" + price + "</p>"
+    +"<p class='delete-basket-details-header'>QUANTITY</p>"
+    +"<p class='delete-basket-details-text'>" + quantity + "</p>"
+    +"</div>"
+    +"<div class='second-content'>"
+    +"<p class='delete-basket-details-header'>OPTIONS SELECTED</p>"
+    +"<div class='delete-basket-details-text' id='basket-detail-options'></div>"
+    +"<p class='delete-basket-details-header'>TOTAL</p>"
+    +"<p class='delete-basket-details-text'>" + total + "</p>"
+    +"</div>"
+    +"</div></div>";
+
+    alertify.confirm(basketDetailsTemplate,).set({movable:false, padding: false,frameless:true,transition: 'fade'}).show();
+
+    console.log("showBasketDetails : app.allOptions");
+    console.log(app.allOptions[basketIndex]);
+    var optionsArray = app.allOptions[basketIndex].extrasInfo;
+
+    for (var i = 0; i < optionsArray.length; i++) {
+      //optionsArray[i].extrasInfo;
+      $("#basket-detail-options").append("<p> " + optionsArray[i].extra_name  +"( " + "NGN " + optionsArray[i].extra_price + " )" + "</p>")
+    }
   },
 
 
@@ -1038,16 +1164,39 @@ var app = {
 
   /** INCREMENT **/
   increment: function (identifier, price) {
+
+    console.log("app.allExtrasPrice");
+    console.log(app.allExtrasPrice);
+
+    var totalExtrasPrice = 0;
+    for (var i = 0; i < app.allExtrasPrice.length; i++) {
+      totalExtrasPrice += app.allExtrasPrice[i];
+    }
+
     count = parseInt(app.element(identifier).innerHTML);
     count += 1;
     app.element(identifier).innerHTML = count;
-    bundleTotal = price * count;
-    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
+    bundleTotal = (price * count) + parseInt(totalExtrasPrice);
+    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString();
+    console.log("app.allExtrasPrice");
+    console.log(app.allExtrasPrice);
   },
 
 
   /** DECREMENT **/
   decrement: function (identifier, price) {
+
+
+    console.log("app.allExtrasPrice");
+    console.log(app.allExtrasPrice);
+
+    var totalExtrasPrice = 0;
+    for (var i = 0; i < app.allExtrasPrice.length; i++) {
+      totalExtrasPrice += app.allExtrasPrice[i];
+    }
+
+
+
     count = parseInt(app.element(identifier).innerHTML);
     if (count == 1) {
       app.element(identifier).innerHTML = "1";
@@ -1055,8 +1204,9 @@ var app = {
       count -= 1;
       app.element(identifier).innerHTML = count;
     }
-    bundleTotal = price * count;
-    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString()
+    bundleTotal = (price * count) + parseInt(totalExtrasPrice);
+    app.element("bundleTotal").innerHTML = parseInt(bundleTotal, 10).toLocaleString();
+
   },
 
 
@@ -1391,7 +1541,7 @@ var app = {
     +"</div>"
     //  +"<input id='cardNumber' class='checkout-input keyboard-numerals' type='text' placeholder='Card Number' onclick='app.showNumberKeyboard()'>"
     //button function is payWithCard
-    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
+    +"<input id='cardPin' class='checkout-input keyboard-numerals' type='password' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='payWithCardButton' class='checkout-button' onclick='app.validateCardDetails()'>CONTINUE</button>"
     +"<p id='checkoutMessage'></p>"
     +"</div>";
@@ -1469,7 +1619,7 @@ var app = {
       }
 
       var cartItemsArray = { category_id : cartCategoryID, bundle_id : cartBundleID, quantity : cartQuantity, options:cartOptions};
-      debugger;
+      //  debugger;
       cartItems.unshift(cartItemsArray);
     }
 
