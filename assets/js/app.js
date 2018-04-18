@@ -224,13 +224,15 @@ var app = {
           //DISPLAY BASKET
           $("#basketTable").append("<tr>"
           + "<td>" +storedBasket[i].name + "</td>"
-          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+          + "<td>NGN " + storedBasket[i].bundleTotal + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
-          + "<td><button onclick='app.deleteCategoryBasket(" + i + ",\"" + storedBasket[i].name + "\")'><img src='assets/image/trash.png'></button></td>"
+          + "<td><button onclick='app.deleteCategoryBasket(" + i + ",\"" + storedBasket[i].name + "\", \"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE TO CATEGORY PAGE
-          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+        //  totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+          var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
+          totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
         }
 
         app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
@@ -319,13 +321,15 @@ var app = {
         //DISPLAY BASKET
         $("#basketTable").append("<tr>"
         + "<td>" +storedBasket[i].name + "</td>"
-        + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+        + "<td>NGN " + storedBasket[i].bundleTotal + "</td>"
         + "<td>" +storedBasket[i].quantity + "</td>"
         + "<td><button onclick='app.deleteCategoryBasket(" + i + ",\"" + storedBasket[i].name + "\")'><img src='assets/image/trash.png'></button></td>"
         + "</tr>");
 
         //ADD BUNDLE PRICE TO CATEGORY PAGE
-        totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+        //totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+        var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
+        totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
       }
 
       app.totalBundle = parseInt(totalBundle, 10).toLocaleString();
@@ -394,13 +398,16 @@ var app = {
           //DISPLAY BASKET
           $("#bundleBasketTable").append("<tr>"
           + "<td>" +storedBasket[i].name + "</td>"
-          + "<td>NGN " + parseInt(storedBasket[i].price, 10).toLocaleString() + "</td>"
+          + "<td>NGN " + storedBasket[i].bundleTotal + "</td>"
           + "<td>" +storedBasket[i].quantity + "</td>"
           + "<td><button onclick='app.deleteBundleBasket(" + i + ",\"" + storedBasket[i].name + "\",\"" + parseInt(storedBasket[i].price, 10).toLocaleString() + "\",\"" + storedBasket[i].quantity + "\", \"" + storedBasket[i].bundleTotal + "\")'><img src='assets/image/trash.png'></button></td>"
           + "</tr>");
 
           //ADD BUNDLE PRICE
-          totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+          //  totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+          //ADD BUNDLE PRICE
+          var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
+          totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
         }
 
         //  app.element("totalBasketBundle").innerHTML = app.totalBundle;
