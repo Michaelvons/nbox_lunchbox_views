@@ -450,6 +450,9 @@ var app = {
     views.goto("page-bundle", function () {
       var storedSetup = JSON.parse(localStorage.getItem("setup"));
 
+      //HIDE PREVIOUS CARDS
+      app.element("cards-bundle").innerHTML = "";
+
       app.element("bundleLocationName").innerHTML= storedSetup[0].locationName;
       app.element("bundleLocationCity").innerHTML= storedSetup[0].locationCity;
 
@@ -905,7 +908,7 @@ var app = {
     +"<p class='delete-basket-details-header'>BUNDLE NAME</p>"
     +"<p class='delete-basket-details-text'>" + name + "</p>"
     +"<p class='delete-basket-details-header'>BUNDLE PRICE</p>"
-    +"<p class='delete-basket-details-text'>" + price + "</p>"
+    +"<p class='delete-basket-details-text'><span class='currency'>NGN </span>" + price + "<span class='currency'>.00</span></p>"
     +"<p class='delete-basket-details-header'>QUANTITY</p>"
     +"<p class='delete-basket-details-text'>" + quantity + "</p>"
     +"</div>"
@@ -913,7 +916,7 @@ var app = {
     +"<p class='delete-basket-details-header'>OPTIONS SELECTED</p>"
     +"<div class='delete-basket-details-text' id='basket-detail-options'></div>"
     +"<p class='delete-basket-details-header'>TOTAL</p>"
-    +"<p class='delete-basket-details-text'>" + total + "</p>"
+    +"<p class='delete-basket-details-text'><span class='currency'>NGN </span>" + total + "<span class='currency'>.00</span></p>"
     +"</div>"
     +"</div></div>";
 
@@ -922,6 +925,8 @@ var app = {
     console.log("showBasketDetails : app.allOptions");
     console.log(app.allOptions[basketIndex]);
     var optionsArray = app.allOptions[basketIndex].extrasInfo;
+
+      app.element("basket-detail-options").innerHTML = "";
 
     for (var i = 0; i < optionsArray.length; i++) {
       //optionsArray[i].extrasInfo;

@@ -933,8 +933,8 @@ margin-bottom: 4px;
 
 
 .delete-basket-details-header{
-  font-size: 16px;
-  color: #656363;
+  font-size: 14px;
+  color: #8d8d8d;
   font-family: Montserrat-Bold;
   margin-bottom: 4px;
 }
@@ -1367,6 +1367,10 @@ font-size: 28px;
 
 .checkboxFive input{
   margin-top: 14px !important;
+  width: 0px !important;
+  background-color: white;
+  border: none;
+  height: 0px !important;
 }
 
 .options-checkbox{
