@@ -230,7 +230,7 @@ var app = {
           + "</tr>");
 
           //ADD BUNDLE PRICE TO CATEGORY PAGE
-        //  totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
+          //  totalBundle += parseInt(storedBasket[i].price) * parseInt(storedBasket[i].quantity);
           var unformatTotalBundle =  parseInt(storedBasket[i].bundleTotal.replace(/,/g, ''));
           totalBundle += unformatTotalBundle * parseInt(storedBasket[i].quantity);
         }
@@ -1628,10 +1628,16 @@ var app = {
     var amount = app.grandTotal;
     var floorNumber = app.storedFloorNumber;
 
-    //var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin, floornumber : floorNumber}
+    document.getElementById("payWithCardPinButton").disabled = true;
+    document.getElementById("payWithCardPinButton").style.backgroundColor = "#5D5D5D";
+    document.getElementById("payWithCardPinButton").innerHTML = "PROCESSING...";
 
-    var tokenData = {amount: amount, phonenumber: phoneNumber, pin: cardPin}
 
+    var unformattedAmount = parseInt(amount.replace(/,/g, ''));
+    //  var tokenData = {amount: unformattedAmount, phonenumber: phoneNumber, pin: cardPin, floornumber : floorNumber}
+
+    var tokenData = {amount: unformattedAmount, phonenumber: phoneNumber, pin: cardPin}
+    debugger;
 
     $.ajax({
       url: app.BASE_URL + "tokentransaction",
@@ -1645,7 +1651,7 @@ var app = {
         var transactionID = response.transaction_id;
         app.submitOrder(transactionID);
       }else {
-                app.showTransactionFailed();
+        app.showTransactionFailed();
       }
     })
   },
@@ -1795,30 +1801,30 @@ var app = {
 
   showCardPinForm:function () {
     var cardPinForm = "<div class='form-card'>"
-    +"<input id='pinTokenized' class='checkout-input keyboard-numerals' type='text' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
+    +"<input id='pinTokenized' class='checkout-input keyboard-numerals' type='password' placeholder='ATM Pin' onclick='app.showNumberKeyboard()'>"
     +"<button id='payWithCardPinButton' class='checkout-button' onclick='app.payWithToken()'>COMPLETE TRANSACTION</button>"
     +"</div>";
     app.element("checkoutBody").innerHTML = cardPinForm;
   },
 
-//   payTokenized:function () {
-//
-//     var cardPin = $("#pinTokenized").val();
-//
-// var tokenizedChargeData ={amount : amount, phonenumber : phoneNumber, pin : cardPin}
-//
-//     $.ajax({
-//       url: app.BASE_URL + "tokentransaction",
-//       type: "POST",
-//       crossDomain: true,
-//       data: JSON.stringify(tokenizedChargeData),
-//       contentType: "application/json"
-//     }).done(function (tokenizedChargeData) {
-//       // var transactionID = response.transaction_id;
-//       // app.submitOrder(transactionID);
-//     })
-//
-//   },
+  //   payTokenized:function () {
+  //
+  //     var cardPin = $("#pinTokenized").val();
+  //
+  // var tokenizedChargeData ={amount : amount, phonenumber : phoneNumber, pin : cardPin}
+  //
+  //     $.ajax({
+  //       url: app.BASE_URL + "tokentransaction",
+  //       type: "POST",
+  //       crossDomain: true,
+  //       data: JSON.stringify(tokenizedChargeData),
+  //       contentType: "application/json"
+  //     }).done(function (tokenizedChargeData) {
+  //       // var transactionID = response.transaction_id;
+  //       // app.submitOrder(transactionID);
+  //     })
+  //
+  //   },
 
   /** PERFORM OTP TRANSACTION **/
   payWithOtp:function () {
